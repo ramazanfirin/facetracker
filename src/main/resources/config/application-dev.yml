@@ -42,7 +42,7 @@ spring:
         type: com.zaxxer.hikari.HikariDataSource
         url: jdbc:mysql://localhost:3306/facetracker?useUnicode=true&characterEncoding=utf8&useSSL=false
         username: root
-        password:
+        password: ra5699mo
         hikari:
             data-source-properties:
                 cachePrepStmts: true
