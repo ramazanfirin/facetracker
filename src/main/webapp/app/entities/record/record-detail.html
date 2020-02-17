@@ -1,0 +1,35 @@
+
+<div>
+    <h2><span data-translate="facetrackerApp.record.detail.title">Record</span> {{vm.record.id}}</h2>
+    <hr>
+    <jhi-alert-error></jhi-alert-error>
+    <dl class="dl-horizontal jh-entity-details">
+        <dt><span data-translate="facetrackerApp.record.insert">Insert</span></dt>
+        <dd>
+            <span>{{vm.record.insert | date:'medium'}}</span>
+        </dd>
+        <dt><span data-translate="facetrackerApp.record.path">Path</span></dt>
+        <dd>
+            <span>{{vm.record.path}}</span>
+        </dd>
+        <dt><span data-translate="facetrackerApp.record.device">Device</span></dt>
+        <dd>
+            <a ui-sref="device-detail({id:vm.record.device.id})">{{vm.record.device.id}}</a>
+        </dd>
+        <dt><span data-translate="facetrackerApp.record.image">Image</span></dt>
+        <dd>
+            <a ui-sref="image-detail({id:vm.record.image.id})">{{vm.record.image.id}}</a>
+        </dd>
+    </dl>
+
+    <button type="submit"
+            ui-sref="{{ vm.previousState }}"
+            class="btn btn-info">
+        <span class="glyphicon glyphicon-arrow-left"></span>&nbsp;<span data-translate="entity.action.back"> Back</span>
+    </button>
+
+    <button type="button" ui-sref="record-detail.edit({id:vm.record.id})" class="btn btn-primary">
+        <span class="glyphicon glyphicon-pencil"></span>
+        <span class="hidden-sm-down" data-translate="entity.action.edit"> Edit</span>
+    </button>
+</div>

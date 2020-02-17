@@ -44,6 +44,11 @@ public class ImageResourceIntTest {
     private static final String DEFAULT_IMAGE_CONTENT_TYPE = "image/jpg";
     private static final String UPDATED_IMAGE_CONTENT_TYPE = "image/png";
 
+    private static final byte[] DEFAULT_AFID = TestUtil.createByteArray(1, "0");
+    private static final byte[] UPDATED_AFID = TestUtil.createByteArray(2, "1");
+    private static final String DEFAULT_AFID_CONTENT_TYPE = "image/jpg";
+    private static final String UPDATED_AFID_CONTENT_TYPE = "image/png";
+
     @Autowired
     private ImageRepository imageRepository;
 
@@ -83,7 +88,9 @@ public class ImageResourceIntTest {
     public static Image createEntity(EntityManager em) {
         Image image = new Image()
             .image(DEFAULT_IMAGE)
-            .imageContentType(DEFAULT_IMAGE_CONTENT_TYPE);
+            .imageContentType(DEFAULT_IMAGE_CONTENT_TYPE)
+            .afid(DEFAULT_AFID)
+            .afidContentType(DEFAULT_AFID_CONTENT_TYPE);
         return image;
     }
 
@@ -109,6 +116,8 @@ public class ImageResourceIntTest {
         Image testImage = imageList.get(imageList.size() - 1);
         assertThat(testImage.getImage()).isEqualTo(DEFAULT_IMAGE);
         assertThat(testImage.getImageContentType()).isEqualTo(DEFAULT_IMAGE_CONTENT_TYPE);
+        assertThat(testImage.getAfid()).isEqualTo(DEFAULT_AFID);
+        assertThat(testImage.getAfidContentType()).isEqualTo(DEFAULT_AFID_CONTENT_TYPE);
     }
 
     @Test
@@ -150,6 +159,24 @@ public class ImageResourceIntTest {
 
     @Test
     @Transactional
+    public void checkAfidIsRequired() throws Exception {
+        int databaseSizeBeforeTest = imageRepository.findAll().size();
+        // set the field null
+        image.setAfid(null);
+
+        // Create the Image, which fails.
+
+        restImageMockMvc.perform(post("/api/images")
+            .contentType(TestUtil.APPLICATION_JSON_UTF8)
+            .content(TestUtil.convertObjectToJsonBytes(image)))
+            .andExpect(status().isBadRequest());
+
+        List<Image> imageList = imageRepository.findAll();
+        assertThat(imageList).hasSize(databaseSizeBeforeTest);
+    }
+
+    @Test
+    @Transactional
     public void getAllImages() throws Exception {
         // Initialize the database
         imageRepository.saveAndFlush(image);
@@ -160,7 +187,9 @@ public class ImageResourceIntTest {
             .andExpect(content().contentType(MediaType.APPLICATION_JSON_UTF8_VALUE))
             .andExpect(jsonPath("$.[*].id").value(hasItem(image.getId().intValue())))
             .andExpect(jsonPath("$.[*].imageContentType").value(hasItem(DEFAULT_IMAGE_CONTENT_TYPE)))
-            .andExpect(jsonPath("$.[*].image").value(hasItem(Base64Utils.encodeToString(DEFAULT_IMAGE))));
+            .andExpect(jsonPath("$.[*].image").value(hasItem(Base64Utils.encodeToString(DEFAULT_IMAGE))))
+            .andExpect(jsonPath("$.[*].afidContentType").value(hasItem(DEFAULT_AFID_CONTENT_TYPE)))
+            .andExpect(jsonPath("$.[*].afid").value(hasItem(Base64Utils.encodeToString(DEFAULT_AFID))));
     }
 
     @Test
@@ -175,7 +204,9 @@ public class ImageResourceIntTest {
             .andExpect(content().contentType(MediaType.APPLICATION_JSON_UTF8_VALUE))
             .andExpect(jsonPath("$.id").value(image.getId().intValue()))
             .andExpect(jsonPath("$.imageContentType").value(DEFAULT_IMAGE_CONTENT_TYPE))
-            .andExpect(jsonPath("$.image").value(Base64Utils.encodeToString(DEFAULT_IMAGE)));
+            .andExpect(jsonPath("$.image").value(Base64Utils.encodeToString(DEFAULT_IMAGE)))
+            .andExpect(jsonPath("$.afidContentType").value(DEFAULT_AFID_CONTENT_TYPE))
+            .andExpect(jsonPath("$.afid").value(Base64Utils.encodeToString(DEFAULT_AFID)));
     }
 
     @Test
@@ -199,7 +230,9 @@ public class ImageResourceIntTest {
         em.detach(updatedImage);
         updatedImage
             .image(UPDATED_IMAGE)
-            .imageContentType(UPDATED_IMAGE_CONTENT_TYPE);
+            .imageContentType(UPDATED_IMAGE_CONTENT_TYPE)
+            .afid(UPDATED_AFID)
+            .afidContentType(UPDATED_AFID_CONTENT_TYPE);
 
         restImageMockMvc.perform(put("/api/images")
             .contentType(TestUtil.APPLICATION_JSON_UTF8)
@@ -212,6 +245,8 @@ public class ImageResourceIntTest {
         Image testImage = imageList.get(imageList.size() - 1);
         assertThat(testImage.getImage()).isEqualTo(UPDATED_IMAGE);
         assertThat(testImage.getImageContentType()).isEqualTo(UPDATED_IMAGE_CONTENT_TYPE);
+        assertThat(testImage.getAfid()).isEqualTo(UPDATED_AFID);
+        assertThat(testImage.getAfidContentType()).isEqualTo(UPDATED_AFID_CONTENT_TYPE);
     }
 
     @Test

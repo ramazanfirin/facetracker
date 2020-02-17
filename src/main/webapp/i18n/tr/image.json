@@ -16,6 +16,7 @@
                 "title": "Image"
             },
             "image": "Image",
+            "afid": "Afid",
             "person": "Person"
         }
     }

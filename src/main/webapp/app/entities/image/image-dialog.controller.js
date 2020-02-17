@@ -59,5 +59,16 @@
             }
         };
 
+        vm.setAfid = function ($file, image) {
+            if ($file) {
+                DataUtils.toBase64($file, function(base64Data) {
+                    $scope.$apply(function() {
+                        image.afid = base64Data;
+                        image.afidContentType = $file.type;
+                    });
+                });
+            }
+        };
+
     }
 })();

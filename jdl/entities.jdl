@@ -3,8 +3,24 @@ entity Person{
 }
 entity Image{
     image ImageBlob required
+    afid AnyBlob required
+}
+
+entity Device{
+    deviceId String required
+	description String
+}
+
+entity Record{
+	insert Instant
+	path String
 }
 
 relationship OneToMany {
     Person{images} to Image
 } 
+
+relationship ManyToOne {
+    Record{device} to Device
+	Record{image} to Image
+}

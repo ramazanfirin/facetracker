@@ -9,6 +9,8 @@
                 "main": "Entities",
                 "person": "Person",
                 "image": "Image",
+                "device": "Device",
+                "record": "Record",
                 "jhipster-needle-menu-add-entry": "JHipster will add additional entities here (do not translate!)"
             },
             "account": {

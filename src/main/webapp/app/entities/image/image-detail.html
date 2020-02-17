@@ -13,6 +13,13 @@
                 {{vm.image.imageContentType}}, {{vm.byteSize(vm.image.image)}}
             </div>
         </dd>
+        <dt><span data-translate="facetrackerApp.image.afid">Afid</span></dt>
+        <dd>
+            <div ng-if="vm.image.afid">
+                <a ng-click="vm.openFile(vm.image.afidContentType, vm.image.afid)" data-translate="entity.action.open">open</a>
+                {{vm.image.afidContentType}}, {{vm.byteSize(vm.image.afid)}}
+            </div>
+        </dd>
         <dt><span data-translate="facetrackerApp.image.person">Person</span></dt>
         <dd>
             <a ui-sref="person-detail({id:vm.image.person.id})">{{vm.image.person.id}}</a>

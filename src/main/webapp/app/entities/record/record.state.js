@@ -9,53 +9,53 @@
 
     function stateConfig($stateProvider) {
         $stateProvider
-        .state('image', {
+        .state('record', {
             parent: 'entity',
-            url: '/image',
+            url: '/record',
             data: {
                 authorities: ['ROLE_USER'],
-                pageTitle: 'facetrackerApp.image.home.title'
+                pageTitle: 'facetrackerApp.record.home.title'
             },
             views: {
                 'content@': {
-                    templateUrl: 'app/entities/image/images.html',
-                    controller: 'ImageController',
+                    templateUrl: 'app/entities/record/records.html',
+                    controller: 'RecordController',
                     controllerAs: 'vm'
                 }
             },
             resolve: {
                 translatePartialLoader: ['$translate', '$translatePartialLoader', function ($translate, $translatePartialLoader) {
-                    $translatePartialLoader.addPart('image');
+                    $translatePartialLoader.addPart('record');
                     $translatePartialLoader.addPart('global');
                     return $translate.refresh();
                 }]
             }
         })
-        .state('image-detail', {
-            parent: 'image',
-            url: '/image/{id}',
+        .state('record-detail', {
+            parent: 'record',
+            url: '/record/{id}',
             data: {
                 authorities: ['ROLE_USER'],
-                pageTitle: 'facetrackerApp.image.detail.title'
+                pageTitle: 'facetrackerApp.record.detail.title'
             },
             views: {
                 'content@': {
-                    templateUrl: 'app/entities/image/image-detail.html',
-                    controller: 'ImageDetailController',
+                    templateUrl: 'app/entities/record/record-detail.html',
+                    controller: 'RecordDetailController',
                     controllerAs: 'vm'
                 }
             },
             resolve: {
                 translatePartialLoader: ['$translate', '$translatePartialLoader', function ($translate, $translatePartialLoader) {
-                    $translatePartialLoader.addPart('image');
+                    $translatePartialLoader.addPart('record');
                     return $translate.refresh();
                 }],
-                entity: ['$stateParams', 'Image', function($stateParams, Image) {
-                    return Image.get({id : $stateParams.id}).$promise;
+                entity: ['$stateParams', 'Record', function($stateParams, Record) {
+                    return Record.get({id : $stateParams.id}).$promise;
                 }],
                 previousState: ["$state", function ($state) {
                     var currentStateData = {
-                        name: $state.current.name || 'image',
+                        name: $state.current.name || 'record',
                         params: $state.params,
                         url: $state.href($state.current.name, $state.params)
                     };
@@ -63,22 +63,22 @@
                 }]
             }
         })
-        .state('image-detail.edit', {
-            parent: 'image-detail',
+        .state('record-detail.edit', {
+            parent: 'record-detail',
             url: '/detail/edit',
             data: {
                 authorities: ['ROLE_USER']
             },
             onEnter: ['$stateParams', '$state', '$uibModal', function($stateParams, $state, $uibModal) {
                 $uibModal.open({
-                    templateUrl: 'app/entities/image/image-dialog.html',
-                    controller: 'ImageDialogController',
+                    templateUrl: 'app/entities/record/record-dialog.html',
+                    controller: 'RecordDialogController',
                     controllerAs: 'vm',
                     backdrop: 'static',
                     size: 'lg',
                     resolve: {
-                        entity: ['Image', function(Image) {
-                            return Image.get({id : $stateParams.id}).$promise;
+                        entity: ['Record', function(Record) {
+                            return Record.get({id : $stateParams.id}).$promise;
                         }]
                     }
                 }).result.then(function() {
@@ -88,81 +88,79 @@
                 });
             }]
         })
-        .state('image.new', {
-            parent: 'image',
+        .state('record.new', {
+            parent: 'record',
             url: '/new',
             data: {
                 authorities: ['ROLE_USER']
             },
             onEnter: ['$stateParams', '$state', '$uibModal', function($stateParams, $state, $uibModal) {
                 $uibModal.open({
-                    templateUrl: 'app/entities/image/image-dialog.html',
-                    controller: 'ImageDialogController',
+                    templateUrl: 'app/entities/record/record-dialog.html',
+                    controller: 'RecordDialogController',
                     controllerAs: 'vm',
                     backdrop: 'static',
                     size: 'lg',
                     resolve: {
                         entity: function () {
                             return {
-                                image: null,
-                                imageContentType: null,
-                                afid: null,
-                                afidContentType: null,
+                                insert: null,
+                                path: null,
                                 id: null
                             };
                         }
                     }
                 }).result.then(function() {
-                    $state.go('image', null, { reload: 'image' });
+                    $state.go('record', null, { reload: 'record' });
                 }, function() {
-                    $state.go('image');
+                    $state.go('record');
                 });
             }]
         })
-        .state('image.edit', {
-            parent: 'image',
+        .state('record.edit', {
+            parent: 'record',
             url: '/{id}/edit',
             data: {
                 authorities: ['ROLE_USER']
             },
             onEnter: ['$stateParams', '$state', '$uibModal', function($stateParams, $state, $uibModal) {
                 $uibModal.open({
-                    templateUrl: 'app/entities/image/image-dialog.html',
-                    controller: 'ImageDialogController',
+                    templateUrl: 'app/entities/record/record-dialog.html',
+                    controller: 'RecordDialogController',
                     controllerAs: 'vm',
                     backdrop: 'static',
                     size: 'lg',
                     resolve: {
-                        entity: ['Image', function(Image) {
-                            return Image.get({id : $stateParams.id}).$promise;
+                        entity: ['Record', function(Record) {
+                            return Record.get({id : $stateParams.id}).$promise;
                         }]
                     }
                 }).result.then(function() {
-                    $state.go('image', null, { reload: 'image' });
+                    $state.go('record', null, { reload: 'record' });
                 }, function() {
                     $state.go('^');
                 });
             }]
         })
-        .state('image.delete', {
-            parent: 'image',
+        .state('record.delete', {
+            parent: 'record',
             url: '/{id}/delete',
             data: {
                 authorities: ['ROLE_USER']
             },
             onEnter: ['$stateParams', '$state', '$uibModal', function($stateParams, $state, $uibModal) {
                 $uibModal.open({
-                    templateUrl: 'app/entities/image/image-delete-dialog.html',
-                    controller: 'ImageDeleteController',
+                    templateUrl: 'app/entities/record/record-delete-dialog.html',
+                    controller: 'RecordDeleteController',
                     controllerAs: 'vm',
                     size: 'md',
                     resolve: {
-                        entity: ['Image', function(Image) {
-                            return Image.get({id : $stateParams.id}).$promise;
+                        entity: ['Record', function(Record) {
+                            return Record.get({id : $stateParams.id}).$promise;
                         }]
                     }
                 }).result.then(function() {
-                    $state.go('image', null, { reload: 'image' });
+                    $state.go('record', null, { reload: 'record' });
                 }, function() {
                     $state.go('^');
                 });

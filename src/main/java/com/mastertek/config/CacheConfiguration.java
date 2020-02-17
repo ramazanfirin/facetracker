@@ -47,6 +47,8 @@ public class CacheConfiguration {
             cm.createCache(com.mastertek.domain.Person.class.getName(), jcacheConfiguration);
             cm.createCache(com.mastertek.domain.Person.class.getName() + ".images", jcacheConfiguration);
             cm.createCache(com.mastertek.domain.Image.class.getName(), jcacheConfiguration);
+            cm.createCache(com.mastertek.domain.Device.class.getName(), jcacheConfiguration);
+            cm.createCache(com.mastertek.domain.Record.class.getName(), jcacheConfiguration);
             // jhipster-needle-ehcache-add-entry
         };
     }

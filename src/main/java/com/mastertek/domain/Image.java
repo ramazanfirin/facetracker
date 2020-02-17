@@ -31,6 +31,14 @@ public class Image implements Serializable {
     @Column(name = "image_content_type", nullable = false)
     private String imageContentType;
 
+    @NotNull
+    @Lob
+    @Column(name = "afid", nullable = false)
+    private byte[] afid;
+
+    @Column(name = "afid_content_type", nullable = false)
+    private String afidContentType;
+
     @ManyToOne
     private Person person;
 
@@ -67,6 +75,32 @@ public class Image implements Serializable {
 
     public void setImageContentType(String imageContentType) {
         this.imageContentType = imageContentType;
+    }
+
+    public byte[] getAfid() {
+        return afid;
+    }
+
+    public Image afid(byte[] afid) {
+        this.afid = afid;
+        return this;
+    }
+
+    public void setAfid(byte[] afid) {
+        this.afid = afid;
+    }
+
+    public String getAfidContentType() {
+        return afidContentType;
+    }
+
+    public Image afidContentType(String afidContentType) {
+        this.afidContentType = afidContentType;
+        return this;
+    }
+
+    public void setAfidContentType(String afidContentType) {
+        this.afidContentType = afidContentType;
     }
 
     public Person getPerson() {
@@ -109,6 +143,8 @@ public class Image implements Serializable {
             "id=" + getId() +
             ", image='" + getImage() + "'" +
             ", imageContentType='" + getImageContentType() + "'" +
+            ", afid='" + getAfid() + "'" +
+            ", afidContentType='" + getAfidContentType() + "'" +
             "}";
     }
 }
