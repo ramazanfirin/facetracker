@@ -1,0 +1,10 @@
+entity Person{
+     name String required
+}
+entity Image{
+    image ImageBlob required
+}
+
+relationship OneToMany {
+    Person{images} to Image
+} 
