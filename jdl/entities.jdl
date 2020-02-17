@@ -1,5 +1,14 @@
-entity Person{
+entity WhiteListPerson{
      name String required
+}
+entity WhiteListRecordItem{
+
+}
+entity BlackListPerson{
+     name String required
+}
+entity BlackListRecordItem{
+
 }
 entity Image{
     image ImageBlob required
@@ -11,16 +20,32 @@ entity Device{
 	description String
 }
 
+enum RecordStatus {
+   PROCESSING_STARTED,PROCESSING_FINISHED,NO_FACE_DETECTED, NO_AFID_DETECTED,WHITE_LIST_DETECTED, BLACK_LIST_DETECTED
+}  
+
 entity Record{
 	insert Instant
 	path String
+	fileSentDate Instant 
+    fileCreationDate Instant
+	processStartDate Instant
+    processFinishDate Instant
+    status RecordStatus 
+    afid AnyBlob
+	
 }
 
 relationship OneToMany {
-    Person{images} to Image
-} 
+    WhiteListPerson{images} to Image
+    BlackListPerson{images} to Image
+}
 
 relationship ManyToOne {
     Record{device} to Device
 	Record{image} to Image
+	WhiteListRecordItem{record} to Record
+	BlackListRecordItem{record} to Record
+	WhiteListRecordItem{person} to WhiteListPerson
+	BlackListRecordItem{person} to BlackListPerson
 }

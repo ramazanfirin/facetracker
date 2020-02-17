@@ -20,9 +20,13 @@
                 {{vm.image.afidContentType}}, {{vm.byteSize(vm.image.afid)}}
             </div>
         </dd>
-        <dt><span data-translate="facetrackerApp.image.person">Person</span></dt>
+        <dt><span data-translate="facetrackerApp.image.whiteListPerson">White List Person</span></dt>
         <dd>
-            <a ui-sref="person-detail({id:vm.image.person.id})">{{vm.image.person.id}}</a>
+            <a ui-sref="white-list-person-detail({id:vm.image.whiteListPerson.id})">{{vm.image.whiteListPerson.id}}</a>
+        </dd>
+        <dt><span data-translate="facetrackerApp.image.blackListPerson">Black List Person</span></dt>
+        <dd>
+            <a ui-sref="black-list-person-detail({id:vm.image.blackListPerson.id})">{{vm.image.blackListPerson.id}}</a>
         </dd>
     </dl>
 

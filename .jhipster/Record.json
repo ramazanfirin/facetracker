@@ -22,6 +22,32 @@
         {
             "fieldName": "path",
             "fieldType": "String"
+        },
+        {
+            "fieldName": "fileSentDate",
+            "fieldType": "Instant"
+        },
+        {
+            "fieldName": "fileCreationDate",
+            "fieldType": "Instant"
+        },
+        {
+            "fieldName": "processStartDate",
+            "fieldType": "Instant"
+        },
+        {
+            "fieldName": "processFinishDate",
+            "fieldType": "Instant"
+        },
+        {
+            "fieldName": "status",
+            "fieldType": "RecordStatus",
+            "fieldValues": "PROCESSING_STARTED,PROCESSING_FINISHED,NO_FACE_DETECTED,NO_AFID_DETECTED,WHITE_LIST_DETECTED,BLACK_LIST_DETECTED"
+        },
+        {
+            "fieldName": "afid",
+            "fieldType": "byte[]",
+            "fieldTypeBlobContent": "any"
         }
     ],
     "changelogDate": "20200217114503",

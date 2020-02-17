@@ -30,6 +30,33 @@
                 <constraints nullable="true" />
             </column>
 
+            <column name="file_sent_date" type="timestamp">
+                <constraints nullable="true" />
+            </column>
+
+            <column name="file_creation_date" type="timestamp">
+                <constraints nullable="true" />
+            </column>
+
+            <column name="process_start_date" type="timestamp">
+                <constraints nullable="true" />
+            </column>
+
+            <column name="process_finish_date" type="timestamp">
+                <constraints nullable="true" />
+            </column>
+
+            <column name="status" type="varchar(255)">
+                <constraints nullable="true" />
+            </column>
+
+            <column name="afid" type="longblob">
+                <constraints nullable="true" />
+            </column>
+            <column name="afid_content_type" type="varchar(255)">
+                <constraints nullable="true" />
+            </column>
+
             <column name="device_id" type="bigint">
                 <constraints nullable="true" />
             </column>
@@ -41,6 +68,10 @@
             <!-- jhipster-needle-liquibase-add-column - JHipster will add columns here, do not remove-->
         </createTable>
         <dropDefaultValue tableName="record" columnName="jhi_insert" columnDataType="datetime"/>
+        <dropDefaultValue tableName="record" columnName="file_sent_date" columnDataType="datetime"/>
+        <dropDefaultValue tableName="record" columnName="file_creation_date" columnDataType="datetime"/>
+        <dropDefaultValue tableName="record" columnName="process_start_date" columnDataType="datetime"/>
+        <dropDefaultValue tableName="record" columnName="process_finish_date" columnDataType="datetime"/>
         
     </changeSet>
     <!-- jhipster-needle-liquibase-add-changeset - JHipster will add changesets here, do not remove-->

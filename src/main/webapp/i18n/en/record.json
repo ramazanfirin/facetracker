@@ -17,6 +17,12 @@
             },
             "insert": "Insert",
             "path": "Path",
+            "fileSentDate": "File Sent Date",
+            "fileCreationDate": "File Creation Date",
+            "processStartDate": "Process Start Date",
+            "processFinishDate": "Process Finish Date",
+            "status": "Status",
+            "afid": "Afid",
             "device": "Device",
             "image": "Image"
         }

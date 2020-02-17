@@ -9,6 +9,8 @@ import java.io.Serializable;
 import java.time.Instant;
 import java.util.Objects;
 
+import com.mastertek.domain.enumeration.RecordStatus;
+
 /**
  * A Record.
  */
@@ -28,6 +30,29 @@ public class Record implements Serializable {
 
     @Column(name = "path")
     private String path;
+
+    @Column(name = "file_sent_date")
+    private Instant fileSentDate;
+
+    @Column(name = "file_creation_date")
+    private Instant fileCreationDate;
+
+    @Column(name = "process_start_date")
+    private Instant processStartDate;
+
+    @Column(name = "process_finish_date")
+    private Instant processFinishDate;
+
+    @Enumerated(EnumType.STRING)
+    @Column(name = "status")
+    private RecordStatus status;
+
+    @Lob
+    @Column(name = "afid")
+    private byte[] afid;
+
+    @Column(name = "afid_content_type")
+    private String afidContentType;
 
     @ManyToOne
     private Device device;
@@ -68,6 +93,97 @@ public class Record implements Serializable {
 
     public void setPath(String path) {
         this.path = path;
+    }
+
+    public Instant getFileSentDate() {
+        return fileSentDate;
+    }
+
+    public Record fileSentDate(Instant fileSentDate) {
+        this.fileSentDate = fileSentDate;
+        return this;
+    }
+
+    public void setFileSentDate(Instant fileSentDate) {
+        this.fileSentDate = fileSentDate;
+    }
+
+    public Instant getFileCreationDate() {
+        return fileCreationDate;
+    }
+
+    public Record fileCreationDate(Instant fileCreationDate) {
+        this.fileCreationDate = fileCreationDate;
+        return this;
+    }
+
+    public void setFileCreationDate(Instant fileCreationDate) {
+        this.fileCreationDate = fileCreationDate;
+    }
+
+    public Instant getProcessStartDate() {
+        return processStartDate;
+    }
+
+    public Record processStartDate(Instant processStartDate) {
+        this.processStartDate = processStartDate;
+        return this;
+    }
+
+    public void setProcessStartDate(Instant processStartDate) {
+        this.processStartDate = processStartDate;
+    }
+
+    public Instant getProcessFinishDate() {
+        return processFinishDate;
+    }
+
+    public Record processFinishDate(Instant processFinishDate) {
+        this.processFinishDate = processFinishDate;
+        return this;
+    }
+
+    public void setProcessFinishDate(Instant processFinishDate) {
+        this.processFinishDate = processFinishDate;
+    }
+
+    public RecordStatus getStatus() {
+        return status;
+    }
+
+    public Record status(RecordStatus status) {
+        this.status = status;
+        return this;
+    }
+
+    public void setStatus(RecordStatus status) {
+        this.status = status;
+    }
+
+    public byte[] getAfid() {
+        return afid;
+    }
+
+    public Record afid(byte[] afid) {
+        this.afid = afid;
+        return this;
+    }
+
+    public void setAfid(byte[] afid) {
+        this.afid = afid;
+    }
+
+    public String getAfidContentType() {
+        return afidContentType;
+    }
+
+    public Record afidContentType(String afidContentType) {
+        this.afidContentType = afidContentType;
+        return this;
+    }
+
+    public void setAfidContentType(String afidContentType) {
+        this.afidContentType = afidContentType;
     }
 
     public Device getDevice() {
@@ -123,6 +239,13 @@ public class Record implements Serializable {
             "id=" + getId() +
             ", insert='" + getInsert() + "'" +
             ", path='" + getPath() + "'" +
+            ", fileSentDate='" + getFileSentDate() + "'" +
+            ", fileCreationDate='" + getFileCreationDate() + "'" +
+            ", processStartDate='" + getProcessStartDate() + "'" +
+            ", processFinishDate='" + getProcessFinishDate() + "'" +
+            ", status='" + getStatus() + "'" +
+            ", afid='" + getAfid() + "'" +
+            ", afidContentType='" + getAfidContentType() + "'" +
             "}";
     }
 }

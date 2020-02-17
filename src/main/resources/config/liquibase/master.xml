@@ -5,12 +5,17 @@
     xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.5.xsd">
 
     <include file="config/liquibase/changelog/00000000000000_initial_schema.xml" relativeToChangelogFile="false"/>
-    <include file="config/liquibase/changelog/20200214235320_added_entity_Person.xml" relativeToChangelogFile="false"/>
     <include file="config/liquibase/changelog/20200214235321_added_entity_Image.xml" relativeToChangelogFile="false"/>
     <include file="config/liquibase/changelog/20200217114502_added_entity_Device.xml" relativeToChangelogFile="false"/>
     <include file="config/liquibase/changelog/20200217114503_added_entity_Record.xml" relativeToChangelogFile="false"/>
+    <include file="config/liquibase/changelog/20200217143244_added_entity_WhiteListPerson.xml" relativeToChangelogFile="false"/>
+    <include file="config/liquibase/changelog/20200217143245_added_entity_BlackListPerson.xml" relativeToChangelogFile="false"/>
+    <include file="config/liquibase/changelog/20200217195304_added_entity_WhiteListRecordItem.xml" relativeToChangelogFile="false"/>
+    <include file="config/liquibase/changelog/20200217195306_added_entity_BlackListRecordItem.xml" relativeToChangelogFile="false"/>
     <!-- jhipster-needle-liquibase-add-changelog - JHipster will add liquibase changelogs here -->
     <include file="config/liquibase/changelog/20200214235321_added_entity_constraints_Image.xml" relativeToChangelogFile="false"/>
     <include file="config/liquibase/changelog/20200217114503_added_entity_constraints_Record.xml" relativeToChangelogFile="false"/>
+    <include file="config/liquibase/changelog/20200217195304_added_entity_constraints_WhiteListRecordItem.xml" relativeToChangelogFile="false"/>
+    <include file="config/liquibase/changelog/20200217195306_added_entity_constraints_BlackListRecordItem.xml" relativeToChangelogFile="false"/>
     <!-- jhipster-needle-liquibase-add-constraints-changelog - JHipster will add liquibase constraints changelogs here -->
 </databaseChangeLog>

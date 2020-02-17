@@ -5,13 +5,15 @@
         .module('facetrackerApp')
         .controller('RecordController', RecordController);
 
-    RecordController.$inject = ['Record'];
+    RecordController.$inject = ['DataUtils', 'Record'];
 
-    function RecordController(Record) {
+    function RecordController(DataUtils, Record) {
 
         var vm = this;
 
         vm.records = [];
+        vm.openFile = DataUtils.openFile;
+        vm.byteSize = DataUtils.byteSize;
 
         loadAll();
 

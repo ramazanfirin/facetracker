@@ -5,9 +5,9 @@
         .module('facetrackerApp')
         .controller('ImageDetailController', ImageDetailController);
 
-    ImageDetailController.$inject = ['$scope', '$rootScope', '$stateParams', 'previousState', 'DataUtils', 'entity', 'Image', 'Person'];
+    ImageDetailController.$inject = ['$scope', '$rootScope', '$stateParams', 'previousState', 'DataUtils', 'entity', 'Image', 'WhiteListPerson', 'BlackListPerson'];
 
-    function ImageDetailController($scope, $rootScope, $stateParams, previousState, DataUtils, entity, Image, Person) {
+    function ImageDetailController($scope, $rootScope, $stateParams, previousState, DataUtils, entity, Image, WhiteListPerson, BlackListPerson) {
         var vm = this;
 
         vm.image = entity;

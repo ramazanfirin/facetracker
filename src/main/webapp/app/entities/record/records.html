@@ -21,6 +21,12 @@
                     <th><span data-translate="global.field.id">ID</span></th>
                     <th><span data-translate="facetrackerApp.record.insert">Insert</span></th>
                     <th><span data-translate="facetrackerApp.record.path">Path</span></th>
+                    <th><span data-translate="facetrackerApp.record.fileSentDate">File Sent Date</span></th>
+                    <th><span data-translate="facetrackerApp.record.fileCreationDate">File Creation Date</span></th>
+                    <th><span data-translate="facetrackerApp.record.processStartDate">Process Start Date</span></th>
+                    <th><span data-translate="facetrackerApp.record.processFinishDate">Process Finish Date</span></th>
+                    <th><span data-translate="facetrackerApp.record.status">Status</span></th>
+                    <th><span data-translate="facetrackerApp.record.afid">Afid</span></th>
                     <th><span data-translate="facetrackerApp.record.device">Device</span></th>
                     <th><span data-translate="facetrackerApp.record.image">Image</span></th>
                     <th></th>
@@ -31,6 +37,15 @@
                     <td><a ui-sref="record-detail({id:record.id})">{{record.id}}</a></td>
                     <td>{{record.insert | date:'medium'}}</td>
                     <td>{{record.path}}</td>
+                    <td>{{record.fileSentDate | date:'medium'}}</td>
+                    <td>{{record.fileCreationDate | date:'medium'}}</td>
+                    <td>{{record.processStartDate | date:'medium'}}</td>
+                    <td>{{record.processFinishDate | date:'medium'}}</td>
+                    <td data-translate="{{'facetrackerApp.RecordStatus.' + record.status}}">{{record.status}}</td>
+                    <td>
+                        <a ng-if="record.afid" ng-click="vm.openFile(record.afidContentType, record.afid)" data-translate="entity.action.open">open</a>
+                        <span ng-if="record.afid">{{record.afidContentType}}, {{vm.byteSize(record.afid)}}</span>
+                    </td>
                     <td>
                         <a ui-sref="device-detail({id:record.device.id})">{{record.device.id}}</a>
                     </td>

@@ -2,8 +2,14 @@
     "fluentMethods": true,
     "relationships": [
         {
-            "relationshipName": "person",
-            "otherEntityName": "person",
+            "relationshipName": "whiteListPerson",
+            "otherEntityName": "whiteListPerson",
+            "relationshipType": "many-to-one",
+            "otherEntityField": "id"
+        },
+        {
+            "relationshipName": "blackListPerson",
+            "otherEntityName": "blackListPerson",
             "relationshipType": "many-to-one",
             "otherEntityField": "id"
         }

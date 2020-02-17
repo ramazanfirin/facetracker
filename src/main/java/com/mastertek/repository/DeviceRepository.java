@@ -13,4 +13,5 @@ import org.springframework.data.jpa.repository.*;
 @Repository
 public interface DeviceRepository extends JpaRepository<Device, Long> {
 
+	public Device findOneByDeviceId(String deviceId);
 }

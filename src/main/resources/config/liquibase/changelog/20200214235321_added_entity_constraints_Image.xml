@@ -8,11 +8,17 @@
     -->
     <changeSet id="20200214235321-2" author="jhipster">
         
-        <addForeignKeyConstraint baseColumnNames="person_id"
+        <addForeignKeyConstraint baseColumnNames="white_list_person_id"
                                  baseTableName="image"
-                                 constraintName="fk_image_person_id"
+                                 constraintName="fk_image_white_list_person_id"
                                  referencedColumnNames="id"
-                                 referencedTableName="person"/>
+                                 referencedTableName="white_list_person"/>
+
+        <addForeignKeyConstraint baseColumnNames="black_list_person_id"
+                                 baseTableName="image"
+                                 constraintName="fk_image_black_list_person_id"
+                                 referencedColumnNames="id"
+                                 referencedTableName="black_list_person"/>
 
     </changeSet>
 </databaseChangeLog>

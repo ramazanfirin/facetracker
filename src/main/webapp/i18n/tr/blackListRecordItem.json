@@ -1,0 +1,22 @@
+{
+    "facetrackerApp": {
+        "blackListRecordItem" : {
+            "home": {
+                "title": "Black List Record Items",
+                "createLabel": "Create a new Black List Record Item",
+                "createOrEditLabel": "Create or edit a Black List Record Item"
+            },
+            "created": "A new Black List Record Item is created with identifier {{ param }}",
+            "updated": "A Black List Record Item is updated with identifier {{ param }}",
+            "deleted": "A Black List Record Item is deleted with identifier {{ param }}",
+            "delete": {
+                "question": "Are you sure you want to delete Black List Record Item {{ id }}?"
+            },
+            "detail": {
+                "title": "Black List Record Item"
+            },
+            "record": "Record",
+            "person": "Person"
+        }
+    }
+}

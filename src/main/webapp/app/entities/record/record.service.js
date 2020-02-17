@@ -17,6 +17,10 @@
                     if (data) {
                         data = angular.fromJson(data);
                         data.insert = DateUtils.convertDateTimeFromServer(data.insert);
+                        data.fileSentDate = DateUtils.convertDateTimeFromServer(data.fileSentDate);
+                        data.fileCreationDate = DateUtils.convertDateTimeFromServer(data.fileCreationDate);
+                        data.processStartDate = DateUtils.convertDateTimeFromServer(data.processStartDate);
+                        data.processFinishDate = DateUtils.convertDateTimeFromServer(data.processFinishDate);
                     }
                     return data;
                 }

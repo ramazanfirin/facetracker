@@ -5,15 +5,17 @@
         .module('facetrackerApp')
         .controller('RecordDialogController', RecordDialogController);
 
-    RecordDialogController.$inject = ['$timeout', '$scope', '$stateParams', '$uibModalInstance', 'entity', 'Record', 'Device', 'Image'];
+    RecordDialogController.$inject = ['$timeout', '$scope', '$stateParams', '$uibModalInstance', 'DataUtils', 'entity', 'Record', 'Device', 'Image'];
 
-    function RecordDialogController ($timeout, $scope, $stateParams, $uibModalInstance, entity, Record, Device, Image) {
+    function RecordDialogController ($timeout, $scope, $stateParams, $uibModalInstance, DataUtils, entity, Record, Device, Image) {
         var vm = this;
 
         vm.record = entity;
         vm.clear = clear;
         vm.datePickerOpenStatus = {};
         vm.openCalendar = openCalendar;
+        vm.byteSize = DataUtils.byteSize;
+        vm.openFile = DataUtils.openFile;
         vm.save = save;
         vm.devices = Device.query();
         vm.images = Image.query();
@@ -46,6 +48,21 @@
         }
 
         vm.datePickerOpenStatus.insert = false;
+        vm.datePickerOpenStatus.fileSentDate = false;
+        vm.datePickerOpenStatus.fileCreationDate = false;
+        vm.datePickerOpenStatus.processStartDate = false;
+        vm.datePickerOpenStatus.processFinishDate = false;
+
+        vm.setAfid = function ($file, record) {
+            if ($file) {
+                DataUtils.toBase64($file, function(base64Data) {
+                    $scope.$apply(function() {
+                        record.afid = base64Data;
+                        record.afidContentType = $file.type;
+                    });
+                });
+            }
+        };
 
         function openCalendar (date) {
             vm.datePickerOpenStatus[date] = true;

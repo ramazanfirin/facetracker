@@ -1,0 +1,62 @@
+<div>
+    <h2 data-translate="facetrackerApp.blackListRecordItem.home.title">Black List Record Items</h2>
+    <jhi-alert></jhi-alert>
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-xs-4 no-padding-left">
+                <button class="btn btn-primary" ui-sref="black-list-record-item.new" >
+                    <span class="glyphicon glyphicon-plus"></span>
+                    <span  data-translate="facetrackerApp.blackListRecordItem.home.createLabel">
+                        Create new Black List Record Item
+                    </span>
+                </button>
+            </div>
+        </div>
+    </div>
+    <br/>
+    <div class="table-responsive">
+        <table class="jh-table table table-striped">
+            <thead>
+                <tr>
+                    <th><span data-translate="global.field.id">ID</span></th>
+                    <th><span data-translate="facetrackerApp.blackListRecordItem.record">Record</span></th>
+                    <th><span data-translate="facetrackerApp.blackListRecordItem.person">Person</span></th>
+                    <th></th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr ng-repeat="blackListRecordItem in vm.blackListRecordItems track by blackListRecordItem.id">
+                    <td><a ui-sref="black-list-record-item-detail({id:blackListRecordItem.id})">{{blackListRecordItem.id}}</a></td>
+                    <td>
+                        <a ui-sref="record-detail({id:blackListRecordItem.record.id})">{{blackListRecordItem.record.id}}</a>
+                    </td>
+                    <td>
+                        <a ui-sref="black-list-person-detail({id:blackListRecordItem.person.id})">{{blackListRecordItem.person.id}}</a>
+                    </td>
+                    <td class="text-right">
+                        <div class="btn-group flex-btn-group-container">
+                            <button type="submit"
+                                    ui-sref="black-list-record-item-detail({id:blackListRecordItem.id})"
+                                    class="btn btn-info btn-sm">
+                                <span class="glyphicon glyphicon-eye-open"></span>
+                                <span class="hidden-sm-down" data-translate="entity.action.view"></span>
+                            </button>
+                            <button type="submit"
+                                    ui-sref="black-list-record-item.edit({id:blackListRecordItem.id})"
+                                    class="btn btn-primary btn-sm">
+                                <span class="glyphicon glyphicon-pencil"></span>
+                                <span class="hidden-sm-down" data-translate="entity.action.edit"></span>
+                            </button>
+                            <button type="submit"
+                                    ui-sref="black-list-record-item.delete({id:blackListRecordItem.id})"
+                                    class="btn btn-danger btn-sm">
+                                <span class="glyphicon glyphicon-remove-circle"></span>
+                                <span class="hidden-sm-down" data-translate="entity.action.delete"></span>
+                            </button>
+                        </div>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+</div>

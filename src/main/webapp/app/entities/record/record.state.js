@@ -26,6 +26,7 @@
             resolve: {
                 translatePartialLoader: ['$translate', '$translatePartialLoader', function ($translate, $translatePartialLoader) {
                     $translatePartialLoader.addPart('record');
+                    $translatePartialLoader.addPart('recordStatus');
                     $translatePartialLoader.addPart('global');
                     return $translate.refresh();
                 }]
@@ -48,6 +49,7 @@
             resolve: {
                 translatePartialLoader: ['$translate', '$translatePartialLoader', function ($translate, $translatePartialLoader) {
                     $translatePartialLoader.addPart('record');
+                    $translatePartialLoader.addPart('recordStatus');
                     return $translate.refresh();
                 }],
                 entity: ['$stateParams', 'Record', function($stateParams, Record) {
@@ -106,6 +108,13 @@
                             return {
                                 insert: null,
                                 path: null,
+                                fileSentDate: null,
+                                fileCreationDate: null,
+                                processStartDate: null,
+                                processFinishDate: null,
+                                status: null,
+                                afid: null,
+                                afidContentType: null,
                                 id: null
                             };
                         }

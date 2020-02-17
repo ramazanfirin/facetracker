@@ -1,0 +1,22 @@
+{
+    "facetrackerApp": {
+        "whiteListPerson" : {
+            "home": {
+                "title": "White List People",
+                "createLabel": "Create a new White List Person",
+                "createOrEditLabel": "Create or edit a White List Person"
+            },
+            "created": "A new White List Person is created with identifier {{ param }}",
+            "updated": "A White List Person is updated with identifier {{ param }}",
+            "deleted": "A White List Person is deleted with identifier {{ param }}",
+            "delete": {
+                "question": "Are you sure you want to delete White List Person {{ id }}?"
+            },
+            "detail": {
+                "title": "White List Person"
+            },
+            "name": "Name",
+            "images": "Images"
+        }
+    }
+}

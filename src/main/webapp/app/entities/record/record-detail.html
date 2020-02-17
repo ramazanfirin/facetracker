@@ -12,6 +12,33 @@
         <dd>
             <span>{{vm.record.path}}</span>
         </dd>
+        <dt><span data-translate="facetrackerApp.record.fileSentDate">File Sent Date</span></dt>
+        <dd>
+            <span>{{vm.record.fileSentDate | date:'medium'}}</span>
+        </dd>
+        <dt><span data-translate="facetrackerApp.record.fileCreationDate">File Creation Date</span></dt>
+        <dd>
+            <span>{{vm.record.fileCreationDate | date:'medium'}}</span>
+        </dd>
+        <dt><span data-translate="facetrackerApp.record.processStartDate">Process Start Date</span></dt>
+        <dd>
+            <span>{{vm.record.processStartDate | date:'medium'}}</span>
+        </dd>
+        <dt><span data-translate="facetrackerApp.record.processFinishDate">Process Finish Date</span></dt>
+        <dd>
+            <span>{{vm.record.processFinishDate | date:'medium'}}</span>
+        </dd>
+        <dt><span data-translate="facetrackerApp.record.status">Status</span></dt>
+        <dd>
+            <span data-translate="{{'facetrackerApp.RecordStatus.' + vm.record.status}}">{{vm.record.status}}</span>
+        </dd>
+        <dt><span data-translate="facetrackerApp.record.afid">Afid</span></dt>
+        <dd>
+            <div ng-if="vm.record.afid">
+                <a ng-click="vm.openFile(vm.record.afidContentType, vm.record.afid)" data-translate="entity.action.open">open</a>
+                {{vm.record.afidContentType}}, {{vm.byteSize(vm.record.afid)}}
+            </div>
+        </dd>
         <dt><span data-translate="facetrackerApp.record.device">Device</span></dt>
         <dd>
             <a ui-sref="device-detail({id:vm.record.device.id})">{{vm.record.device.id}}</a>

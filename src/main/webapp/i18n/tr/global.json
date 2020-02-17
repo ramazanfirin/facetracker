@@ -11,6 +11,10 @@
                 "image": "Image",
                 "device": "Device",
                 "record": "Record",
+                "whiteListPerson": "White List Person",
+                "blackListPerson": "Black List Person",
+                "whiteListRecordItem": "White List Record Item",
+                "blackListRecordItem": "Black List Record Item",
                 "jhipster-needle-menu-add-entry": "JHipster will add additional entities here (do not translate!)"
             },
             "account": {

@@ -36,7 +36,11 @@
                 <constraints nullable="false" />
             </column>
 
-            <column name="person_id" type="bigint">
+            <column name="white_list_person_id" type="bigint">
+                <constraints nullable="true" />
+            </column>
+
+            <column name="black_list_person_id" type="bigint">
                 <constraints nullable="true" />
             </column>
 

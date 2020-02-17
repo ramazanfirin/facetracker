@@ -44,11 +44,15 @@ public class CacheConfiguration {
             cm.createCache(com.mastertek.domain.User.class.getName(), jcacheConfiguration);
             cm.createCache(com.mastertek.domain.Authority.class.getName(), jcacheConfiguration);
             cm.createCache(com.mastertek.domain.User.class.getName() + ".authorities", jcacheConfiguration);
-            cm.createCache(com.mastertek.domain.Person.class.getName(), jcacheConfiguration);
-            cm.createCache(com.mastertek.domain.Person.class.getName() + ".images", jcacheConfiguration);
             cm.createCache(com.mastertek.domain.Image.class.getName(), jcacheConfiguration);
             cm.createCache(com.mastertek.domain.Device.class.getName(), jcacheConfiguration);
             cm.createCache(com.mastertek.domain.Record.class.getName(), jcacheConfiguration);
+            cm.createCache(com.mastertek.domain.WhiteListPerson.class.getName(), jcacheConfiguration);
+            cm.createCache(com.mastertek.domain.WhiteListPerson.class.getName() + ".images", jcacheConfiguration);
+            cm.createCache(com.mastertek.domain.BlackListPerson.class.getName(), jcacheConfiguration);
+            cm.createCache(com.mastertek.domain.BlackListPerson.class.getName() + ".images", jcacheConfiguration);
+            cm.createCache(com.mastertek.domain.WhiteListRecordItem.class.getName(), jcacheConfiguration);
+            cm.createCache(com.mastertek.domain.BlackListRecordItem.class.getName(), jcacheConfiguration);
             // jhipster-needle-ehcache-add-entry
         };
     }
