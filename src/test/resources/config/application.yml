@@ -116,7 +116,8 @@ application:
     ftpDirectory: c:\publicDirectoryTest
     passowordFile: c:\publicDirectory\myftpusers.properties
     ftpPort: 21212
-    passiveExternalAddress: countbuddy.mastertek.com.tr
+    passiveExternalAddress: localhost
     passivePorts: 10000-11000
     ftpDefaultUser: countbuddyFtp
     ftpDefaultPassord: 105957Grk.
+    performanceTestDataDirectory: C:\Users\ramazan\git\performanceTestData

@@ -22,6 +22,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.mastertek.config.ApplicationProperties;
@@ -35,6 +36,7 @@ import com.mastertek.service.util.FaceUtil;
 
 
 @Service
+@Transactional
 public class FaceRecognitionService {
 
 	private final Logger log = LoggerFactory.getLogger(FaceRecognitionService.class);
@@ -91,9 +93,12 @@ public class FaceRecognitionService {
 		
 		String source = FaceUtil.getSource(fileName);
 		Device device = deviceRepository.findOneByDeviceId(source);
-	    if(device == null)
-	    	throw new RuntimeException("device data can not be null.source:"+source);
-		
+	    if(device == null) {
+	    	if(!source.equals("733935") && !source.equals("744272"))
+	    		throw new RuntimeException("device data can not be null.source:"+source);
+			
+		}
+	    
 	    record.setDevice(device);
 		record.setPath(fileName);
 		record.setIsProcessed(false);

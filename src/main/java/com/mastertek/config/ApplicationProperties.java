@@ -18,6 +18,7 @@ public class ApplicationProperties {
 	String passivePorts;
 	String ftpDefaultUser;
 	String ftpDefaultPassord;
+	String performanceTestDataDirectory;
 	public String getFtpDirectory() {
 		return ftpDirectory;
 	}
@@ -59,6 +60,12 @@ public class ApplicationProperties {
 	}
 	public void setFtpDefaultPassord(String ftpDefaultPassord) {
 		this.ftpDefaultPassord = ftpDefaultPassord;
+	}
+	public String getPerformanceTestDataDirectory() {
+		return performanceTestDataDirectory;
+	}
+	public void setPerformanceTestDataDirectory(String performanceTestDataDirectory) {
+		this.performanceTestDataDirectory = performanceTestDataDirectory;
 	}
 	
 	
