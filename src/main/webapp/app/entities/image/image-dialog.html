@@ -71,14 +71,8 @@
         </div>
 
         <div class="form-group">
-            <label data-translate="facetrackerApp.image.whiteListPerson" for="field_whiteListPerson">White List Person</label>
-            <select class="form-control" id="field_whiteListPerson" name="whiteListPerson" ng-model="vm.image.whiteListPerson" ng-options="whiteListPerson as whiteListPerson.id for whiteListPerson in vm.whitelistpeople track by whiteListPerson.id">
-                <option value=""></option>
-            </select>
-        </div>
-        <div class="form-group">
-            <label data-translate="facetrackerApp.image.blackListPerson" for="field_blackListPerson">Black List Person</label>
-            <select class="form-control" id="field_blackListPerson" name="blackListPerson" ng-model="vm.image.blackListPerson" ng-options="blackListPerson as blackListPerson.id for blackListPerson in vm.blacklistpeople track by blackListPerson.id">
+            <label data-translate="facetrackerApp.image.person" for="field_person">Person</label>
+            <select class="form-control" id="field_person" name="person" ng-model="vm.image.person" ng-options="person as person.id for person in vm.people track by person.id">
                 <option value=""></option>
             </select>
         </div>

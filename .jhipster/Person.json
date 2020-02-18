@@ -15,9 +15,14 @@
             "fieldValidateRules": [
                 "required"
             ]
+        },
+        {
+            "fieldName": "type",
+            "fieldType": "PersonType",
+            "fieldValues": "WHITE_LIST_PERSON,BLACK_LIST_PERSON"
         }
     ],
-    "changelogDate": "20200214235320",
+    "changelogDate": "20200218073318",
     "entityTableName": "person",
     "dto": "no",
     "pagination": "no",

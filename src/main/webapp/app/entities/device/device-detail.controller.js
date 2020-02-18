@@ -5,9 +5,9 @@
         .module('facetrackerApp')
         .controller('DeviceDetailController', DeviceDetailController);
 
-    DeviceDetailController.$inject = ['$scope', '$rootScope', '$stateParams', 'previousState', 'entity', 'Device'];
+    DeviceDetailController.$inject = ['$scope', '$rootScope', '$stateParams', 'previousState', 'entity', 'Device', 'Floor'];
 
-    function DeviceDetailController($scope, $rootScope, $stateParams, previousState, entity, Device) {
+    function DeviceDetailController($scope, $rootScope, $stateParams, previousState, entity, Device, Floor) {
         var vm = this;
 
         vm.device = entity;

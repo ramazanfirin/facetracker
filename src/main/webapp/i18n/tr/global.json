@@ -15,6 +15,10 @@
                 "blackListPerson": "Black List Person",
                 "whiteListRecordItem": "White List Record Item",
                 "blackListRecordItem": "Black List Record Item",
+                "company": "Company",
+                "store": "Store",
+                "floor": "Floor",
+                "building": "Building",
                 "jhipster-needle-menu-add-entry": "JHipster will add additional entities here (do not translate!)"
             },
             "account": {

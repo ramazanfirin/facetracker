@@ -115,6 +115,7 @@
                                 status: null,
                                 afid: null,
                                 afidContentType: null,
+                                isProcessed: null,
                                 id: null
                             };
                         }

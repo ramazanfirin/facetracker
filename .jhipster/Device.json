@@ -1,6 +1,13 @@
 {
     "fluentMethods": true,
-    "relationships": [],
+    "relationships": [
+        {
+            "relationshipType": "many-to-one",
+            "relationshipName": "floor",
+            "otherEntityName": "floor",
+            "otherEntityField": "id"
+        }
+    ],
     "fields": [
         {
             "fieldName": "deviceId",
@@ -14,7 +21,7 @@
             "fieldType": "String"
         }
     ],
-    "changelogDate": "20200217114502",
+    "changelogDate": "20200218073323",
     "entityTableName": "device",
     "dto": "no",
     "pagination": "no",

@@ -40,10 +40,7 @@ public class Image implements Serializable {
     private String afidContentType;
 
     @ManyToOne
-    private WhiteListPerson whiteListPerson;
-
-    @ManyToOne
-    private BlackListPerson blackListPerson;
+    private Person person;
 
     // jhipster-needle-entity-add-field - JHipster will add fields here, do not remove
     public Long getId() {
@@ -106,30 +103,17 @@ public class Image implements Serializable {
         this.afidContentType = afidContentType;
     }
 
-    public WhiteListPerson getWhiteListPerson() {
-        return whiteListPerson;
+    public Person getPerson() {
+        return person;
     }
 
-    public Image whiteListPerson(WhiteListPerson whiteListPerson) {
-        this.whiteListPerson = whiteListPerson;
+    public Image person(Person person) {
+        this.person = person;
         return this;
     }
 
-    public void setWhiteListPerson(WhiteListPerson whiteListPerson) {
-        this.whiteListPerson = whiteListPerson;
-    }
-
-    public BlackListPerson getBlackListPerson() {
-        return blackListPerson;
-    }
-
-    public Image blackListPerson(BlackListPerson blackListPerson) {
-        this.blackListPerson = blackListPerson;
-        return this;
-    }
-
-    public void setBlackListPerson(BlackListPerson blackListPerson) {
-        this.blackListPerson = blackListPerson;
+    public void setPerson(Person person) {
+        this.person = person;
     }
     // jhipster-needle-entity-add-getters-setters - JHipster will add getters and setters here, do not remove
 

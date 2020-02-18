@@ -72,12 +72,11 @@
         <div class="form-group">
             <label class="control-label" data-translate="facetrackerApp.record.status" for="field_status">Status</label>
             <select class="form-control" name="status" ng-model="vm.record.status" id="field_status">
-                <option value="PROCESSING_STARTED" data-translate="facetrackerApp.RecordStatus.PROCESSING_STARTED">PROCESSING_STARTED</option>
-                <option value="PROCESSING_FINISHED" data-translate="facetrackerApp.RecordStatus.PROCESSING_FINISHED">PROCESSING_FINISHED</option>
                 <option value="NO_FACE_DETECTED" data-translate="facetrackerApp.RecordStatus.NO_FACE_DETECTED">NO_FACE_DETECTED</option>
                 <option value="NO_AFID_DETECTED" data-translate="facetrackerApp.RecordStatus.NO_AFID_DETECTED">NO_AFID_DETECTED</option>
                 <option value="WHITE_LIST_DETECTED" data-translate="facetrackerApp.RecordStatus.WHITE_LIST_DETECTED">WHITE_LIST_DETECTED</option>
                 <option value="BLACK_LIST_DETECTED" data-translate="facetrackerApp.RecordStatus.BLACK_LIST_DETECTED">BLACK_LIST_DETECTED</option>
+                <option value="NO_MATCHING" data-translate="facetrackerApp.RecordStatus.NO_MATCHING">NO_MATCHING</option>
             </select>
         </div>
         <div class="form-group" ngf-drop ngf-change="vm.setAfid($file, vm.record)">
@@ -101,6 +100,11 @@
                     />
             <input type="hidden" class="form-control" name="afidContentType" id="field_afidContentType"
                     ng-model="vm.record.afidContentType" />
+        </div>
+        <div class="form-group">
+            <label class="control-label" data-translate="facetrackerApp.record.isProcessed" for="field_isProcessed">Is Processed</label>
+                <input type="checkbox" name="isProcessed" id="field_isProcessed"
+                          ng-model="vm.record.isProcessed"/>
         </div>
 
         <div class="form-group">

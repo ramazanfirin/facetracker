@@ -96,7 +96,7 @@ public class FaceRecognitionService {
 		
 	    record.setDevice(device);
 		record.setPath(fileName);
-		record.setStatus(RecordStatus.PROCESSING_STARTED);
+		record.setIsProcessed(false);
 		recordRepository.save(record);
 		
 		return record;
@@ -110,11 +110,13 @@ public class FaceRecognitionService {
 
 	private void NoFaceDetected(Record record) throws IOException {
 		record.setStatus(RecordStatus.NO_FACE_DETECTED);
+		record.setProcessFinishDate(Instant.now());
 		recordRepository.save(record);
 	}
 	
 	private void NoAfidDetected(Record record) throws IOException {
-		record.setStatus(RecordStatus.NO_FACE_DETECTED);
+		record.setStatus(RecordStatus.NO_AFID_DETECTED);
+		record.setProcessFinishDate(Instant.now());
 		recordRepository.save(record);
 	}
 	
@@ -125,6 +127,7 @@ public class FaceRecognitionService {
 			return;
 		}	
 		
+		matchingService.checkForMatching(record);
 		
 	}
 	

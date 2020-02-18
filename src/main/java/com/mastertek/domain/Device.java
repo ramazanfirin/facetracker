@@ -30,6 +30,9 @@ public class Device implements Serializable {
     @Column(name = "description")
     private String description;
 
+    @ManyToOne
+    private Floor floor;
+
     // jhipster-needle-entity-add-field - JHipster will add fields here, do not remove
     public Long getId() {
         return id;
@@ -63,6 +66,19 @@ public class Device implements Serializable {
 
     public void setDescription(String description) {
         this.description = description;
+    }
+
+    public Floor getFloor() {
+        return floor;
+    }
+
+    public Device floor(Floor floor) {
+        this.floor = floor;
+        return this;
+    }
+
+    public void setFloor(Floor floor) {
+        this.floor = floor;
     }
     // jhipster-needle-entity-add-getters-setters - JHipster will add getters and setters here, do not remove
 

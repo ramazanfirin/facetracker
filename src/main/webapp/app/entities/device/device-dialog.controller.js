@@ -5,14 +5,15 @@
         .module('facetrackerApp')
         .controller('DeviceDialogController', DeviceDialogController);
 
-    DeviceDialogController.$inject = ['$timeout', '$scope', '$stateParams', '$uibModalInstance', 'entity', 'Device'];
+    DeviceDialogController.$inject = ['$timeout', '$scope', '$stateParams', '$uibModalInstance', 'entity', 'Device', 'Floor'];
 
-    function DeviceDialogController ($timeout, $scope, $stateParams, $uibModalInstance, entity, Device) {
+    function DeviceDialogController ($timeout, $scope, $stateParams, $uibModalInstance, entity, Device, Floor) {
         var vm = this;
 
         vm.device = entity;
         vm.clear = clear;
         vm.save = save;
+        vm.floors = Floor.query();
 
         $timeout(function (){
             angular.element('.form-group:eq(1)>input').focus();

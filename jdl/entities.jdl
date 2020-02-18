@@ -1,19 +1,25 @@
-entity WhiteListPerson{
+entity Person{
      name String required
+     type PersonType
 }
-entity WhiteListRecordItem{
 
-}
-entity BlackListPerson{
-     name String required
-}
-entity BlackListRecordItem{
-
-}
 entity Image{
     image ImageBlob required
     afid AnyBlob required
 }
+
+entity Company{
+     name String required
+}
+
+entity Building{
+	name String required
+}
+
+entity Floor{
+	name String required
+}
+
 
 entity Device{
     deviceId String required
@@ -21,9 +27,11 @@ entity Device{
 }
 
 enum RecordStatus {
-   PROCESSING_STARTED,PROCESSING_FINISHED,NO_FACE_DETECTED, NO_AFID_DETECTED,WHITE_LIST_DETECTED, BLACK_LIST_DETECTED
+   NO_FACE_DETECTED, NO_AFID_DETECTED,WHITE_LIST_DETECTED, BLACK_LIST_DETECTED,NO_MATCHING
 }  
-
+enum PersonType {
+   WHITE_LIST_PERSON, BLACK_LIST_PERSON
+}
 entity Record{
 	insert Instant
 	path String
@@ -33,19 +41,17 @@ entity Record{
     processFinishDate Instant
     status RecordStatus 
     afid AnyBlob
-	
+	isProcessed Boolean
 }
 
 relationship OneToMany {
-    WhiteListPerson{images} to Image
-    BlackListPerson{images} to Image
+    Person{images} to Image
 }
 
 relationship ManyToOne {
     Record{device} to Device
 	Record{image} to Image
-	WhiteListRecordItem{record} to Record
-	BlackListRecordItem{record} to Record
-	WhiteListRecordItem{person} to WhiteListPerson
-	BlackListRecordItem{person} to BlackListPerson
+	Device{floor} to Floor
+	Floor{store} to Building
+	Building{company} to Company
 }

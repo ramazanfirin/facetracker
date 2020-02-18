@@ -27,6 +27,7 @@
                     <th><span data-translate="facetrackerApp.record.processFinishDate">Process Finish Date</span></th>
                     <th><span data-translate="facetrackerApp.record.status">Status</span></th>
                     <th><span data-translate="facetrackerApp.record.afid">Afid</span></th>
+                    <th><span data-translate="facetrackerApp.record.isProcessed">Is Processed</span></th>
                     <th><span data-translate="facetrackerApp.record.device">Device</span></th>
                     <th><span data-translate="facetrackerApp.record.image">Image</span></th>
                     <th></th>
@@ -46,6 +47,7 @@
                         <a ng-if="record.afid" ng-click="vm.openFile(record.afidContentType, record.afid)" data-translate="entity.action.open">open</a>
                         <span ng-if="record.afid">{{record.afidContentType}}, {{vm.byteSize(record.afid)}}</span>
                     </td>
+                    <td>{{record.isProcessed}}</td>
                     <td>
                         <a ui-sref="device-detail({id:record.device.id})">{{record.device.id}}</a>
                     </td>

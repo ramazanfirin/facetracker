@@ -54,6 +54,9 @@ public class Record implements Serializable {
     @Column(name = "afid_content_type")
     private String afidContentType;
 
+    @Column(name = "is_processed")
+    private Boolean isProcessed;
+
     @ManyToOne
     private Device device;
 
@@ -186,6 +189,19 @@ public class Record implements Serializable {
         this.afidContentType = afidContentType;
     }
 
+    public Boolean isIsProcessed() {
+        return isProcessed;
+    }
+
+    public Record isProcessed(Boolean isProcessed) {
+        this.isProcessed = isProcessed;
+        return this;
+    }
+
+    public void setIsProcessed(Boolean isProcessed) {
+        this.isProcessed = isProcessed;
+    }
+
     public Device getDevice() {
         return device;
     }
@@ -246,6 +262,7 @@ public class Record implements Serializable {
             ", status='" + getStatus() + "'" +
             ", afid='" + getAfid() + "'" +
             ", afidContentType='" + getAfidContentType() + "'" +
+            ", isProcessed='" + isIsProcessed() + "'" +
             "}";
     }
 }

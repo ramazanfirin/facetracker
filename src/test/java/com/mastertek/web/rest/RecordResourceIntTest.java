@@ -60,13 +60,16 @@ public class RecordResourceIntTest {
     private static final Instant DEFAULT_PROCESS_FINISH_DATE = Instant.ofEpochMilli(0L);
     private static final Instant UPDATED_PROCESS_FINISH_DATE = Instant.now().truncatedTo(ChronoUnit.MILLIS);
 
-    private static final RecordStatus DEFAULT_STATUS = RecordStatus.PROCESSING_STARTED;
-    private static final RecordStatus UPDATED_STATUS = RecordStatus.PROCESSING_FINISHED;
+    private static final RecordStatus DEFAULT_STATUS = RecordStatus.NO_FACE_DETECTED;
+    private static final RecordStatus UPDATED_STATUS = RecordStatus.NO_AFID_DETECTED;
 
     private static final byte[] DEFAULT_AFID = TestUtil.createByteArray(1, "0");
     private static final byte[] UPDATED_AFID = TestUtil.createByteArray(2, "1");
     private static final String DEFAULT_AFID_CONTENT_TYPE = "image/jpg";
     private static final String UPDATED_AFID_CONTENT_TYPE = "image/png";
+
+    private static final Boolean DEFAULT_IS_PROCESSED = false;
+    private static final Boolean UPDATED_IS_PROCESSED = true;
 
     @Autowired
     private RecordRepository recordRepository;
@@ -114,7 +117,8 @@ public class RecordResourceIntTest {
             .processFinishDate(DEFAULT_PROCESS_FINISH_DATE)
             .status(DEFAULT_STATUS)
             .afid(DEFAULT_AFID)
-            .afidContentType(DEFAULT_AFID_CONTENT_TYPE);
+            .afidContentType(DEFAULT_AFID_CONTENT_TYPE)
+            .isProcessed(DEFAULT_IS_PROCESSED);
         return record;
     }
 
@@ -147,6 +151,7 @@ public class RecordResourceIntTest {
         assertThat(testRecord.getStatus()).isEqualTo(DEFAULT_STATUS);
         assertThat(testRecord.getAfid()).isEqualTo(DEFAULT_AFID);
         assertThat(testRecord.getAfidContentType()).isEqualTo(DEFAULT_AFID_CONTENT_TYPE);
+        assertThat(testRecord.isIsProcessed()).isEqualTo(DEFAULT_IS_PROCESSED);
     }
 
     @Test
@@ -187,7 +192,8 @@ public class RecordResourceIntTest {
             .andExpect(jsonPath("$.[*].processFinishDate").value(hasItem(DEFAULT_PROCESS_FINISH_DATE.toString())))
             .andExpect(jsonPath("$.[*].status").value(hasItem(DEFAULT_STATUS.toString())))
             .andExpect(jsonPath("$.[*].afidContentType").value(hasItem(DEFAULT_AFID_CONTENT_TYPE)))
-            .andExpect(jsonPath("$.[*].afid").value(hasItem(Base64Utils.encodeToString(DEFAULT_AFID))));
+            .andExpect(jsonPath("$.[*].afid").value(hasItem(Base64Utils.encodeToString(DEFAULT_AFID))))
+            .andExpect(jsonPath("$.[*].isProcessed").value(hasItem(DEFAULT_IS_PROCESSED.booleanValue())));
     }
 
     @Test
@@ -209,7 +215,8 @@ public class RecordResourceIntTest {
             .andExpect(jsonPath("$.processFinishDate").value(DEFAULT_PROCESS_FINISH_DATE.toString()))
             .andExpect(jsonPath("$.status").value(DEFAULT_STATUS.toString()))
             .andExpect(jsonPath("$.afidContentType").value(DEFAULT_AFID_CONTENT_TYPE))
-            .andExpect(jsonPath("$.afid").value(Base64Utils.encodeToString(DEFAULT_AFID)));
+            .andExpect(jsonPath("$.afid").value(Base64Utils.encodeToString(DEFAULT_AFID)))
+            .andExpect(jsonPath("$.isProcessed").value(DEFAULT_IS_PROCESSED.booleanValue()));
     }
 
     @Test
@@ -240,7 +247,8 @@ public class RecordResourceIntTest {
             .processFinishDate(UPDATED_PROCESS_FINISH_DATE)
             .status(UPDATED_STATUS)
             .afid(UPDATED_AFID)
-            .afidContentType(UPDATED_AFID_CONTENT_TYPE);
+            .afidContentType(UPDATED_AFID_CONTENT_TYPE)
+            .isProcessed(UPDATED_IS_PROCESSED);
 
         restRecordMockMvc.perform(put("/api/records")
             .contentType(TestUtil.APPLICATION_JSON_UTF8)
@@ -260,6 +268,7 @@ public class RecordResourceIntTest {
         assertThat(testRecord.getStatus()).isEqualTo(UPDATED_STATUS);
         assertThat(testRecord.getAfid()).isEqualTo(UPDATED_AFID);
         assertThat(testRecord.getAfidContentType()).isEqualTo(UPDATED_AFID_CONTENT_TYPE);
+        assertThat(testRecord.isIsProcessed()).isEqualTo(UPDATED_IS_PROCESSED);
     }
 
     @Test

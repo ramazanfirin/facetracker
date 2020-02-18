@@ -1,0 +1,9 @@
+{
+    "facetrackerApp": {
+        "PersonType" : {
+            "null": "",
+            "WHITE_LIST_PERSON": "WHITE_LIST_PERSON",
+            "BLACK_LIST_PERSON": "BLACK_LIST_PERSON"
+        }
+    }
+}

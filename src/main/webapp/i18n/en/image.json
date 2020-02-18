@@ -17,8 +17,7 @@
             },
             "image": "Image",
             "afid": "Afid",
-            "whiteListPerson": "White List Person",
-            "blackListPerson": "Black List Person"
+            "person": "Person"
         }
     }
 }

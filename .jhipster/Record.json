@@ -42,15 +42,19 @@
         {
             "fieldName": "status",
             "fieldType": "RecordStatus",
-            "fieldValues": "PROCESSING_STARTED,PROCESSING_FINISHED,NO_FACE_DETECTED,NO_AFID_DETECTED,WHITE_LIST_DETECTED,BLACK_LIST_DETECTED"
+            "fieldValues": "NO_FACE_DETECTED,NO_AFID_DETECTED,WHITE_LIST_DETECTED,BLACK_LIST_DETECTED,NO_MATCHING"
         },
         {
             "fieldName": "afid",
             "fieldType": "byte[]",
             "fieldTypeBlobContent": "any"
+        },
+        {
+            "fieldName": "isProcessed",
+            "fieldType": "Boolean"
         }
     ],
-    "changelogDate": "20200217114503",
+    "changelogDate": "20200218073324",
     "entityTableName": "record",
     "dto": "no",
     "pagination": "no",

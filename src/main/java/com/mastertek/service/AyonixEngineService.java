@@ -99,6 +99,24 @@ public class AyonixEngineService{
 		
 	}
 	
+	public byte[] getAfid(String path) {
+		AyonixImage img = sdk.LoadImage(path);
+		AyonixFace[] faces = sdk.DetectFaces(img);
+		if(faces.length==0)
+			throw new RuntimeException("No face detected");
+		if(faces.length>1)
+			throw new RuntimeException("more face than 1");
+		
+		
+		sdk.PreprocessFace(faces[0]);
+		byte[] afid = sdk.CreateAfid(faces[0]);
+		if(afid == null)
+			throw new RuntimeException("afid not detected");
+		
+		return afid;
+		
+	}
+	
 	public AyonixFace[] detectFaces(String path) throws Exception {
 		
 		 AyonixImage img =null;

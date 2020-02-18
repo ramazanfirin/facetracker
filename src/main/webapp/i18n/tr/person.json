@@ -16,6 +16,7 @@
                 "title": "Person"
             },
             "name": "Name",
+            "type": "Type",
             "images": "Images"
         }
     }

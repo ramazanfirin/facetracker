@@ -5,9 +5,9 @@
         .module('facetrackerApp')
         .controller('ImageDialogController', ImageDialogController);
 
-    ImageDialogController.$inject = ['$timeout', '$scope', '$stateParams', '$uibModalInstance', 'DataUtils', 'entity', 'Image', 'WhiteListPerson', 'BlackListPerson'];
+    ImageDialogController.$inject = ['$timeout', '$scope', '$stateParams', '$uibModalInstance', 'DataUtils', 'entity', 'Image', 'Person'];
 
-    function ImageDialogController ($timeout, $scope, $stateParams, $uibModalInstance, DataUtils, entity, Image, WhiteListPerson, BlackListPerson) {
+    function ImageDialogController ($timeout, $scope, $stateParams, $uibModalInstance, DataUtils, entity, Image, Person) {
         var vm = this;
 
         vm.image = entity;
@@ -15,8 +15,7 @@
         vm.byteSize = DataUtils.byteSize;
         vm.openFile = DataUtils.openFile;
         vm.save = save;
-        vm.whitelistpeople = WhiteListPerson.query();
-        vm.blacklistpeople = BlackListPerson.query();
+        vm.people = Person.query();
 
         $timeout(function (){
             angular.element('.form-group:eq(1)>input').focus();

@@ -2,14 +2,8 @@
     "fluentMethods": true,
     "relationships": [
         {
-            "relationshipName": "whiteListPerson",
-            "otherEntityName": "whiteListPerson",
-            "relationshipType": "many-to-one",
-            "otherEntityField": "id"
-        },
-        {
-            "relationshipName": "blackListPerson",
-            "otherEntityName": "blackListPerson",
+            "relationshipName": "person",
+            "otherEntityName": "person",
             "relationshipType": "many-to-one",
             "otherEntityField": "id"
         }
@@ -32,7 +26,7 @@
             ]
         }
     ],
-    "changelogDate": "20200214235321",
+    "changelogDate": "20200218073319",
     "entityTableName": "image",
     "dto": "no",
     "pagination": "no",

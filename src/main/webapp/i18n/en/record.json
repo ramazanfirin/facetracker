@@ -23,6 +23,7 @@
             "processFinishDate": "Process Finish Date",
             "status": "Status",
             "afid": "Afid",
+            "isProcessed": "Is Processed",
             "device": "Device",
             "image": "Image"
         }

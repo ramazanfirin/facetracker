@@ -39,6 +39,10 @@
                 {{vm.record.afidContentType}}, {{vm.byteSize(vm.record.afid)}}
             </div>
         </dd>
+        <dt><span data-translate="facetrackerApp.record.isProcessed">Is Processed</span></dt>
+        <dd>
+            <span>{{vm.record.isProcessed}}</span>
+        </dd>
         <dt><span data-translate="facetrackerApp.record.device">Device</span></dt>
         <dd>
             <a ui-sref="device-detail({id:vm.record.device.id})">{{vm.record.device.id}}</a>

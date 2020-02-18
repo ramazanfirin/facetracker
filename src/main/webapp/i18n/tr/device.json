@@ -16,7 +16,8 @@
                 "title": "Device"
             },
             "deviceId": "Device Id",
-            "description": "Description"
+            "description": "Description",
+            "floor": "Floor"
         }
     }
 }
