@@ -4,8 +4,13 @@ import com.codahale.metrics.annotation.Timed;
 import com.mastertek.domain.Record;
 
 import com.mastertek.repository.RecordRepository;
+import com.mastertek.service.AyonixEngineService;
+import com.mastertek.service.MatchingService;
 import com.mastertek.web.rest.errors.BadRequestAlertException;
 import com.mastertek.web.rest.util.HeaderUtil;
+import com.mastertek.web.rest.vm.MatchResultVM;
+import com.mastertek.web.rest.vm.SearchByImageVM;
+
 import io.github.jhipster.web.util.ResponseUtil;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -30,9 +35,15 @@ public class RecordResource {
     private static final String ENTITY_NAME = "record";
 
     private final RecordRepository recordRepository;
+    
+    private final AyonixEngineService ayonixEngineService;
+    
+    private final MatchingService matchingService;
 
-    public RecordResource(RecordRepository recordRepository) {
+    public RecordResource(RecordRepository recordRepository,AyonixEngineService ayonixEngineService,MatchingService matchingService) {
         this.recordRepository = recordRepository;
+        this.ayonixEngineService = ayonixEngineService;
+        this.matchingService = matchingService;
     }
 
     /**
@@ -115,5 +126,16 @@ public class RecordResource {
         log.debug("REST request to delete Record : {}", id);
         recordRepository.delete(id);
         return ResponseEntity.ok().headers(HeaderUtil.createEntityDeletionAlert(ENTITY_NAME, id.toString())).build();
+    }
+    
+    @DeleteMapping("/records/searchByImage")
+    @Timed
+    public ResponseEntity<MatchResultVM> searchByImage(SearchByImageVM searchByImageVM) {
+        log.debug("REST request to delete Record : {}");
+     
+        MatchResultVM result = matchingService.checkForMatching(searchByImageVM.getImage());
+        return ResponseEntity.ok()
+                //.headers(HeaderUtil.createEntityUpdateAlert(ENTITY_NAME, record.getId().toString()))
+                .body(result);
     }
 }

@@ -186,8 +186,8 @@ public class AyonixEngineService{
 			sdk.MatchAfids(afid1, afids, scores, indexes);
 			return scores[0];
 		} catch (Exception e) {
-			// TODO Auto-generated catch block
-			return 0;
+			throw new RuntimeException(e);
+			//return 0;
 		}
 		
 	}

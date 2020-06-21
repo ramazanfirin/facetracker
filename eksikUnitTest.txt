@@ -1,0 +1,4 @@
+/records/searchByImage
+ayonixEngineService.getAfid
+MatchResultVM result = matchingService.checkForMatching(image);
+searchByFileUpload...

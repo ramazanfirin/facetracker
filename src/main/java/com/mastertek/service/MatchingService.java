@@ -3,6 +3,7 @@ package com.mastertek.service;
 import java.time.Instant;
 import java.util.Iterator;
 import java.util.List;
+import java.util.regex.MatchResult;
 
 import org.springframework.stereotype.Service;
 
@@ -12,6 +13,7 @@ import com.mastertek.domain.enumeration.PersonType;
 import com.mastertek.domain.enumeration.RecordStatus;
 import com.mastertek.repository.ImageRepository;
 import com.mastertek.repository.RecordRepository;
+import com.mastertek.web.rest.vm.MatchResultVM;
 
 @Service
 public class MatchingService {
@@ -60,6 +62,32 @@ public class MatchingService {
 		recordRepository.save(record);
 		
 		return record;
+	}
+	
+	public MatchResultVM checkForMatching(byte[] sourceImage) {
+		MatchResultVM result = new MatchResultVM();
+		byte[] afid =ayonixEngineService.getAfid(sourceImage);
+		
+		List<Image> images = imageRepository.findAll();
+		
+		float similarityRate = 0f;
+		Image selectedImage = null;
+		for (Iterator iterator = images.iterator(); iterator.hasNext();) {
+			Image image = (Image) iterator.next();
+			float similarityRateTemp = ayonixEngineService.match(afid, image.getAfid());
+			if(similarityRateTemp>similarityRate) {
+				similarityRate = similarityRateTemp;
+				selectedImage = image;
+			}
+		}
+		
+		if(similarityRate>0.9) {
+			result.setSimilarityRate(similarityRate);
+			result.setImage(selectedImage);
+			
+		}
+		
+		return result;
 	}
 	
 	private void process(Record record,Image image) {

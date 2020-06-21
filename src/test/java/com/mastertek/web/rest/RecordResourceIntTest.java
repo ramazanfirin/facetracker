@@ -1,10 +1,22 @@
 package com.mastertek.web.rest;
 
-import com.mastertek.FacetrackerApp;
+import static com.mastertek.web.rest.TestUtil.createFormattingConversionService;
+import static org.assertj.core.api.Assertions.assertThat;
+import static org.hamcrest.Matchers.hasItem;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.delete;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.put;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
-import com.mastertek.domain.Record;
-import com.mastertek.repository.RecordRepository;
-import com.mastertek.web.rest.errors.ExceptionTranslator;
+import java.io.File;
+import java.time.Instant;
+import java.time.temporal.ChronoUnit;
+import java.util.List;
+
+import javax.persistence.EntityManager;
 
 import org.junit.Before;
 import org.junit.Test;
@@ -17,22 +29,19 @@ import org.springframework.http.MediaType;
 import org.springframework.http.converter.json.MappingJackson2HttpMessageConverter;
 import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.test.web.servlet.MockMvc;
+import org.springframework.test.web.servlet.MvcResult;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.Base64Utils;
 
-import javax.persistence.EntityManager;
-import java.time.Instant;
-import java.time.temporal.ChronoUnit;
-import java.util.List;
-
-import static com.mastertek.web.rest.TestUtil.createFormattingConversionService;
-import static org.assertj.core.api.Assertions.assertThat;
-import static org.hamcrest.Matchers.hasItem;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
-
+import com.mastertek.FacetrackerApp;
+import com.mastertek.domain.Record;
 import com.mastertek.domain.enumeration.RecordStatus;
+import com.mastertek.repository.RecordRepository;
+import com.mastertek.service.AyonixEngineService;
+import com.mastertek.service.MatchingService;
+import com.mastertek.web.rest.errors.ExceptionTranslator;
+import com.mastertek.web.rest.vm.SearchByImageVM;
 /**
  * Test class for the RecordResource REST controller.
  *
@@ -73,7 +82,13 @@ public class RecordResourceIntTest {
 
     @Autowired
     private RecordRepository recordRepository;
+    
+    @Autowired
+    private AyonixEngineService ayonixEngineService;
 
+    @Autowired
+    private MatchingService matchingService;
+    
     @Autowired
     private MappingJackson2HttpMessageConverter jacksonMessageConverter;
 
@@ -93,7 +108,7 @@ public class RecordResourceIntTest {
     @Before
     public void setup() {
         MockitoAnnotations.initMocks(this);
-        final RecordResource recordResource = new RecordResource(recordRepository);
+        final RecordResource recordResource = new RecordResource(recordRepository,ayonixEngineService,matchingService);
         this.restRecordMockMvc = MockMvcBuilders.standaloneSetup(recordResource)
             .setCustomArgumentResolvers(pageableArgumentResolver)
             .setControllerAdvice(exceptionTranslator)
@@ -306,6 +321,37 @@ public class RecordResourceIntTest {
         assertThat(recordList).hasSize(databaseSizeBeforeDelete - 1);
     }
 
+    @Test
+    @Transactional
+    public void searchByImage() throws Exception {
+        int databaseSizeBeforeCreate = recordRepository.findAll().size();
+        ClassLoader classLoader = getClass().getClassLoader();
+    	File file = new File(classLoader.getResource("faceimages/Face_733935_19121_1557049797506.jpg").getFile());
+        SearchByImageVM searchByImageVM  =new SearchByImageVM();
+        
+        // Create the Record
+        MvcResult mvcResult = restRecordMockMvc.perform(post("/api/records")
+            .contentType(TestUtil.APPLICATION_JSON_UTF8)
+            .content(TestUtil.convertObjectToJsonBytes(searchByImageVM)))
+            .andExpect(status().isOk()).andReturn();
+
+        // Validate the Record in the database
+        List<Record> recordList = recordRepository.findAll();
+        assertThat(recordList).hasSize(databaseSizeBeforeCreate + 1);
+        Record testRecord = recordList.get(recordList.size() - 1);
+        assertThat(testRecord.getInsert()).isEqualTo(DEFAULT_INSERT);
+        assertThat(testRecord.getPath()).isEqualTo(DEFAULT_PATH);
+        assertThat(testRecord.getFileSentDate()).isEqualTo(DEFAULT_FILE_SENT_DATE);
+        assertThat(testRecord.getFileCreationDate()).isEqualTo(DEFAULT_FILE_CREATION_DATE);
+        assertThat(testRecord.getProcessStartDate()).isEqualTo(DEFAULT_PROCESS_START_DATE);
+        assertThat(testRecord.getProcessFinishDate()).isEqualTo(DEFAULT_PROCESS_FINISH_DATE);
+        assertThat(testRecord.getStatus()).isEqualTo(DEFAULT_STATUS);
+        assertThat(testRecord.getAfid()).isEqualTo(DEFAULT_AFID);
+        assertThat(testRecord.getAfidContentType()).isEqualTo(DEFAULT_AFID_CONTENT_TYPE);
+        assertThat(testRecord.isIsProcessed()).isEqualTo(DEFAULT_IS_PROCESSED);
+    }
+
+    
     @Test
     @Transactional
     public void equalsVerifier() throws Exception {
