@@ -25,7 +25,7 @@
 <!--                     <th><span data-translate="facetrackerApp.record.fileCreationDate">File Creation Date</span></th> -->
 <!--                     <th><span data-translate="facetrackerApp.record.processStartDate">Process Start Date</span></th> -->
                     <th><span data-translate="facetrackerApp.record.image">Image</span></th>
-                    
+                    <th><span data-translate="facetrackerApp.record.similarity">Image</span></th>
                     <th><span data-translate="facetrackerApp.record.processFinishDate">Process Finish Date</span></th>
                     <th><span data-translate="facetrackerApp.record.status">Status</span></th>
 <!--                     <th><span data-translate="facetrackerApp.record.afid">Afid</span></th> -->
@@ -50,6 +50,7 @@
                         {{record.image.person.name}}
                 
                     </td>
+                    <td>{{record.similarity}}</td>
                     <td>{{record.processFinishDate | date:'medium'}}</td>
                     <td data-translate="{{'facetrackerApp.RecordStatus.' + record.status}}">{{record.status}}</td>
 <!--                     <td> -->

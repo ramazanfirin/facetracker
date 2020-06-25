@@ -24,6 +24,7 @@
             "status": "Status",
             "afid": "Afid",
             "isProcessed": "Is Processed",
+            "similarity": "Similarity",
             "device": "Device",
             "image": "Image"
         }

@@ -53,10 +53,12 @@ public class MatchingService {
 			}
 		}
 		
-		if(similarityRate>0.85)
+		record.setSimilarity(similarityRate);
+		if(similarityRate>0.85) {
 			process(record, selectedImage);
-		else
+		}else {
 			record.setStatus(RecordStatus.NO_MATCHING);
+		}
 		
 		record.setIsProcessed(true);
 		record.setProcessFinishDate(Instant.now());

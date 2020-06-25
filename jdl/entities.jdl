@@ -42,6 +42,7 @@ entity Record{
     status RecordStatus 
     afid AnyBlob
 	isProcessed Boolean
+	similarity Float
 }
 
 relationship OneToMany {

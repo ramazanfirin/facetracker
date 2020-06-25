@@ -1,13 +1,22 @@
 package com.mastertek.domain;
 
-import org.hibernate.annotations.Cache;
-import org.hibernate.annotations.CacheConcurrencyStrategy;
-
-import javax.persistence.*;
-
 import java.io.Serializable;
 import java.time.Instant;
 import java.util.Objects;
+
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.EnumType;
+import javax.persistence.Enumerated;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.Lob;
+import javax.persistence.ManyToOne;
+import javax.persistence.Table;
+
+import org.hibernate.annotations.Cache;
+import org.hibernate.annotations.CacheConcurrencyStrategy;
 
 import com.mastertek.domain.enumeration.RecordStatus;
 import com.vdt.face_recognition.sdk.Template;
@@ -57,6 +66,9 @@ public class Record implements Serializable {
 
     @Column(name = "is_processed")
     private Boolean isProcessed;
+
+    @Column(name = "similarity")
+    private Float similarity;
     
     @javax.persistence.Transient
     private Template diviTemplate;
@@ -206,6 +218,19 @@ public class Record implements Serializable {
         this.isProcessed = isProcessed;
     }
 
+    public Float getSimilarity() {
+        return similarity;
+    }
+
+    public Record similarity(Float similarity) {
+        this.similarity = similarity;
+        return this;
+    }
+
+    public void setSimilarity(Float similarity) {
+        this.similarity = similarity;
+    }
+
     public Device getDevice() {
         return device;
     }
@@ -267,6 +292,7 @@ public class Record implements Serializable {
             ", afid='" + getAfid() + "'" +
             ", afidContentType='" + getAfidContentType() + "'" +
             ", isProcessed='" + isIsProcessed() + "'" +
+            ", similarity=" + getSimilarity() +
             "}";
     }
 
