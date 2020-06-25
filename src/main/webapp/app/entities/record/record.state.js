@@ -11,7 +11,7 @@
         $stateProvider
         .state('record', {
             parent: 'entity',
-            url: '/record',
+            url: '/record?page&sort&search',
             data: {
                 authorities: ['ROLE_USER'],
                 pageTitle: 'facetrackerApp.record.home.title'
@@ -23,7 +23,27 @@
                     controllerAs: 'vm'
                 }
             },
+            params: {
+                page: {
+                    value: '1',
+                    squash: true
+                },
+                sort: {
+                    value: 'id,asc',
+                    squash: true
+                },
+                search: null
+            },
             resolve: {
+                pagingParams: ['$stateParams', 'PaginationUtil', function ($stateParams, PaginationUtil) {
+                    return {
+                        page: PaginationUtil.parsePage($stateParams.page),
+                        sort: $stateParams.sort,
+                        predicate: PaginationUtil.parsePredicate($stateParams.sort),
+                        ascending: PaginationUtil.parseAscending($stateParams.sort),
+                        search: $stateParams.search
+                    };
+                }],
                 translatePartialLoader: ['$translate', '$translatePartialLoader', function ($translate, $translatePartialLoader) {
                     $translatePartialLoader.addPart('record');
                     $translatePartialLoader.addPart('recordStatus');
@@ -116,6 +136,7 @@
                                 afid: null,
                                 afidContentType: null,
                                 isProcessed: null,
+                                similarity: null,
                                 id: null
                             };
                         }
