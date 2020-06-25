@@ -48,7 +48,7 @@ public class AyonixEngineService{
 	@PostConstruct
 	public void init() {
 		//if(!"tomcat".equals(applicationProperties.getEnvironment()))
-			sdk = new FaceID("C:\\Program Files\\Ayonix Corporation\\Ayonix FaceID SDK v6\\data\\engine");
+		//	sdk = new FaceID("C:\\Program Files\\Ayonix Corporation\\Ayonix FaceID SDK v6\\data\\engine");
 		
 		System.out.println("bitti");
 	}
@@ -138,23 +138,7 @@ public class AyonixEngineService{
 		 return faces;
 	}
 
-	
-	public AyonixFace[] detectFaceFromResizedImage(String path) throws IOException {
-		BufferedImage image = ImageIO.read(new File(path));
-        int type = image.getType() == 0? BufferedImage.TYPE_INT_ARGB : image.getType();
-        BufferedImage imageNew = resizeImage700(image, type);
-        
-        
-        ByteArrayOutputStream bos = new ByteArrayOutputStream();
-        ImageIO.write(imageNew, "jpg", bos );
-        byte [] data = bos.toByteArray();
-        AyonixImage img = sdk.LoadImage(data);
-        //faces = sdk.DetectFaces(img);
-        AyonixFace[] faces = sdk.DetectFaces(img,48,new Rectangle(img.getWidth(), img.getHeight()));
-        
-        return faces;
-	}
-	
+
 	public FaceDataDTO getRecord(AyonixFace faceDetail,String fileName) throws IOException {
 	
 		sdk.PreprocessFace(faceDetail);
@@ -192,21 +176,4 @@ public class AyonixEngineService{
 		
 	}
 	
-	 private static BufferedImage resizeImage(BufferedImage originalImage, int type){
-     	BufferedImage resizedImage = new BufferedImage(originalImage.getWidth()*2, originalImage.getHeight()*2, type);
-     	Graphics2D g = resizedImage.createGraphics();
-     	g.drawImage(originalImage, 0, 0, originalImage.getWidth()*2, originalImage.getHeight()*2, null);
-     	g.dispose();
-     		
-     	return resizedImage;
-         }
-	 // gurkan
-	 private static BufferedImage resizeImage700(BufferedImage originalImage, int type){
-	     	BufferedImage resizedImage = new BufferedImage(originalImage.getWidth()*7, originalImage.getHeight()*7, type);
-	     	Graphics2D g = resizedImage.createGraphics();
-	     	g.drawImage(originalImage, 0, 0, originalImage.getWidth()*7, originalImage.getHeight()*7, null);
-	     	g.dispose();
-	     		
-	     	return resizedImage;
-	         }
 }

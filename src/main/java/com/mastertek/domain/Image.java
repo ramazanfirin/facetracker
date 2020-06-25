@@ -31,7 +31,7 @@ public class Image implements Serializable {
     @Column(name = "image_content_type", nullable = false)
     private String imageContentType;
 
-    @NotNull
+    //@NotNull
     @Lob
     @Column(name = "afid", nullable = false)
     private byte[] afid;

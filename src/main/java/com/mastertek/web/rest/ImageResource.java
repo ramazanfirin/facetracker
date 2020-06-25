@@ -1,23 +1,34 @@
 package com.mastertek.web.rest;
 
-import com.codahale.metrics.annotation.Timed;
-import com.mastertek.domain.Image;
+import java.io.ByteArrayOutputStream;
+import java.net.URI;
+import java.net.URISyntaxException;
+import java.util.List;
+import java.util.Optional;
 
-import com.mastertek.repository.ImageRepository;
-import com.mastertek.web.rest.errors.BadRequestAlertException;
-import com.mastertek.web.rest.util.HeaderUtil;
-import io.github.jhipster.web.util.ResponseUtil;
+import javax.validation.Valid;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.DeleteMapping;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
 
-import javax.validation.Valid;
-import java.net.URI;
-import java.net.URISyntaxException;
+import com.codahale.metrics.annotation.Timed;
+import com.mastertek.domain.Image;
+import com.mastertek.repository.ImageRepository;
+import com.mastertek.service.DiviEngineService;
+import com.mastertek.web.rest.errors.BadRequestAlertException;
+import com.mastertek.web.rest.util.HeaderUtil;
+import com.vdt.face_recognition.sdk.Template;
 
-import java.util.List;
-import java.util.Optional;
+import io.github.jhipster.web.util.ResponseUtil;
 
 /**
  * REST controller for managing Image.
@@ -31,10 +42,14 @@ public class ImageResource {
     private static final String ENTITY_NAME = "image";
 
     private final ImageRepository imageRepository;
+    
+    private final DiviEngineService diviEngineService;
 
-    public ImageResource(ImageRepository imageRepository) {
+    public ImageResource(ImageRepository imageRepository,DiviEngineService diviEngineService) {
         this.imageRepository = imageRepository;
+        this.diviEngineService = diviEngineService;
     }
+    
 
     /**
      * POST  /images : Create a new image.
@@ -50,7 +65,13 @@ public class ImageResource {
         if (image.getId() != null) {
             throw new BadRequestAlertException("A new image cannot already have an ID", ENTITY_NAME, "idexists");
         }
-        Image result = imageRepository.save(image);
+        Template template = diviEngineService.getTemplate(image.getImage());
+        ByteArrayOutputStream bOutput = new ByteArrayOutputStream(1200);
+    	template.save(bOutput);
+    	image.setAfid(bOutput.toByteArray());
+    	image.setAfidContentType("");
+    	Image result = imageRepository.save(image);
+        
         return ResponseEntity.created(new URI("/api/images/" + result.getId()))
             .headers(HeaderUtil.createEntityCreationAlert(ENTITY_NAME, result.getId().toString()))
             .body(result);
@@ -72,6 +93,11 @@ public class ImageResource {
         if (image.getId() == null) {
             return createImage(image);
         }
+        Template template = diviEngineService.getTemplate(image.getImage());
+        ByteArrayOutputStream bOutput = new ByteArrayOutputStream(1200);
+    	template.save(bOutput);
+    	image.setAfid(bOutput.toByteArray());
+    	image.setAfidContentType("");
         Image result = imageRepository.save(image);
         return ResponseEntity.ok()
             .headers(HeaderUtil.createEntityUpdateAlert(ENTITY_NAME, image.getId().toString()))

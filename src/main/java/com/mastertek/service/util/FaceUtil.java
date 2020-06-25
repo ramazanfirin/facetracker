@@ -20,6 +20,9 @@ import org.apache.commons.io.IOUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import com.mastertek.domain.Device;
+import com.mastertek.domain.Record;
+
 public class FaceUtil {
 
 	private static Logger log = LoggerFactory.getLogger(FaceUtil.class);
@@ -117,5 +120,17 @@ public class FaceUtil {
         printWriter.close();
 	}
 	
-	
+	public static Record convertToRecord(Float age,Device device,String path,byte[] afid) throws MalformedURLException {
+		Record record = new Record();
+		//record.setAfid(Base64.getEncoder().encodeToString(afid));
+		//record.setAge(age.longValue());
+		record.setDevice(device);
+		//record.setGender(gender);
+		record.setPath(path);
+		record.setInsert(getCreateDate(path));
+		//record.setAgeSegment(segment);
+		//record.setTemplate(afid);
+		//record.setSource(getSource(path));
+		return record;
+	}
 }

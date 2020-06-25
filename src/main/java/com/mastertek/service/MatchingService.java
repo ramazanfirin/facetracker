@@ -3,7 +3,6 @@ package com.mastertek.service;
 import java.time.Instant;
 import java.util.Iterator;
 import java.util.List;
-import java.util.regex.MatchResult;
 
 import org.springframework.stereotype.Service;
 
@@ -14,6 +13,7 @@ import com.mastertek.domain.enumeration.RecordStatus;
 import com.mastertek.repository.ImageRepository;
 import com.mastertek.repository.RecordRepository;
 import com.mastertek.web.rest.vm.MatchResultVM;
+import com.vdt.face_recognition.sdk.Template;
 
 @Service
 public class MatchingService {
@@ -26,10 +26,10 @@ public class MatchingService {
 
 	final private RecordRepository recordRepository;
 	
-	final private AyonixEngineService ayonixEngineService;
+	final private DiviEngineService ayonixEngineService;
 	
 	public MatchingService(MatchingWhiteListService matchingWhiteListService,
-			MatchingBlackListService matchingBlackListService,ImageRepository imageRepository,RecordRepository recordRepository,AyonixEngineService ayonixEngineService) {
+			MatchingBlackListService matchingBlackListService,ImageRepository imageRepository,RecordRepository recordRepository,DiviEngineService ayonixEngineService) {
 		super();
 		this.matchingWhiteListService = matchingWhiteListService;
 		this.matchingBlackListService = matchingBlackListService;
@@ -45,14 +45,15 @@ public class MatchingService {
 		Image selectedImage = null;
 		for (Iterator iterator = images.iterator(); iterator.hasNext();) {
 			Image image = (Image) iterator.next();
-			float similarityRateTemp = ayonixEngineService.match(record.getAfid(), image.getAfid());
+			Template temp = ayonixEngineService.loadTemplate(image.getAfid());
+			float similarityRateTemp = ayonixEngineService.match(record.getDiviTemplate(), temp);
 			if(similarityRateTemp>similarityRate) {
 				similarityRate = similarityRateTemp;
 				selectedImage = image;
 			}
 		}
 		
-		if(similarityRate>0.9)
+		if(similarityRate>0.85)
 			process(record, selectedImage);
 		else
 			record.setStatus(RecordStatus.NO_MATCHING);
@@ -66,7 +67,8 @@ public class MatchingService {
 	
 	public MatchResultVM checkForMatching(byte[] sourceImage) {
 		MatchResultVM result = new MatchResultVM();
-		byte[] afid =ayonixEngineService.getAfid(sourceImage);
+		//byte[] afid =ayonixEngineService.getAfid(sourceImage);
+		Template afid =ayonixEngineService.loadTemplate(sourceImage);
 		
 		List<Image> images = imageRepository.findAll();
 		
@@ -74,7 +76,8 @@ public class MatchingService {
 		Image selectedImage = null;
 		for (Iterator iterator = images.iterator(); iterator.hasNext();) {
 			Image image = (Image) iterator.next();
-			float similarityRateTemp = ayonixEngineService.match(afid, image.getAfid());
+			Template temp = ayonixEngineService.loadTemplate(image.getAfid()); 
+			float similarityRateTemp = ayonixEngineService.match(afid, temp);
 			if(similarityRateTemp>similarityRate) {
 				similarityRate = similarityRateTemp;
 				selectedImage = image;

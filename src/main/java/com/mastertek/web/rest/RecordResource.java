@@ -12,11 +12,16 @@ import com.mastertek.web.rest.vm.MatchResultVM;
 import com.mastertek.web.rest.vm.SearchByImageVM;
 
 import io.github.jhipster.web.util.ResponseUtil;
+
+import org.apache.commons.io.IOUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.IOException;
 import java.net.URI;
 import java.net.URISyntaxException;
 
@@ -138,4 +143,10 @@ public class RecordResource {
                 //.headers(HeaderUtil.createEntityUpdateAlert(ENTITY_NAME, record.getId().toString()))
                 .body(result);
     }
+    
+    @GetMapping("/records/showImage")
+    public @ResponseBody byte[] getImage(@RequestParam("path") String path) throws IOException {
+        //InputStream in =;
+        return IOUtils.toByteArray( new FileInputStream(new File(path)));
+}
 }

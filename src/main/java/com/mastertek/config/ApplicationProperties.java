@@ -19,6 +19,13 @@ public class ApplicationProperties {
 	String ftpDefaultUser;
 	String ftpDefaultPassord;
 	String performanceTestDataDirectory;
+	
+	String dllPath;
+	String faceRegPath;
+	String licensePath;
+	String capturer;
+	String recognizer;
+	
 	public String getFtpDirectory() {
 		return ftpDirectory;
 	}
@@ -66,6 +73,36 @@ public class ApplicationProperties {
 	}
 	public void setPerformanceTestDataDirectory(String performanceTestDataDirectory) {
 		this.performanceTestDataDirectory = performanceTestDataDirectory;
+	}
+	public String getDllPath() {
+		return dllPath;
+	}
+	public void setDllPath(String dllPath) {
+		this.dllPath = dllPath;
+	}
+	public String getFaceRegPath() {
+		return faceRegPath;
+	}
+	public void setFaceRegPath(String faceRegPath) {
+		this.faceRegPath = faceRegPath;
+	}
+	public String getLicensePath() {
+		return licensePath;
+	}
+	public void setLicensePath(String licensePath) {
+		this.licensePath = licensePath;
+	}
+	public String getCapturer() {
+		return capturer;
+	}
+	public void setCapturer(String capturer) {
+		this.capturer = capturer;
+	}
+	public String getRecognizer() {
+		return recognizer;
+	}
+	public void setRecognizer(String recognizer) {
+		this.recognizer = recognizer;
 	}
 	
 	

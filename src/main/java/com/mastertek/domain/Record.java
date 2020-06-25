@@ -10,6 +10,7 @@ import java.time.Instant;
 import java.util.Objects;
 
 import com.mastertek.domain.enumeration.RecordStatus;
+import com.vdt.face_recognition.sdk.Template;
 
 /**
  * A Record.
@@ -56,6 +57,9 @@ public class Record implements Serializable {
 
     @Column(name = "is_processed")
     private Boolean isProcessed;
+    
+    @javax.persistence.Transient
+    private Template diviTemplate;
 
     @ManyToOne
     private Device device;
@@ -265,4 +269,12 @@ public class Record implements Serializable {
             ", isProcessed='" + isIsProcessed() + "'" +
             "}";
     }
+
+	public Template getDiviTemplate() {
+		return diviTemplate;
+	}
+
+	public void setDiviTemplate(Template diviTemplate) {
+		this.diviTemplate = diviTemplate;
+	}
 }

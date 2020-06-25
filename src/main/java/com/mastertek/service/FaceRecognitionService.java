@@ -1,6 +1,7 @@
 package com.mastertek.service;
 
 import java.awt.image.BufferedImage;
+import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.IOException;
 import java.net.MalformedURLException;
@@ -34,6 +35,8 @@ import com.mastertek.repository.RecordRepository;
 import com.mastertek.service.dto.FaceDataDTO;
 import com.mastertek.service.util.FaceUtil;
 
+import ayonix.AyonixFace;
+
 
 @Service
 @Transactional
@@ -42,7 +45,7 @@ public class FaceRecognitionService {
 	private final Logger log = LoggerFactory.getLogger(FaceRecognitionService.class);
 	final private ApplicationProperties applicationProperties;
 	
-	final private AyonixEngineService ayonixEngineService;
+	final private DiviEngineService ayonixEngineService;
 	
 	final private RecordRepository recordRepository;
 	
@@ -50,7 +53,7 @@ public class FaceRecognitionService {
 	
 	final private MatchingService matchingService;
 	
-	public FaceRecognitionService(ApplicationProperties applicationProperties,AyonixEngineService ayonixEngineService,RecordRepository recordRepository,DeviceRepository deviceRepository,MatchingService matchingService) throws Exception {
+	public FaceRecognitionService(ApplicationProperties applicationProperties,DiviEngineService ayonixEngineService,RecordRepository recordRepository,DeviceRepository deviceRepository,MatchingService matchingService) throws Exception {
 		super();
 		this.applicationProperties = applicationProperties;
 		this.ayonixEngineService = ayonixEngineService;
@@ -67,21 +70,32 @@ public class FaceRecognitionService {
 
 	//@Async
 	public void analyze(String uuid,String fileName,Long fileCatalogId) throws Exception {
-		log.info("uuid="+uuid+",filename:"+fileName+" analiz başlıyor");
-		File file = new File(fileName);
-		Record record = startFileProcessing(fileName);
-		
-		List<FaceDataDTO> faceDataDTOList = ayonixEngineService.analyze(fileName);
-		if(faceDataDTOList.size() == 0) {
-			NoFaceDetected(record);
-		}else {
-			FaceDataDTO faceDataDTO = faceDataDTOList.get(0);
-			record.setAfid(faceDataDTO.getTemplate());
-			saveRecord(record);
-		}
+		Record record = new Record();
+		try {
+			log.info("uuid="+uuid+",filename:"+fileName+" analiz başlıyor");
+			File file = new File(fileName);
+			record = startFileProcessing(fileName);
+			
+			List<FaceDataDTO> faceDataDTOList = ayonixEngineService.analyze(fileName);
+			if(faceDataDTOList.size() == 0) {
+				NoFaceDetected(record);
+			}else {
+				FaceDataDTO faceDataDTO = faceDataDTOList.get(0);
+				record.setAfid(faceDataDTO.getTemplate());
+				record.setDiviTemplate(faceDataDTO.getDiviTemplate());
+				saveRecord(record);
+			}
 
-		finishFileProcessing(record);
-		log.info("uuid="+uuid+",filename:"+fileName+" analiz bitti");
+			finishFileProcessing(record);
+			log.info("uuid="+uuid+",filename:"+fileName+" analiz bitti");
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+			record.setPath(fileName);
+			record.setIsProcessed(false);
+			record.setStatus(RecordStatus.ERROR);
+			recordRepository.save(record);
+		}
 	}
 	
 	private Record startFileProcessing(String fileName) throws Exception {
@@ -131,6 +145,8 @@ public class FaceRecognitionService {
 			NoAfidDetected(record);
 			return;
 		}	
+		
+		
 		
 		matchingService.checkForMatching(record);
 		
