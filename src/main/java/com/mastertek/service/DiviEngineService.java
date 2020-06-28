@@ -114,6 +114,7 @@ public class DiviEngineService {
 			bOutput = new ByteArrayOutputStream(1200);
 			temp.save(bOutput);
 		} catch (Exception e) {
+			e.printStackTrace();
 			bOutput = null;
 		}
        

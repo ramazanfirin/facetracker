@@ -24,7 +24,7 @@ eureka:
         prefer-ip-address: true
     client:
         service-url:
-            defaultZone: http://admin:${jhipster.registry.password}@localhost:8761/eureka/
+            defaultZone: http://admin:${jhipster.registry.password}@monitor.mastertek.com.tr:8761/eureka/
 
 spring:
     devtools:
@@ -34,9 +34,9 @@ spring:
             enabled: false
     datasource:
         type: com.zaxxer.hikari.HikariDataSource
-        url: jdbc:mysql://localhost:3306/facetracker?useUnicode=true&characterEncoding=utf8&useSSL=false
-        username: root
-        password:
+        url: jdbc:mysql://mastertekdb.cfyototaodfv.us-east-2.rds.amazonaws.com/test?useUnicode=true&characterEncoding=utf8&useSSL=false
+        username: masterTek6634
+        password: 105957Grk.
         hikari:
             data-source-properties:
                 cachePrepStmts: true
@@ -152,13 +152,13 @@ jhipster:
 application:
     ftpDirectory: c:\publicDirectory
     passowordFile: c:\publicDirectory\myftpusers.properties
-    ftpPort: 21212
-    passiveExternalAddress: countbuddy.mastertek.com.tr
+    ftpPort: 2121
+    passiveExternalAddress: 10.100.5.8
     passivePorts: 10000-11000
-    ftpDefaultUser: countbuddyFtp
-    ftpDefaultPassord: 105957Grk.
-    dllPath: C:\Users\ramazan\Downloads\face_sdk-3.3.0.1-only_m9v30_m9v300_m9v1000_m6v7\face_sdk-3.3.0.1-only_m9v30_m9v300_m9v1000_m6v7\bin\facerec.dll
-    faceRegPath: C:\Users\ramazan\Downloads\face_sdk-3.3.0.1-only_m9v30_m9v300_m9v1000_m6v7\face_sdk-3.3.0.1-only_m9v30_m9v300_m9v1000_m6v7\conf\facerec 
-    licensePath: C:\Users\ramazan\Downloads\face_sdk-3.3.0.1-only_m9v30_m9v300_m9v1000_m6v7\face_sdk-3.3.0.1-only_m9v30_m9v300_m9v1000_m6v7\license
+    ftpDefaultUser: masterface
+    ftpDefaultPassord: masterface
+    dllPath: C:\Users\rfirin\Downloads\face_sdk-3.3.0.1-only_m9v30_m9v300_m9v1000_m6v7\face_sdk-3.3.0.1-only_m9v30_m9v300_m9v1000_m6v7\bin\facerec.dll
+    faceRegPath: C:\Users\rfirin\Downloads\face_sdk-3.3.0.1-only_m9v30_m9v300_m9v1000_m6v7\face_sdk-3.3.0.1-only_m9v30_m9v300_m9v1000_m6v7\conf\facerec 
+    licensePath: C:\Users\rfirin\Downloads\face_sdk-3.3.0.1-only_m9v30_m9v300_m9v1000_m6v7\face_sdk-3.3.0.1-only_m9v30_m9v300_m9v1000_m6v7\license
     capturer: common_capturer4.xml
     recognizer: method6v7_recognizer.xml 

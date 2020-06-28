@@ -340,12 +340,10 @@
 		</dependency>
 		
 		<dependency>
-	<groupId>com.roufid.tutorials</groupId>
-	<artifactId>example-app</artifactId>
-	<version>1.0</version>
-	<scope>system</scope>
-	<systemPath>${basedir}/lib/facerec.jar</systemPath>
-</dependency>
+			<groupId>com.3divi</groupId>
+			<artifactId>com3dv</artifactId>
+			<version>1.0</version>
+		</dependency>
         
     </dependencies>
 
