@@ -28,7 +28,7 @@
 
         <div class="form-group">
             <label data-translate="facetrackerApp.floor.store" for="field_store">Store</label>
-            <select class="form-control" id="field_store" name="store" ng-model="vm.floor.store" ng-options="building as building.id for building in vm.buildings track by building.id">
+            <select class="form-control" id="field_store" name="store" ng-model="vm.floor.store" ng-options="building as building.name for building in vm.buildings track by building.id">
                 <option value=""></option>
             </select>
         </div>

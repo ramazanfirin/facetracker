@@ -45,7 +45,7 @@
 
         <div class="form-group">
             <label data-translate="facetrackerApp.image.person" for="field_person">Person</label>
-            <select class="form-control" id="field_person" name="person" ng-model="vm.image.person" ng-options="person as person.id for person in vm.people track by person.id">
+            <select class="form-control" id="field_person" name="person" ng-model="vm.image.person" ng-options="person as person.name for person in vm.people track by person.id">
                 <option value=""></option>
             </select>
         </div>

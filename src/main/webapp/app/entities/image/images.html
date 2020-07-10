@@ -20,7 +20,7 @@
                 <tr>
                     <th><span data-translate="global.field.id">ID</span></th>
                     <th><span data-translate="facetrackerApp.image.image">Image</span></th>
-                    <th><span data-translate="facetrackerApp.image.afid">Afid</span></th>
+<!--                     <th><span data-translate="facetrackerApp.image.afid">Afid</span></th> -->
                     <th><span data-translate="facetrackerApp.image.person">Person</span></th>
                     <th></th>
                 </tr>
@@ -34,12 +34,14 @@
                         </a>
                         <span ng-if="image.image">{{image.imageContentType}}, {{vm.byteSize(image.image)}}</span>
                     </td>
+                   <!-- 
                     <td>
                         <a ng-if="image.afid" ng-click="vm.openFile(image.afidContentType, image.afid)" data-translate="entity.action.open">open</a>
                         <span ng-if="image.afid">{{image.afidContentType}}, {{vm.byteSize(image.afid)}}</span>
                     </td>
+                     -->
                     <td>
-                        <a ui-sref="person-detail({id:image.person.id})">{{image.person.id}}</a>
+                        <a ui-sref="person-detail({id:image.person.id})">{{image.person.name}}</a>
                     </td>
                     <td class="text-right">
                         <div class="btn-group flex-btn-group-container">

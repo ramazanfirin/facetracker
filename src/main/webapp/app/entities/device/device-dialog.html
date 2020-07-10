@@ -34,7 +34,7 @@
 
         <div class="form-group">
             <label data-translate="facetrackerApp.device.floor" for="field_floor">Floor</label>
-            <select class="form-control" id="field_floor" name="floor" ng-model="vm.device.floor" ng-options="floor as floor.id for floor in vm.floors track by floor.id">
+            <select class="form-control" id="field_floor" name="floor" ng-model="vm.device.floor" ng-options="floor as floor.name for floor in vm.floors track by floor.id">
                 <option value=""></option>
             </select>
         </div>

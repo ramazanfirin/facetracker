@@ -1,0 +1,1 @@
+mvn install:install-file –Dfile=C:\Users\ramazan\git\facetracker\lib\facerec.jar -DgroupId=com.3divi -DartifactId=com3dv -Dversion=1.0 -Dpackaging=jar
