@@ -160,5 +160,5 @@ application:
     dllPath: C:\Users\rfirin\Downloads\face_sdk-3.3.0.1-only_m9v30_m9v300_m9v1000_m6v7\face_sdk-3.3.0.1-only_m9v30_m9v300_m9v1000_m6v7\bin\facerec.dll
     faceRegPath: C:\Users\rfirin\Downloads\face_sdk-3.3.0.1-only_m9v30_m9v300_m9v1000_m6v7\face_sdk-3.3.0.1-only_m9v30_m9v300_m9v1000_m6v7\conf\facerec 
     licensePath: C:\Users\rfirin\Downloads\face_sdk-3.3.0.1-only_m9v30_m9v300_m9v1000_m6v7\face_sdk-3.3.0.1-only_m9v30_m9v300_m9v1000_m6v7\license
-    capturer: common_capturer4.xml
+    capturer: common_capturer4_singleface_with_angles.xml
     recognizer: method6v7_recognizer.xml 

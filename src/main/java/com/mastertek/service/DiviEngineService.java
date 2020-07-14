@@ -67,7 +67,9 @@ public class DiviEngineService {
 		
 		recognizer = service.createRecognizer(applicationProperties.getRecognizer(), true, true, true);
 		
-		System.out.println("bitti");
+		System.out.println(" 3 divi start bitti.");
+		System.out.println(" capturer:"+applicationProperties.getCapturer());
+		System.out.println(" recognizer:"+applicationProperties.getRecognizer());
 	}
 	
 	

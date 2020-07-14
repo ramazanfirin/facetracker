@@ -50,7 +50,7 @@ public class AyonixEngineService{
 		//if(!"tomcat".equals(applicationProperties.getEnvironment()))
 		//	sdk = new FaceID("C:\\Program Files\\Ayonix Corporation\\Ayonix FaceID SDK v6\\data\\engine");
 		
-		System.out.println("bitti");
+		//System.out.println("bitti");
 	}
 	
 	@PreDestroy
