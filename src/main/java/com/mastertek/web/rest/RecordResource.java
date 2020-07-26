@@ -5,6 +5,10 @@ import java.io.FileInputStream;
 import java.io.IOException;
 import java.net.URI;
 import java.net.URISyntaxException;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
+import java.util.Date;
 import java.util.List;
 import java.util.Optional;
 
@@ -57,6 +61,9 @@ public class RecordResource {
     
     private final MatchingService matchingService;
 
+    String pattern = "yyyy-MM-dd'T'hh:mm:ss.SSS";
+    SimpleDateFormat simpleDateFormat = new SimpleDateFormat(pattern);
+    
     public RecordResource(RecordRepository recordRepository,AyonixEngineService ayonixEngineService,MatchingService matchingService) {
         this.recordRepository = recordRepository;
         this.ayonixEngineService = ayonixEngineService;
@@ -163,4 +170,34 @@ public class RecordResource {
         //InputStream in =;
         return IOUtils.toByteArray( new FileInputStream(new File(path)));
 }
+    
+    @GetMapping("/records/getRecordsForReport")
+    public List<Record> getRecordsForReport(@RequestParam("personId") Long personId,@RequestParam("startDate") String startDateValue,@RequestParam("endDate") String endDateValue) throws IOException, ParseException {
+        //InputStream in =;
+    	
+    	Date startDate = getDate(startDateValue);
+        Date endDate= getDate(endDateValue);
+        
+        List<Record> list = recordRepository.findRecords(personId,startDate.toInstant(), endDate.toInstant());
+        System.out.println("asd");
+        return list;
+}
+    
+    private Date getDate(String startDateValue) throws ParseException {
+    	Date startDate = simpleDateFormat.parse(startDateValue);
+        if(startDate.getHours()==0)
+        	startDate =addHoursToDate(startDate, 15);
+        else
+        	startDate =addHoursToDate(startDate, 3);
+        return startDate;
+    }
+    
+    private Date addHoursToDate(Date date, int count) {
+    	Calendar c = Calendar.getInstance();
+        c.setTime(date);
+        c.add(Calendar.HOUR, count);
+        return c.getTime();
+    }
+    
+    
 }

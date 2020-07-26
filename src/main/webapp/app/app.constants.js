@@ -5,6 +5,6 @@
         .module('facetrackerApp')
         .constant('VERSION', "0.0.1-SNAPSHOT")
         .constant('DEBUG_INFO_ENABLED', false)
-        .constant('BUILD_TIMESTAMP', 1594578680793)
+        .constant('BUILD_TIMESTAMP', 1595393999451)
 ;
 })();

@@ -5,9 +5,9 @@
         .module('facetrackerApp')
         .controller('RecordController', RecordController);
 
-    RecordController.$inject = ['$state', 'DataUtils', 'Record', 'ParseLinks', 'AlertService', 'paginationConstants', 'pagingParams'];
+    RecordController.$inject = ['$state', 'DataUtils', 'Record', 'ParseLinks', 'AlertService', 'paginationConstants', 'pagingParams','Person'];
 
-    function RecordController($state, DataUtils, Record, ParseLinks, AlertService, paginationConstants, pagingParams) {
+    function RecordController($state, DataUtils, Record, ParseLinks, AlertService, paginationConstants, pagingParams,Person) {
 
         var vm = this;
 
@@ -18,7 +18,17 @@
         vm.itemsPerPage = paginationConstants.itemsPerPage;
         vm.openFile = DataUtils.openFile;
         vm.byteSize = DataUtils.byteSize;
+        vm.people = Person.query();
+        vm.loadRecords = loadRecords;
+        
+        var d = new Date();
+        d.setHours(d.getHours() - 1);
+        
+        vm.startDate= d;
 
+        vm.endDate = new Date();     
+        
+        
         loadAll();
 
         function loadAll () {
@@ -58,5 +68,36 @@
                 search: vm.currentSearch
             });
         }
+        
+        
+        
+function loadRecords () {
+        	
+        	var floorId;
+        	if(vm.selectedFloor!=null)
+        		floorId=vm.selectedFloor.id;
+       
+        	var locationId;
+         	if(vm.selectedLocation!=null)
+         		locationId=vm.selectedLocation.id;
+       
+        	
+            Record.getRecords({
+            	personId:vm.person.id,
+            	startDate:vm.startDate,
+                endDate:vm.endDate
+            }, onSuccess, onError);
+            
+            function onSuccess(data, headers) {
+                vm.records = data;
+               
+            }
+            function onError(error) {
+                AlertService.error(error.data.message);
+            }
+}
+
+        
+        
     }
 })();
