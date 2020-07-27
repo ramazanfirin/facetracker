@@ -34,9 +34,9 @@ spring:
             enabled: false
     datasource:
         type: com.zaxxer.hikari.HikariDataSource
-        url: jdbc:mysql://mastertekdb.cfyototaodfv.us-east-2.rds.amazonaws.com/test?useUnicode=true&characterEncoding=utf8&useSSL=false
-        username: masterTek6634
-        password: 105957Grk.
+        url: jdbc:mysql://localhost/facetracker?useUnicode=true&characterEncoding=utf8&useSSL=false&serverTimezone=UTC&allowPublicKeyRetrieval=true
+        username: facetracker
+        password: ra5699mo
         hikari:
             data-source-properties:
                 cachePrepStmts: true
@@ -153,12 +153,12 @@ application:
     ftpDirectory: c:\publicDirectory
     passowordFile: c:\publicDirectory\myftpusers.properties
     ftpPort: 2121
-    passiveExternalAddress: 10.100.5.8
+    passiveExternalAddress: facetracker.masterteknoloji.net
     passivePorts: 10000-11000
     ftpDefaultUser: masterface
     ftpDefaultPassord: masterface
-    dllPath: C:\Users\rfirin\Downloads\face_sdk-3.3.0.1-only_m9v30_m9v300_m9v1000_m6v7\face_sdk-3.3.0.1-only_m9v30_m9v300_m9v1000_m6v7\bin\facerec.dll
-    faceRegPath: C:\Users\rfirin\Downloads\face_sdk-3.3.0.1-only_m9v30_m9v300_m9v1000_m6v7\face_sdk-3.3.0.1-only_m9v30_m9v300_m9v1000_m6v7\conf\facerec 
-    licensePath: C:\Users\rfirin\Downloads\face_sdk-3.3.0.1-only_m9v30_m9v300_m9v1000_m6v7\face_sdk-3.3.0.1-only_m9v30_m9v300_m9v1000_m6v7\license
+    dllPath: C:\Users\Administrator\git\face-sdk\bin\facerec.dll
+    faceRegPath: C:\Users\Administrator\git\face-sdk\conf\facerec 
+    licensePath: C:\Users\Administrator\git\face-sdk\license
     capturer: common_capturer4_singleface_with_angles.xml
     recognizer: method6v7_recognizer.xml 
