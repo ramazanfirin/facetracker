@@ -48,9 +48,11 @@ public class DiviEngineService {
 		// TODO Auto-generated constructor stub
 		this.deviceRepository = deviceRepository;
 		this.applicationProperties = applicationProperties;
+		
+		init();
 	}
 
-	@PostConstruct
+	//@PostConstruct
 	public void init() {
 		//if(!"tomcat".equals(applicationProperties.getEnvironment()))
 		//	sdk = new FaceID("C:\\Program Files\\Ayonix Corporation\\Ayonix FaceID SDK v6\\data\\engine");
