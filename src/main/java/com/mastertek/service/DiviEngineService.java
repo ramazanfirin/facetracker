@@ -19,12 +19,16 @@ import org.springframework.stereotype.Service;
 import com.mastertek.config.ApplicationProperties;
 import com.mastertek.repository.DeviceRepository;
 import com.mastertek.service.dto.FaceDataDTO;
+import com.mastertek.service.dto.SearchOnIndexResultDTO;
 import com.vdt.face_recognition.sdk.Capturer;
 import com.vdt.face_recognition.sdk.FacerecService;
 import com.vdt.face_recognition.sdk.RawSample;
 import com.vdt.face_recognition.sdk.Recognizer;
 import com.vdt.face_recognition.sdk.Recognizer.MatchResult;
+import com.vdt.face_recognition.sdk.Recognizer.SearchAccelerationType;
+import com.vdt.face_recognition.sdk.Recognizer.SearchResult;
 import com.vdt.face_recognition.sdk.Template;
+import com.vdt.face_recognition.sdk.TemplatesIndex;
 
 @Service
 public class DiviEngineService {
@@ -42,6 +46,10 @@ public class DiviEngineService {
 	Capturer capturer;
 	
 	Recognizer recognizer;
+	
+	TemplatesIndex index;
+	
+	Vector<Template> templateList = new Vector<Template>();
 	
 	public DiviEngineService(ApplicationProperties applicationProperties,DeviceRepository deviceRepository) {
 		super();
@@ -72,8 +80,14 @@ public class DiviEngineService {
 		System.out.println(" 3 divi start bitti.");
 		System.out.println(" capturer:"+applicationProperties.getCapturer());
 		System.out.println(" recognizer:"+applicationProperties.getRecognizer());
+		
+		
 	}
 	
+	//@PostConstruct
+	public void prepareIndex() {
+		createIndex(templateList);
+	}
 	
 	
 	
@@ -161,5 +175,30 @@ public class DiviEngineService {
 		Vector<RawSample> samples=capturer.capture(out2.toByteArray());
 		Template template = recognizer.processing(samples.get(0));
 		return template;
+	}
+	
+	public void createIndex(Vector<Template> templateList) {
+		setTemplateList(templateList);
+		index = recognizer.createIndex(templateList,1 );
+	}
+	
+	public SearchOnIndexResultDTO searchOnIndex(Template template) {
+		SearchOnIndexResultDTO result = new SearchOnIndexResultDTO();
+		if(index == null || index.size()==0)
+			return result;
+		
+		Vector<SearchResult> matchResult = recognizer.search(template, index, 1, SearchAccelerationType.SEARCH_ACCELERATION_1);
+		result.setIndex(matchResult.get(0).i);
+		result.setScore(matchResult.get(0).matchResult.score);
+		
+		return result;
+	}
+
+	public Vector<Template> getTemplateList() {
+		return templateList;
+	}
+
+	public void setTemplateList(Vector<Template> templateList) {
+		this.templateList = templateList;
 	}
 }

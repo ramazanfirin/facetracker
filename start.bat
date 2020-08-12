@@ -1,1 +1,0 @@
-java -Djava.library.path="C:\Users\ramazan\Downloads\face_sdk-3.3.0.1-only_m9v30_m9v300_m9v1000_m6v7\face_sdk-3.3.0.1-only_m9v30_m9v300_m9v1000_m6v7\bin" -jar -Xmx2048m  "C:\Users\ramazan\git\facetracker\target\facetracker-0.0.1-SNAPSHOT.war" --httpPort=9095

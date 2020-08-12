@@ -1,13 +1,15 @@
 package com.mastertek.service;
 import static org.assertj.core.api.Assertions.assertThat;
 
-import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
 import java.io.File;
+import java.nio.file.Files;
 import java.time.Instant;
 import java.time.temporal.ChronoUnit;
+import java.util.Iterator;
 import java.util.List;
 import java.util.UUID;
+import java.util.Vector;
 
 import org.junit.Before;
 import org.junit.FixMethodOrder;
@@ -31,6 +33,8 @@ import com.mastertek.repository.DeviceRepository;
 import com.mastertek.repository.ImageRepository;
 import com.mastertek.repository.PersonRepository;
 import com.mastertek.repository.RecordRepository;
+import com.mastertek.service.dto.SearchOnIndexResultDTO;
+import com.vdt.face_recognition.sdk.Recognizer.SearchResult;
 import com.vdt.face_recognition.sdk.Template;
 
 
@@ -106,7 +110,7 @@ public class DiviFaceRecognitionServiceIntTest2 {
     	faceRecognitionService.analyze(UUID.randomUUID().toString(),file.getAbsolutePath());
     	List<Record> list = recordRepository.findAll();
     	assertThat(list.size()).isEqualTo(1);
-    	assertThat(list.get(0).getStatus()).isEqualTo(RecordStatus.NO_MATCHING);
+    	assertThat(list.get(0).getStatus()).isEqualTo(RecordStatus.NO_FACE_DETECTED);
     	
     	
     }
@@ -188,4 +192,107 @@ public class DiviFaceRecognitionServiceIntTest2 {
     	assertThat(record.getStatus()).isEqualTo(RecordStatus.NO_MATCHING);
     	
     } 
+    
+    @Test
+    public void indexTest() throws Exception {
+    	ClassLoader classLoader = getClass().getClassLoader();
+    	File file = new File(classLoader.getResource("faceimages/vesikalik").getFile());
+    	
+    	int index = 5;
+    	
+    	File[] files = file.listFiles();
+    	for (int i = 0; i < files.length; i++) {
+			File temp = files[i];
+			Person person = new Person();
+			person.setName(String.valueOf(i));
+			personRepository.save(person);
+			
+			byte[] bFile = Files.readAllBytes(temp.toPath());
+			
+			Template template = ayonixEngineService.getTemplate(bFile);
+	    	ByteArrayOutputStream bOutput = new ByteArrayOutputStream(1200);
+	    	template.save(bOutput);
+	    	
+	    	Image image = new Image();
+			image.setAfid(bOutput.toByteArray());
+			image.setAfidContentType("");
+			image.setImage(bFile);
+			image.setImageContentType("");
+			image.setPerson(person);
+			imageRepository.save(image);
+		}
+    	
+    	List<Image> images = imageRepository.findAll();
+    	assertThat(images.size()).isEqualTo(19);
+    	
+    	Vector<Template> templateList = new Vector<Template>();
+    	
+    	for (Iterator iterator = images.iterator(); iterator.hasNext();) {
+    		Image image = (Image) iterator.next();
+			Template temp = ayonixEngineService.loadTemplate(image.getAfid());
+			templateList.add(temp);
+    	}
+    	
+    	ayonixEngineService.createIndex(templateList);
+    	
+    	SearchOnIndexResultDTO result = ayonixEngineService.searchOnIndex(templateList.get(index));
+    		
+    	assertThat(result.getIndex()).isEqualTo(index);
+    	assertThat(result.getScore()).isEqualTo(1d);
+    	
+    	Image image = images.get(result.getIndex().intValue());
+    	assertThat(image.getPerson().getName()).isEqualTo(String.valueOf(index));
+    	System.out.println("dsf");
+    }
+    
+    
+    @Test
+    public void indexTest_2() throws Exception {
+    	ClassLoader classLoader = getClass().getClassLoader();
+    	File file = new File(classLoader.getResource("faceimages/vesikalik").getFile());
+    	
+    	int index = 5;
+    	
+    	File[] files = file.listFiles();
+    	for (int i = 0; i < files.length; i++) {
+			File temp = files[i];
+			Person person = new Person();
+			person.setName(String.valueOf(i));
+			personRepository.save(person);
+			
+			byte[] bFile = Files.readAllBytes(temp.toPath());
+			
+			Template template = ayonixEngineService.getTemplate(bFile);
+	    	ByteArrayOutputStream bOutput = new ByteArrayOutputStream(1200);
+	    	template.save(bOutput);
+	    	
+	    	Image image = new Image();
+			image.setAfid(bOutput.toByteArray());
+			image.setAfidContentType("");
+			image.setImage(bFile);
+			image.setImageContentType("");
+			image.setPerson(person);
+			imageRepository.save(image);
+		}
+    	
+    	List<Image> images = imageRepository.findAll();
+    	assertThat(images.size()).isEqualTo(19);
+    	
+    	Vector<Template> templateList = new Vector<Template>();
+    	
+    	for (Iterator iterator = images.iterator(); iterator.hasNext();) {
+    		Image image = (Image) iterator.next();
+			Template temp = ayonixEngineService.loadTemplate(image.getAfid());
+			templateList.add(temp);
+    	}
+    	
+    	//ayonixEngineService.createIndex(templateList);
+    	
+    	SearchOnIndexResultDTO result = ayonixEngineService.searchOnIndex(templateList.get(index));
+    		
+    	assertThat(result.getIndex()).isNull();
+    	assertThat(result.getScore()).isEqualTo(0d);
+    	
+    	
+    }
 }
