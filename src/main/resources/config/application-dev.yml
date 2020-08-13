@@ -40,9 +40,9 @@ spring:
         serialization.indent_output: true
     datasource:
         type: com.zaxxer.hikari.HikariDataSource
-        url: jdbc:mysql://mastertekdb.cfyototaodfv.us-east-2.rds.amazonaws.com/test?useUnicode=true&characterEncoding=utf8&useSSL=false
-        username: masterTek6634
-        password: 105957Grk.
+        url: jdbc:mysql://facetracker.masterteknoloji.net:3306/test2?useUnicode=true&characterEncoding=utf8&useSSL=false&allowPublicKeyRetrieval=true&serverTimezone=UTC
+        username: facetracker
+        password: ra5699mo
         hikari:
             data-source-properties:
                 cachePrepStmts: true

@@ -53,6 +53,7 @@ public class CacheConfiguration {
             cm.createCache(com.mastertek.domain.Floor.class.getName(), jcacheConfiguration);
             cm.createCache(com.mastertek.domain.Device.class.getName(), jcacheConfiguration);
             cm.createCache(com.mastertek.domain.Record.class.getName(), jcacheConfiguration);
+            cm.createCache(com.mastertek.domain.Compare.class.getName(), jcacheConfiguration);
             // jhipster-needle-ehcache-add-entry
         };
     }
