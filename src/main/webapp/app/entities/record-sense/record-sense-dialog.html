@@ -1,0 +1,138 @@
+
+<form name="editForm" role="form" novalidate ng-submit="vm.save()">
+
+    <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-hidden="true"
+                ng-click="vm.clear()">&times;</button>
+        <h4 class="modal-title" id="myRecordSenseLabel" data-translate="facetrackerApp.recordSense.home.createOrEditLabel">Create or edit a Record Sense</h4>
+    </div>
+    <div class="modal-body">
+        <jhi-alert-error></jhi-alert-error>
+        <div class="form-group" ng-show="vm.recordSense.id">
+            <label for="id" data-translate="global.field.id">ID</label>
+            <input type="text" class="form-control" id="id" name="id"
+                    ng-model="vm.recordSense.id" readonly />
+        </div>
+        <div class="form-group">
+            <label class="control-label" data-translate="facetrackerApp.recordSense.insert" for="field_insert">Insert</label>
+                <div class="input-group">
+                    <input id="field_insert" type="text" class="form-control" name="insert" datetime-picker="{{dateformat}}" ng-model="vm.recordSense.insert" is-open="vm.datePickerOpenStatus.insert"
+                    />
+                    <span class="input-group-btn">
+                        <button type="button" class="btn btn-default" ng-click="vm.openCalendar('insert')"><i class="glyphicon glyphicon-calendar"></i></button>
+                    </span>
+                </div>
+        </div>
+        <div class="form-group">
+            <label class="control-label" data-translate="facetrackerApp.recordSense.path" for="field_path">Path</label>
+            <input type="text" class="form-control" name="path" id="field_path"
+                    ng-model="vm.recordSense.path"
+                    />
+        </div>
+        <div class="form-group">
+            <label class="control-label" data-translate="facetrackerApp.recordSense.fileSentDate" for="field_fileSentDate">File Sent Date</label>
+                <div class="input-group">
+                    <input id="field_fileSentDate" type="text" class="form-control" name="fileSentDate" datetime-picker="{{dateformat}}" ng-model="vm.recordSense.fileSentDate" is-open="vm.datePickerOpenStatus.fileSentDate"
+                    />
+                    <span class="input-group-btn">
+                        <button type="button" class="btn btn-default" ng-click="vm.openCalendar('fileSentDate')"><i class="glyphicon glyphicon-calendar"></i></button>
+                    </span>
+                </div>
+        </div>
+        <div class="form-group">
+            <label class="control-label" data-translate="facetrackerApp.recordSense.fileCreationDate" for="field_fileCreationDate">File Creation Date</label>
+                <div class="input-group">
+                    <input id="field_fileCreationDate" type="text" class="form-control" name="fileCreationDate" datetime-picker="{{dateformat}}" ng-model="vm.recordSense.fileCreationDate" is-open="vm.datePickerOpenStatus.fileCreationDate"
+                    />
+                    <span class="input-group-btn">
+                        <button type="button" class="btn btn-default" ng-click="vm.openCalendar('fileCreationDate')"><i class="glyphicon glyphicon-calendar"></i></button>
+                    </span>
+                </div>
+        </div>
+        <div class="form-group">
+            <label class="control-label" data-translate="facetrackerApp.recordSense.processStartDate" for="field_processStartDate">Process Start Date</label>
+                <div class="input-group">
+                    <input id="field_processStartDate" type="text" class="form-control" name="processStartDate" datetime-picker="{{dateformat}}" ng-model="vm.recordSense.processStartDate" is-open="vm.datePickerOpenStatus.processStartDate"
+                    />
+                    <span class="input-group-btn">
+                        <button type="button" class="btn btn-default" ng-click="vm.openCalendar('processStartDate')"><i class="glyphicon glyphicon-calendar"></i></button>
+                    </span>
+                </div>
+        </div>
+        <div class="form-group">
+            <label class="control-label" data-translate="facetrackerApp.recordSense.processFinishDate" for="field_processFinishDate">Process Finish Date</label>
+                <div class="input-group">
+                    <input id="field_processFinishDate" type="text" class="form-control" name="processFinishDate" datetime-picker="{{dateformat}}" ng-model="vm.recordSense.processFinishDate" is-open="vm.datePickerOpenStatus.processFinishDate"
+                    />
+                    <span class="input-group-btn">
+                        <button type="button" class="btn btn-default" ng-click="vm.openCalendar('processFinishDate')"><i class="glyphicon glyphicon-calendar"></i></button>
+                    </span>
+                </div>
+        </div>
+        <div class="form-group">
+            <label class="control-label" data-translate="facetrackerApp.recordSense.status" for="field_status">Status</label>
+            <select class="form-control" name="status" ng-model="vm.recordSense.status" id="field_status">
+                <option value="NO_FACE_DETECTED" data-translate="facetrackerApp.RecordStatus.NO_FACE_DETECTED">NO_FACE_DETECTED</option>
+                <option value="NO_AFID_DETECTED" data-translate="facetrackerApp.RecordStatus.NO_AFID_DETECTED">NO_AFID_DETECTED</option>
+                <option value="WHITE_LIST_DETECTED" data-translate="facetrackerApp.RecordStatus.WHITE_LIST_DETECTED">WHITE_LIST_DETECTED</option>
+                <option value="BLACK_LIST_DETECTED" data-translate="facetrackerApp.RecordStatus.BLACK_LIST_DETECTED">BLACK_LIST_DETECTED</option>
+                <option value="NO_MATCHING" data-translate="facetrackerApp.RecordStatus.NO_MATCHING">NO_MATCHING</option>
+                <option value="ERROR" data-translate="facetrackerApp.RecordStatus.ERROR">ERROR</option>
+            </select>
+        </div>
+        <div class="form-group" ngf-drop ngf-change="vm.setAfid($file, vm.recordSense)">
+            <label class="control-label" data-translate="facetrackerApp.recordSense.afid" for="field_afid">Afid</label>
+            <div>
+                <div ng-if="vm.recordSense.afid" class="help-block clearfix">
+                    <a class="pull-left" ng-click="vm.openFile(vm.recordSense.afidContentType, vm.recordSense.afid)" data-translate="entity.action.open">open</a><br>
+                    <span class="pull-left">{{vm.recordSense.afidContentType}}, {{vm.byteSize(vm.recordSense.afid)}}</span>
+                    <button type="button" ng-click="vm.recordSense.afid=null;vm.recordSense.afidContentType=null;"
+                            class="btn btn-default btn-xs pull-right">
+                        <span class="glyphicon glyphicon-remove"></span>
+                    </button>
+                </div>
+                <button type="button" ngf-select class="btn btn-default btn-block"
+                        ngf-change="vm.setAfid($file, vm.recordSense)" data-translate="entity.action.addblob">
+                    Add blob
+                </button>
+            </div>
+            <input type="hidden" class="form-control" name="afid" id="field_afid"
+                    ng-model="vm.recordSense.afid"
+                    />
+            <input type="hidden" class="form-control" name="afidContentType" id="field_afidContentType"
+                    ng-model="vm.recordSense.afidContentType" />
+        </div>
+        <div class="form-group">
+            <label class="control-label" data-translate="facetrackerApp.recordSense.isProcessed" for="field_isProcessed">Is Processed</label>
+                <input type="checkbox" name="isProcessed" id="field_isProcessed"
+                          ng-model="vm.recordSense.isProcessed"/>
+        </div>
+        <div class="form-group">
+            <label class="control-label" data-translate="facetrackerApp.recordSense.similarity" for="field_similarity">Similarity</label>
+            <input type="number" class="form-control" name="similarity" id="field_similarity"
+                    ng-model="vm.recordSense.similarity"
+                    />
+        </div>
+
+        <div class="form-group">
+            <label data-translate="facetrackerApp.recordSense.device" for="field_device">Device</label>
+            <select class="form-control" id="field_device" name="device" ng-model="vm.recordSense.device" ng-options="device as device.id for device in vm.devices track by device.id">
+                <option value=""></option>
+            </select>
+        </div>
+        <div class="form-group">
+            <label data-translate="facetrackerApp.recordSense.image" for="field_image">Image</label>
+            <select class="form-control" id="field_image" name="image" ng-model="vm.recordSense.image" ng-options="image as image.id for image in vm.images track by image.id">
+                <option value=""></option>
+            </select>
+        </div>
+    </div>
+    <div class="modal-footer">
+        <button type="button" class="btn btn-default" data-dismiss="modal" ng-click="vm.clear()">
+            <span class="glyphicon glyphicon-ban-circle"></span>&nbsp;<span data-translate="entity.action.cancel">Cancel</span>
+        </button>
+        <button type="submit" ng-disabled="editForm.$invalid || vm.isSaving" class="btn btn-primary">
+            <span class="glyphicon glyphicon-save"></span>&nbsp;<span data-translate="entity.action.save">Save</span>
+        </button>
+    </div>
+</form>

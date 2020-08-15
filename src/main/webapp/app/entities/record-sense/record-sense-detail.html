@@ -1,0 +1,70 @@
+
+<div>
+    <h2><span data-translate="facetrackerApp.recordSense.detail.title">Record Sense</span> {{vm.recordSense.id}}</h2>
+    <hr>
+    <jhi-alert-error></jhi-alert-error>
+    <dl class="dl-horizontal jh-entity-details">
+        <dt><span data-translate="facetrackerApp.recordSense.insert">Insert</span></dt>
+        <dd>
+            <span>{{vm.recordSense.insert | date:'medium'}}</span>
+        </dd>
+        <dt><span data-translate="facetrackerApp.recordSense.path">Path</span></dt>
+        <dd>
+            <span>{{vm.recordSense.path}}</span>
+        </dd>
+        <dt><span data-translate="facetrackerApp.recordSense.fileSentDate">File Sent Date</span></dt>
+        <dd>
+            <span>{{vm.recordSense.fileSentDate | date:'medium'}}</span>
+        </dd>
+        <dt><span data-translate="facetrackerApp.recordSense.fileCreationDate">File Creation Date</span></dt>
+        <dd>
+            <span>{{vm.recordSense.fileCreationDate | date:'medium'}}</span>
+        </dd>
+        <dt><span data-translate="facetrackerApp.recordSense.processStartDate">Process Start Date</span></dt>
+        <dd>
+            <span>{{vm.recordSense.processStartDate | date:'medium'}}</span>
+        </dd>
+        <dt><span data-translate="facetrackerApp.recordSense.processFinishDate">Process Finish Date</span></dt>
+        <dd>
+            <span>{{vm.recordSense.processFinishDate | date:'medium'}}</span>
+        </dd>
+        <dt><span data-translate="facetrackerApp.recordSense.status">Status</span></dt>
+        <dd>
+            <span data-translate="{{'facetrackerApp.RecordStatus.' + vm.recordSense.status}}">{{vm.recordSense.status}}</span>
+        </dd>
+        <dt><span data-translate="facetrackerApp.recordSense.afid">Afid</span></dt>
+        <dd>
+            <div ng-if="vm.recordSense.afid">
+                <a ng-click="vm.openFile(vm.recordSense.afidContentType, vm.recordSense.afid)" data-translate="entity.action.open">open</a>
+                {{vm.recordSense.afidContentType}}, {{vm.byteSize(vm.recordSense.afid)}}
+            </div>
+        </dd>
+        <dt><span data-translate="facetrackerApp.recordSense.isProcessed">Is Processed</span></dt>
+        <dd>
+            <span>{{vm.recordSense.isProcessed}}</span>
+        </dd>
+        <dt><span data-translate="facetrackerApp.recordSense.similarity">Similarity</span></dt>
+        <dd>
+            <span>{{vm.recordSense.similarity}}</span>
+        </dd>
+        <dt><span data-translate="facetrackerApp.recordSense.device">Device</span></dt>
+        <dd>
+            <a ui-sref="device-detail({id:vm.recordSense.device.id})">{{vm.recordSense.device.id}}</a>
+        </dd>
+        <dt><span data-translate="facetrackerApp.recordSense.image">Image</span></dt>
+        <dd>
+            <a ui-sref="image-detail({id:vm.recordSense.image.id})">{{vm.recordSense.image.id}}</a>
+        </dd>
+    </dl>
+
+    <button type="submit"
+            ui-sref="{{ vm.previousState }}"
+            class="btn btn-info">
+        <span class="glyphicon glyphicon-arrow-left"></span>&nbsp;<span data-translate="entity.action.back"> Back</span>
+    </button>
+
+    <button type="button" ui-sref="record-sense-detail.edit({id:vm.recordSense.id})" class="btn btn-primary">
+        <span class="glyphicon glyphicon-pencil"></span>
+        <span class="hidden-sm-down" data-translate="entity.action.edit"> Edit</span>
+    </button>
+</div>

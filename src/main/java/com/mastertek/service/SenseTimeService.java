@@ -118,7 +118,7 @@ public class SenseTimeService {
 		
 		FileBody fileBody = new FileBody(new File(path), ContentType.DEFAULT_BINARY);
 		StringBody msg_id = new StringBody("772", ContentType.MULTIPART_FORM_DATA);
-		StringBody lib_ids = new StringBody("3", ContentType.MULTIPART_FORM_DATA);
+		StringBody lib_ids = new StringBody("5", ContentType.MULTIPART_FORM_DATA);
 		StringBody threshold = new StringBody("85", ContentType.MULTIPART_FORM_DATA);
 		StringBody topk = new StringBody("1", ContentType.MULTIPART_FORM_DATA);
 		StringBody n_topk = new StringBody("1", ContentType.MULTIPART_FORM_DATA);
@@ -150,7 +150,7 @@ public class SenseTimeService {
 		}
 		String result = EntityUtils.toString(response.getEntity());
 
-		JsonNode actualObj = objectMapper.readTree(result);
+ 		JsonNode actualObj = objectMapper.readTree(result);
 		Long code = actualObj.get("code").asLong();
 		if(code!=0)
 			throw new RuntimeException("Senstime Business Exception");

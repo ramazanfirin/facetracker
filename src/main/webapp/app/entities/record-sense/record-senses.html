@@ -1,0 +1,89 @@
+<div>
+    <h2 data-translate="facetrackerApp.recordSense.home.title">Record Senses</h2>
+    <jhi-alert></jhi-alert>
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-xs-4 no-padding-left">
+                <button class="btn btn-primary" ui-sref="record-sense.new" >
+                    <span class="glyphicon glyphicon-plus"></span>
+                    <span  data-translate="facetrackerApp.recordSense.home.createLabel">
+                        Create new Record Sense
+                    </span>
+                </button>
+            </div>
+        </div>
+    </div>
+    <br/>
+    <div class="table-responsive">
+        <table class="jh-table table table-striped">
+            <thead>
+                <tr jh-sort="vm.predicate" ascending="vm.reverse" callback="vm.transition()">
+                    <th jh-sort-by="id"><span data-translate="global.field.id">ID</span> <span class="glyphicon glyphicon-sort"></span></th>
+                    <th jh-sort-by="insert"><span data-translate="facetrackerApp.recordSense.insert">Insert</span> <span class="glyphicon glyphicon-sort"></span></th>
+                    <th jh-sort-by="path"><span data-translate="facetrackerApp.recordSense.path">Path</span> <span class="glyphicon glyphicon-sort"></span></th>
+                    <th jh-sort-by="fileSentDate"><span data-translate="facetrackerApp.recordSense.fileSentDate">File Sent Date</span> <span class="glyphicon glyphicon-sort"></span></th>
+                    <th jh-sort-by="fileCreationDate"><span data-translate="facetrackerApp.recordSense.fileCreationDate">File Creation Date</span> <span class="glyphicon glyphicon-sort"></span></th>
+                    <th jh-sort-by="processStartDate"><span data-translate="facetrackerApp.recordSense.processStartDate">Process Start Date</span> <span class="glyphicon glyphicon-sort"></span></th>
+                    <th jh-sort-by="processFinishDate"><span data-translate="facetrackerApp.recordSense.processFinishDate">Process Finish Date</span> <span class="glyphicon glyphicon-sort"></span></th>
+                    <th jh-sort-by="status"><span data-translate="facetrackerApp.recordSense.status">Status</span> <span class="glyphicon glyphicon-sort"></span></th>
+                    <th jh-sort-by="afid"><span data-translate="facetrackerApp.recordSense.afid">Afid</span> <span class="glyphicon glyphicon-sort"></span></th>
+                    <th jh-sort-by="isProcessed"><span data-translate="facetrackerApp.recordSense.isProcessed">Is Processed</span> <span class="glyphicon glyphicon-sort"></span></th>
+                    <th jh-sort-by="similarity"><span data-translate="facetrackerApp.recordSense.similarity">Similarity</span> <span class="glyphicon glyphicon-sort"></span></th>
+                    <th jh-sort-by="device.id"><span data-translate="facetrackerApp.recordSense.device">Device</span> <span class="glyphicon glyphicon-sort"></span></th>
+                    <th jh-sort-by="image.id"><span data-translate="facetrackerApp.recordSense.image">Image</span> <span class="glyphicon glyphicon-sort"></span></th>
+                    <th></th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr ng-repeat="recordSense in vm.recordSenses track by recordSense.id">
+                    <td><a ui-sref="record-sense-detail({id:recordSense.id})">{{recordSense.id}}</a></td>
+                    <td>{{recordSense.insert | date:'medium'}}</td>
+                    <td>{{recordSense.path}}</td>
+                    <td>{{recordSense.fileSentDate | date:'medium'}}</td>
+                    <td>{{recordSense.fileCreationDate | date:'medium'}}</td>
+                    <td>{{recordSense.processStartDate | date:'medium'}}</td>
+                    <td>{{recordSense.processFinishDate | date:'medium'}}</td>
+                    <td data-translate="{{'facetrackerApp.RecordStatus.' + recordSense.status}}">{{recordSense.status}}</td>
+                    <td>
+                        <a ng-if="recordSense.afid" ng-click="vm.openFile(recordSense.afidContentType, recordSense.afid)" data-translate="entity.action.open">open</a>
+                        <span ng-if="recordSense.afid">{{recordSense.afidContentType}}, {{vm.byteSize(recordSense.afid)}}</span>
+                    </td>
+                    <td>{{recordSense.isProcessed}}</td>
+                    <td>{{recordSense.similarity}}</td>
+                    <td>
+                        <a ui-sref="device-detail({id:recordSense.device.id})">{{recordSense.device.id}}</a>
+                    </td>
+                    <td>
+                        <a ui-sref="image-detail({id:recordSense.image.id})">{{recordSense.image.id}}</a>
+                    </td>
+                    <td class="text-right">
+                        <div class="btn-group flex-btn-group-container">
+                            <button type="submit"
+                                    ui-sref="record-sense-detail({id:recordSense.id})"
+                                    class="btn btn-info btn-sm">
+                                <span class="glyphicon glyphicon-eye-open"></span>
+                                <span class="hidden-sm-down" data-translate="entity.action.view"></span>
+                            </button>
+                            <button type="submit"
+                                    ui-sref="record-sense.edit({id:recordSense.id})"
+                                    class="btn btn-primary btn-sm">
+                                <span class="glyphicon glyphicon-pencil"></span>
+                                <span class="hidden-sm-down" data-translate="entity.action.edit"></span>
+                            </button>
+                            <button type="submit"
+                                    ui-sref="record-sense.delete({id:recordSense.id})"
+                                    class="btn btn-danger btn-sm">
+                                <span class="glyphicon glyphicon-remove-circle"></span>
+                                <span class="hidden-sm-down" data-translate="entity.action.delete"></span>
+                            </button>
+                        </div>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+    <div class="text-center">
+        <jhi-item-count page="vm.page" total="vm.queryCount" items-per-page="vm.itemsPerPage"></jhi-item-count>
+        <uib-pagination class="pagination-sm" total-items="vm.totalItems" items-per-page="vm.itemsPerPage" ng-model="vm.page" ng-change="vm.transition()"></uib-pagination>
+    </div>
+</div>

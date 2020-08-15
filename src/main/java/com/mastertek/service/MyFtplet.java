@@ -25,15 +25,18 @@ public class MyFtplet extends DefaultFtplet {
 	
 	FaceRecognitionService faceRecognitionService;
 	
+	FaceRecognitionSenseTimeService faceRecognitionSenseTimeService;
+	
 	String readDirectory;
 	
 	private final ApplicationProperties applicationProperties ;
 
-	public MyFtplet(FaceRecognitionService faceRecognitionService, String readDirectory,ApplicationProperties applicationProperties) {
+	public MyFtplet(FaceRecognitionService faceRecognitionService, String readDirectory,ApplicationProperties applicationProperties,FaceRecognitionSenseTimeService faceRecognitionSenseTimeService) {
 		super();
 		this.faceRecognitionService = faceRecognitionService;
 		this.readDirectory = readDirectory;
 		this.applicationProperties = applicationProperties;
+		this.faceRecognitionSenseTimeService = faceRecognitionSenseTimeService;
 	}
 
 
@@ -56,6 +59,18 @@ public class MyFtplet extends DefaultFtplet {
 			faceRecognitionService.analyze(uuid, path);
 		
 			log.info(request.getArgument() +" ftp  finish");
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
+		try {
+			String uuid = UUID.randomUUID().toString();
+			log.info(request.getArgument() +" ftp  start for sense time");
+	    
+			faceRecognitionSenseTimeService.analyze(uuid, path);
+		
+			log.info(request.getArgument() +" ftp  finish for sense time");
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();

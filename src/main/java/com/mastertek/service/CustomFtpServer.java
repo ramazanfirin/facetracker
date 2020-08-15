@@ -28,24 +28,27 @@ public class CustomFtpServer {
 	
 	FaceRecognitionService faceRecognitionService;
 	
+	FaceRecognitionSenseTimeService faceRecognitionSenseTimeService;
+	
 	ApplicationProperties applicationProperties;
 	
 	FtpServer server;
 	
 	LinkedBlockingQueue<String> quene = new LinkedBlockingQueue<String>(10000);
 	 
-	public CustomFtpServer(FaceRecognitionService faceRecognitionService,ApplicationProperties applicationProperties) {
+	public CustomFtpServer(FaceRecognitionService faceRecognitionService,FaceRecognitionSenseTimeService faceRecognitionSenseTimeService,ApplicationProperties applicationProperties) {
 		super();
 		// TODO Auto-generated constructor stub
 		this.faceRecognitionService = faceRecognitionService;
 		this.applicationProperties = applicationProperties;
+		this.faceRecognitionSenseTimeService = faceRecognitionSenseTimeService;
 	}
 
 @PostConstruct
 public void init() throws FtpException, IOException {
 
     FtpServerFactory serverFactory = new FtpServerFactory();
-    serverFactory.getFtplets().put("uploadNOtify",  new MyFtplet(faceRecognitionService,applicationProperties.getFtpDirectory(),applicationProperties));
+    serverFactory.getFtplets().put("uploadNOtify",  new MyFtplet(faceRecognitionService,applicationProperties.getFtpDirectory(),applicationProperties,faceRecognitionSenseTimeService));
 	
     PropertiesUserManagerFactory userManagerFactory = new PropertiesUserManagerFactory();
 	

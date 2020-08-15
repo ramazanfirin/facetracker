@@ -1,41 +1,25 @@
 package com.mastertek.service;
 
-import java.awt.image.BufferedImage;
-import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.IOException;
-import java.net.MalformedURLException;
-import java.nio.file.Files;
-import java.nio.file.attribute.BasicFileAttributes;
 import java.time.Instant;
 import java.util.List;
-import java.util.UUID;
-import java.util.concurrent.CopyOnWriteArrayList;
-import java.util.concurrent.ExecutorService;
-import java.util.concurrent.Executors;
-import java.util.concurrent.TimeUnit;
-
-import javax.annotation.PostConstruct;
-import javax.imageio.ImageIO;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import com.fasterxml.jackson.databind.ObjectMapper;
 import com.mastertek.config.ApplicationProperties;
 import com.mastertek.domain.Device;
 import com.mastertek.domain.Record;
+import com.mastertek.domain.RecordSense;
 import com.mastertek.domain.enumeration.RecordStatus;
 import com.mastertek.repository.DeviceRepository;
 import com.mastertek.repository.RecordRepository;
+import com.mastertek.repository.RecordSenseRepository;
 import com.mastertek.service.dto.FaceDataDTO;
 import com.mastertek.service.util.FaceUtil;
-
-import ayonix.AyonixFace;
 
 
 @Service
@@ -47,19 +31,22 @@ public class FaceRecognitionSenseTimeService {
 	
 	final private DiviEngineService ayonixEngineService;
 	
-	final private RecordRepository recordRepository;
+	final private RecordSenseRepository recordSenseRepository;
 	
 	final private DeviceRepository deviceRepository;
 	
 	final private MatchingService matchingService;
 	
-	public FaceRecognitionSenseTimeService(ApplicationProperties applicationProperties,DiviEngineService ayonixEngineService,RecordRepository recordRepository,DeviceRepository deviceRepository,MatchingService matchingService) throws Exception {
+	final private SenseTimeService senseTimeService;
+	
+	public FaceRecognitionSenseTimeService(ApplicationProperties applicationProperties,DiviEngineService ayonixEngineService,RecordSenseRepository recordSenseRepository,DeviceRepository deviceRepository,MatchingService matchingService,SenseTimeService senseTimeService) throws Exception {
 		super();
 		this.applicationProperties = applicationProperties;
 		this.ayonixEngineService = ayonixEngineService;
-		this.recordRepository = recordRepository;
+		this.recordSenseRepository = recordSenseRepository;
 		this.deviceRepository = deviceRepository;
 		this.matchingService = matchingService;
+		this.senseTimeService = senseTimeService;
 	}
 	
 	
@@ -70,36 +57,34 @@ public class FaceRecognitionSenseTimeService {
 
 	//@Async
 	public void analyze(String uuid,String fileName,Long fileCatalogId) throws Exception {
-		Record record = new Record();
+		RecordSense recordSense = new RecordSense();
 		try {
 			log.info("uuid="+uuid+",filename:"+fileName+" analiz başlıyor");
 			File file = new File(fileName);
-			record = startFileProcessing(fileName);
+			recordSense = startFileProcessing(fileName);
 			
-			List<FaceDataDTO> faceDataDTOList = ayonixEngineService.analyze(fileName);
-			if(faceDataDTOList.size() == 0) {
-				NoFaceDetected(record);
+			String token = senseTimeService.login();
+			Boolean hasFace = senseTimeService.hasFace(fileName, token);
+			if(!hasFace) {
+				NoFaceDetected(recordSense);
 			}else {
-				FaceDataDTO faceDataDTO = faceDataDTOList.get(0);
-				record.setAfid(faceDataDTO.getTemplate());
-				record.setDiviTemplate(faceDataDTO.getDiviTemplate());
-				saveRecord(record);
+				saveRecord(recordSense,token);
 			}
 
-			finishFileProcessing(record);
+			finishFileProcessing(recordSense);
 			log.info("uuid="+uuid+",filename:"+fileName+" analiz bitti");
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
-			record.setPath(fileName);
-			record.setIsProcessed(false);
-			record.setStatus(RecordStatus.ERROR);
-			recordRepository.save(record);
+			recordSense.setPath(fileName);
+			recordSense.setIsProcessed(false);
+			recordSense.setStatus(RecordStatus.ERROR);
+			recordSenseRepository.save(recordSense);
 		}
 	}
 	
-	private Record startFileProcessing(String fileName) throws Exception {
-		Record record = new Record();
+	private RecordSense startFileProcessing(String fileName) throws Exception {
+		RecordSense record = new RecordSense();
 		//record.setFileCreationDate(Files.readAttributes(fileName, BasicFileAttributes.class).creationTime().toInstant());
 		record.setFileSentDate(FaceUtil.getCreateDate(fileName));
 		record.setProcessStartDate(Instant.now());
@@ -116,39 +101,31 @@ public class FaceRecognitionSenseTimeService {
 	    record.setDevice(device);
 		record.setPath(fileName);
 		record.setIsProcessed(false);
-		recordRepository.save(record);
+		recordSenseRepository.save(record);
 		
 		return record;
 	}
 
-	private void finishFileProcessing(Record record) {
+	private void finishFileProcessing(RecordSense record) {
 		record.setProcessFinishDate(Instant.now());
-		recordRepository.save(record);
+		recordSenseRepository.save(record);
 	}
 	
 
-	private void NoFaceDetected(Record record) throws IOException {
+	private void NoFaceDetected(RecordSense record) throws IOException {
 		record.setStatus(RecordStatus.NO_FACE_DETECTED);
 		record.setProcessFinishDate(Instant.now());
-		recordRepository.save(record);
+		recordSenseRepository.save(record);
 	}
 	
-	private void NoAfidDetected(Record record) throws IOException {
+	private void NoAfidDetected(RecordSense record) throws IOException {
 		record.setStatus(RecordStatus.NO_AFID_DETECTED);
 		record.setProcessFinishDate(Instant.now());
-		recordRepository.save(record);
+		recordSenseRepository.save(record);
 	}
 	
-	private void saveRecord(Record record) throws Exception {
-		
-		if(record.getAfid()==null) {
-			NoAfidDetected(record);
-			return;
-		}	
-		
-		
-		
-		matchingService.checkForMatching(record);
+	private void saveRecord(RecordSense record,String token) throws Exception {
+		matchingService.checkForMatching(record,token);
 		
 	}
 	

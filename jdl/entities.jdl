@@ -44,7 +44,18 @@ entity Record{
 	isProcessed Boolean
 	similarity Float
 }
-
+entity RecordSense{
+	insert Instant
+	path String
+	fileSentDate Instant 
+    fileCreationDate Instant
+	processStartDate Instant
+    processFinishDate Instant
+    status RecordStatus 
+    afid AnyBlob
+	isProcessed Boolean
+	similarity Float
+}
 relationship OneToMany {
     Person{images} to Image
 }
@@ -55,6 +66,9 @@ relationship ManyToOne {
 	Device{floor} to Floor
 	Floor{store} to Building
 	Building{company} to Company
+	
+	RecordSense{device} to Device
+	RecordSense{image} to Image
 }
 
 entity Compare{
@@ -65,4 +79,4 @@ entity Compare{
 }
 
 
-paginate Record with pagination  
+paginate Record,RecordSense with pagination  

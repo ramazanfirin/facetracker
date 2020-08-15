@@ -21,9 +21,11 @@ import com.mastertek.FacetrackerApp;
 import com.mastertek.config.ApplicationProperties;
 import com.mastertek.domain.Device;
 import com.mastertek.domain.Record;
+import com.mastertek.domain.RecordSense;
 import com.mastertek.domain.enumeration.RecordStatus;
 import com.mastertek.repository.DeviceRepository;
 import com.mastertek.repository.RecordRepository;
+import com.mastertek.repository.RecordSenseRepository;
 import com.mastertek.service.util.CountBuddyUtil;
 import com.mastertek.service.util.FtpWorkerThread;
 
@@ -40,6 +42,9 @@ public class FtpServiceIntTest {
 	
 	@Autowired
     private RecordRepository recordRepository;
+	
+	@Autowired
+    private RecordSenseRepository recordSenseRepository;
 	
 	@Autowired
     private DeviceRepository deviceRepository;
@@ -65,15 +70,36 @@ public class FtpServiceIntTest {
 
     	FileUtils.cleanDirectory(new File(applicationProperties.getFtpDirectory()));
     	ClassLoader classLoader = getClass().getClassLoader();
-    	File file = new File(classLoader.getResource("faceimages/Face_733935_19121_1557049797506.jpg").getFile());
-    	deviceRepository.findAll();
+    	File file = new File(classLoader.getResource("faceimages/Face_733935_42839_1566849042090.jpg").getFile());
+  
+    	CountBuddyUtil.sendFtpFile("localhost", applicationProperties.getFtpPort().intValue(), file,applicationProperties.getFtpDefaultUser(),applicationProperties.getFtpDefaultPassord());
+    	
+    	List<Record> list = recordRepository.findAll();
+    	assertThat(list.size()).isEqualTo(1);
+    	assertThat(list.get(0).getStatus()).isEqualTo(RecordStatus.NO_FACE_DETECTED);
+    	
+    	List<RecordSense> list2 = recordSenseRepository.findAll();
+    	assertThat(list2.size()).isEqualTo(1);
+    	assertThat(list2.get(0).getStatus()).isEqualTo(RecordStatus.NO_MATCHING);
+    }	
+    
+    @Test
+    public void ftpTest2() throws Exception {
+
+    	FileUtils.cleanDirectory(new File(applicationProperties.getFtpDirectory()));
+    	ClassLoader classLoader = getClass().getClassLoader();
+    	File file = new File(classLoader.getResource("faceimages/Face_733935_42839_1566849042091.jpg").getFile());
+  
     	CountBuddyUtil.sendFtpFile("localhost", applicationProperties.getFtpPort().intValue(), file,applicationProperties.getFtpDefaultUser(),applicationProperties.getFtpDefaultPassord());
     	
     	List<Record> list = recordRepository.findAll();
     	assertThat(list.size()).isEqualTo(1);
     	assertThat(list.get(0).getStatus()).isEqualTo(RecordStatus.NO_MATCHING);
+    	
+    	List<RecordSense> list2 = recordSenseRepository.findAll();
+    	assertThat(list2.size()).isEqualTo(1);
+    	assertThat(list2.get(0).getStatus()).isEqualTo(RecordStatus.WHITE_LIST_DETECTED);
     }	
-    
     
     @Test
 	public void performanceTest_2() throws Exception {

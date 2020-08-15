@@ -113,7 +113,7 @@ jhipster:
 # ===================================================================
 
 application:
-    ftpDirectory: c:\publicDirectoryTest
+    ftpDirectory: c:\publicDirectoryTest2
     passowordFile: c:\publicDirectory\myftpusers.properties
     ftpPort: 21212
     passiveExternalAddress: localhost

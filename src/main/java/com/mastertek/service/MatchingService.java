@@ -1,17 +1,22 @@
 package com.mastertek.service;
 
+import java.io.IOException;
 import java.time.Instant;
 import java.util.Iterator;
 import java.util.List;
 
+import org.apache.http.client.ClientProtocolException;
 import org.springframework.stereotype.Service;
 
 import com.mastertek.domain.Image;
 import com.mastertek.domain.Record;
+import com.mastertek.domain.RecordSense;
 import com.mastertek.domain.enumeration.PersonType;
 import com.mastertek.domain.enumeration.RecordStatus;
 import com.mastertek.repository.ImageRepository;
 import com.mastertek.repository.RecordRepository;
+import com.mastertek.repository.RecordSenseRepository;
+import com.mastertek.web.rest.util.sensetime.SearchResult;
 import com.mastertek.web.rest.vm.MatchResultVM;
 import com.vdt.face_recognition.sdk.Template;
 
@@ -26,16 +31,23 @@ public class MatchingService {
 
 	final private RecordRepository recordRepository;
 	
+	final private RecordSenseRepository recordSenseRepository;
+	
 	final private DiviEngineService ayonixEngineService;
 	
+	final private SenseTimeService senseTimeService;
+	
 	public MatchingService(MatchingWhiteListService matchingWhiteListService,
-			MatchingBlackListService matchingBlackListService,ImageRepository imageRepository,RecordRepository recordRepository,DiviEngineService ayonixEngineService) {
+			MatchingBlackListService matchingBlackListService,ImageRepository imageRepository,RecordRepository recordRepository,
+			DiviEngineService ayonixEngineService,RecordSenseRepository recordSenseRepository,SenseTimeService senseTimeService) {
 		super();
 		this.matchingWhiteListService = matchingWhiteListService;
 		this.matchingBlackListService = matchingBlackListService;
 		this.imageRepository = imageRepository;
 		this.recordRepository = recordRepository;
 		this.ayonixEngineService = ayonixEngineService;
+		this.recordSenseRepository = recordSenseRepository;
+		this.senseTimeService = senseTimeService;
 	}
 
 	public Record checkForMatching(Record record) {
@@ -63,6 +75,26 @@ public class MatchingService {
 		record.setIsProcessed(true);
 		record.setProcessFinishDate(Instant.now());
 		recordRepository.save(record);
+		
+		return record;
+	}
+	
+	public RecordSense checkForMatching(RecordSense record,String sessionId) throws Exception {
+		SearchResult ad= senseTimeService.search(record.getPath(), sessionId);
+		
+		record.setSimilarity(ad.getSimilarity().floatValue());
+		if(ad.getSimilarity()>0.85) {
+			Image image = imageRepository.findOne(ad.getPersonId());
+			record.setImage(image);
+			record.setStatus(RecordStatus.WHITE_LIST_DETECTED);
+			recordSenseRepository.save(record);
+		}else {
+			record.setStatus(RecordStatus.NO_MATCHING);
+		}
+		
+		record.setIsProcessed(true);
+		record.setProcessFinishDate(Instant.now());
+		recordSenseRepository.save(record);
 		
 		return record;
 	}

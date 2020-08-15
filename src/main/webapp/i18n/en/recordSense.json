@@ -1,0 +1,32 @@
+{
+    "facetrackerApp": {
+        "recordSense" : {
+            "home": {
+                "title": "Record Senses",
+                "createLabel": "Create a new Record Sense",
+                "createOrEditLabel": "Create or edit a Record Sense"
+            },
+            "created": "A new Record Sense is created with identifier {{ param }}",
+            "updated": "A Record Sense is updated with identifier {{ param }}",
+            "deleted": "A Record Sense is deleted with identifier {{ param }}",
+            "delete": {
+                "question": "Are you sure you want to delete Record Sense {{ id }}?"
+            },
+            "detail": {
+                "title": "Record Sense"
+            },
+            "insert": "Insert",
+            "path": "Path",
+            "fileSentDate": "File Sent Date",
+            "fileCreationDate": "File Creation Date",
+            "processStartDate": "Process Start Date",
+            "processFinishDate": "Process Finish Date",
+            "status": "Status",
+            "afid": "Afid",
+            "isProcessed": "Is Processed",
+            "similarity": "Similarity",
+            "device": "Device",
+            "image": "Image"
+        }
+    }
+}
