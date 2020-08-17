@@ -21,12 +21,13 @@
                     <th jh-sort-by="id"><span data-translate="global.field.id">ID</span> <span class="glyphicon glyphicon-sort"></span></th>
                     <th jh-sort-by="insert"><span data-translate="facetrackerApp.recordSense.insert">Insert</span> <span class="glyphicon glyphicon-sort"></span></th>
                     <th jh-sort-by="path"><span data-translate="facetrackerApp.recordSense.path">Path</span> <span class="glyphicon glyphicon-sort"></span></th>
-                    <th jh-sort-by="fileSentDate"><span data-translate="facetrackerApp.recordSense.fileSentDate">File Sent Date</span> <span class="glyphicon glyphicon-sort"></span></th>
-                    <th jh-sort-by="fileCreationDate"><span data-translate="facetrackerApp.recordSense.fileCreationDate">File Creation Date</span> <span class="glyphicon glyphicon-sort"></span></th>
-                    <th jh-sort-by="processStartDate"><span data-translate="facetrackerApp.recordSense.processStartDate">Process Start Date</span> <span class="glyphicon glyphicon-sort"></span></th>
-                    <th jh-sort-by="processFinishDate"><span data-translate="facetrackerApp.recordSense.processFinishDate">Process Finish Date</span> <span class="glyphicon glyphicon-sort"></span></th>
+<!--                     <th jh-sort-by="fileSentDate"><span data-translate="facetrackerApp.recordSense.fileSentDate">File Sent Date</span> <span class="glyphicon glyphicon-sort"></span></th> -->
+<!--                     <th jh-sort-by="fileCreationDate"><span data-translate="facetrackerApp.recordSense.fileCreationDate">File Creation Date</span> <span class="glyphicon glyphicon-sort"></span></th> -->
+<!--                     <th jh-sort-by="processStartDate"><span data-translate="facetrackerApp.recordSense.processStartDate">Process Start Date</span> <span class="glyphicon glyphicon-sort"></span></th> -->
+                   <th jh-sort-by="image.id"><span data-translate="facetrackerApp.recordSense.image">Image</span> <span class="glyphicon glyphicon-sort"></span></th>
+                   <th jh-sort-by="processFinishDate"><span data-translate="facetrackerApp.recordSense.processFinishDate">Process Finish Date</span> <span class="glyphicon glyphicon-sort"></span></th>
                     <th jh-sort-by="status"><span data-translate="facetrackerApp.recordSense.status">Status</span> <span class="glyphicon glyphicon-sort"></span></th>
-                    <th jh-sort-by="afid"><span data-translate="facetrackerApp.recordSense.afid">Afid</span> <span class="glyphicon glyphicon-sort"></span></th>
+<!--                     <th jh-sort-by="afid"><span data-translate="facetrackerApp.recordSense.afid">Afid</span> <span class="glyphicon glyphicon-sort"></span></th> -->
                     <th jh-sort-by="isProcessed"><span data-translate="facetrackerApp.recordSense.isProcessed">Is Processed</span> <span class="glyphicon glyphicon-sort"></span></th>
                     <th jh-sort-by="similarity"><span data-translate="facetrackerApp.recordSense.similarity">Similarity</span> <span class="glyphicon glyphicon-sort"></span></th>
                     <th jh-sort-by="device.id"><span data-translate="facetrackerApp.recordSense.device">Device</span> <span class="glyphicon glyphicon-sort"></span></th>
@@ -38,23 +39,24 @@
                 <tr ng-repeat="recordSense in vm.recordSenses track by recordSense.id">
                     <td><a ui-sref="record-sense-detail({id:recordSense.id})">{{recordSense.id}}</a></td>
                     <td>{{recordSense.insert | date:'medium'}}</td>
-                    <td>{{recordSense.path}}</td>
-                    <td>{{recordSense.fileSentDate | date:'medium'}}</td>
-                    <td>{{recordSense.fileCreationDate | date:'medium'}}</td>
-                    <td>{{recordSense.processStartDate | date:'medium'}}</td>
-                    <td>{{recordSense.processFinishDate | date:'medium'}}</td>
-                    <td data-translate="{{'facetrackerApp.RecordStatus.' + recordSense.status}}">{{recordSense.status}}</td>
+                    <td><img width="100" height="100"  ng-src="/api/records/showImage?path={{record.path}}">
+                    {{recordSense.path}}</td>
                     <td>
-                        <a ng-if="recordSense.afid" ng-click="vm.openFile(recordSense.afidContentType, recordSense.afid)" data-translate="entity.action.open">open</a>
-                        <span ng-if="recordSense.afid">{{recordSense.afidContentType}}, {{vm.byteSize(recordSense.afid)}}</span>
+                       	<img data-ng-src="{{'data:' + recordSense.image.imageContentType + ';base64,' + recordSense.image.image}}" 
+                        style="max-height: 100px;" ng-if="recordSense.image.image" alt="image image"/>
+                        {{record.image.person.name}}
                     </td>
+                    <td>{{recordSense.processFinishDate | date:'medium'}}</td>
+                    <td>{{recordSense.status}}</td>
+<!--                     <td> -->
+<!-- <!--                         <a ng-if="recordSense.afid" ng-click="vm.openFile(recordSense.afidContentType, recordSense.afid)" data-translate="entity.action.open">open</a> --> -->
+<!-- <!--                         <span ng-if="recordSense.afid">{{recordSense.afidContentType}}, {{vm.byteSize(recordSense.afid)}}</span> --> -->
+<!--                     </td> -->
                     <td>{{recordSense.isProcessed}}</td>
                     <td>{{recordSense.similarity}}</td>
+                   
                     <td>
-                        <a ui-sref="device-detail({id:recordSense.device.id})">{{recordSense.device.id}}</a>
-                    </td>
-                    <td>
-                        <a ui-sref="image-detail({id:recordSense.image.id})">{{recordSense.image.id}}</a>
+                          <a ui-sref="device-detail({id:record.device.id})">{{recordSense.device.description}}</a>
                     </td>
                     <td class="text-right">
                         <div class="btn-group flex-btn-group-container">
