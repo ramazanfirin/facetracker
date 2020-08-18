@@ -83,7 +83,7 @@ public class MatchingService {
 		SearchResult ad= senseTimeService.search(record.getPath(), sessionId);
 		
 		record.setSimilarity(ad.getSimilarity().floatValue());
-		if(ad.getSimilarity()>0.85) {
+		if(ad.getSimilarity()>0.80) {
 			Image image = imageRepository.findOne(ad.getPersonId());
 			record.setImage(image);
 			record.setStatus(RecordStatus.WHITE_LIST_DETECTED);

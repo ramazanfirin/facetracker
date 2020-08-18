@@ -1,6 +1,7 @@
 package com.mastertek.web.rest;
 
 import com.codahale.metrics.annotation.Timed;
+import com.mastertek.domain.Record;
 import com.mastertek.domain.RecordSense;
 
 import com.mastertek.repository.RecordSenseRepository;
@@ -17,9 +18,13 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.io.IOException;
 import java.net.URI;
 import java.net.URISyntaxException;
-
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
+import java.util.Date;
 import java.util.List;
 import java.util.Optional;
 
@@ -35,6 +40,10 @@ public class RecordSenseResource {
     private static final String ENTITY_NAME = "recordSense";
 
     private final RecordSenseRepository recordSenseRepository;
+    
+    String pattern = "yyyy-MM-dd'T'hh:mm:ss.SSS";
+    SimpleDateFormat simpleDateFormat = new SimpleDateFormat(pattern);
+    
 
     public RecordSenseResource(RecordSenseRepository recordSenseRepository) {
         this.recordSenseRepository = recordSenseRepository;
@@ -123,5 +132,33 @@ public class RecordSenseResource {
         log.debug("REST request to delete RecordSense : {}", id);
         recordSenseRepository.delete(id);
         return ResponseEntity.ok().headers(HeaderUtil.createEntityDeletionAlert(ENTITY_NAME, id.toString())).build();
+    }
+    
+    @GetMapping("/record-senses/getRecordsForReport")
+    public List<RecordSense> getRecordsForReport(@RequestParam("personId") Long personId,@RequestParam("startDate") String startDateValue,@RequestParam("endDate") String endDateValue) throws IOException, ParseException {
+        //InputStream in =;
+    	
+    	Date startDate = getDate(startDateValue);
+        Date endDate= getDate(endDateValue);
+        
+        List<RecordSense> list = recordSenseRepository.findRecords(personId,startDate.toInstant(), endDate.toInstant());
+        System.out.println("asd");
+        return list;
+}
+    
+    private Date getDate(String startDateValue) throws ParseException {
+    	Date startDate = simpleDateFormat.parse(startDateValue);
+        if(startDate.getHours()==0)
+        	startDate =addHoursToDate(startDate, 15);
+        else
+        	startDate =addHoursToDate(startDate, 3);
+        return startDate;
+    }
+    
+    private Date addHoursToDate(Date date, int count) {
+    	Calendar c = Calendar.getInstance();
+        c.setTime(date);
+        c.add(Calendar.HOUR, count);
+        return c.getTime();
     }
 }

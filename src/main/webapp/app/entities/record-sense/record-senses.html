@@ -14,6 +14,61 @@
         </div>
     </div>
     <br/>
+    
+    <div class="row">
+            
+            <div class="col-xs-3 no-padding-left">
+                <div class="form-group">
+				<label data-translate="facetrackerApp.image.person"
+					for="field_person">Person</label> <select class="form-control"
+					id="field_person" name="person" ng-model="vm.person"
+					ng-options="person as person.name for person in vm.people track by person.id">
+					<option value=""></option>
+				</select>
+			</div>
+            </div>
+
+        <div class="col-xs-3 no-padding-left">
+    		<div class="form-group">
+            <label class="control-label" for="field_insert">Start Date</label>
+                <div class="input-group">
+                    <input id="field_insert" type="text" class="form-control" name="startDate" datetime-picker="{{dateformat}}" ng-model="vm.startDate" is-open="vm.datePickerOpenStatus.startDate"
+                    />
+                    <span class="input-group-btn">
+                        <button type="button" class="btn btn-default" ng-click="vm.openCalendar('startDate')"><i class="glyphicon glyphicon-calendar"></i></button>
+                    </span>
+                </div>
+        	</div>
+		</div>
+		
+		<div class="col-xs-3 no-padding-left">
+    		<div class="form-group">
+            <label class="control-label" for="field_insert">End Date</label>
+                <div class="input-group">
+                    <input id="field_insert" type="text" class="form-control" name="endDate" datetime-picker="{{dateformat}}" ng-model="vm.endDate" is-open="vm.datePickerOpenStatus.endDate"
+                    />
+                    <span class="input-group-btn">
+                        <button type="button" class="btn btn-default" ng-click="vm.openCalendar('endDate')"><i class="glyphicon glyphicon-calendar"></i></button>
+                    </span>
+                </div>
+        	</div>
+		</div>
+		
+		<div class="col-xs-3 no-padding-left">
+    		<div class="form-group">
+            <label class="control-label" for="field_insert">&nbsp;</label>
+            <div class="input-group">
+                <button type="submit"  ng-click="vm.loadRecords()" ng-disabled="editForm.$invalid || vm.isSaving" class="btn btn-primary">
+            		<span class="glyphicon glyphicon-save"></span>&nbsp;<span data-translate="entity.action.save">Save</span>
+        		</button>
+            </div>
+                
+        	</div>
+		</div>
+		
+</div>		
+    
+    
     <div class="table-responsive">
         <table class="jh-table table table-striped">
             <thead>
