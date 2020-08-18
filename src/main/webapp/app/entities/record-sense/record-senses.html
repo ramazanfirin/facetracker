@@ -39,7 +39,7 @@
                 <tr ng-repeat="recordSense in vm.recordSenses track by recordSense.id">
                     <td><a ui-sref="record-sense-detail({id:recordSense.id})">{{recordSense.id}}</a></td>
                     <td>{{recordSense.insert | date:'medium'}}</td>
-                    <td><img width="100" height="100"  ng-src="/api/records/showImage?path={{record.path}}">
+                    <td><img width="100" height="100"  ng-src="/api/records/showImage?path={{recordSense.path}}">
                     {{recordSense.path}}</td>
                     <td>
                        	<img data-ng-src="{{'data:' + recordSense.image.imageContentType + ';base64,' + recordSense.image.image}}" 
