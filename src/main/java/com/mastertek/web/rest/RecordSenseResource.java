@@ -144,7 +144,30 @@ public class RecordSenseResource {
         List<RecordSense> list = recordSenseRepository.findRecords(personId,startDate.toInstant(), endDate.toInstant());
         System.out.println("asd");
         return list;
-}
+    }
+    @GetMapping("/record-senses/getRecordsForReportForUnknownPerson")
+    public List<RecordSense> getRecordsForReportForUnknownPerson(@RequestParam("startDate") String startDateValue,@RequestParam("endDate") String endDateValue) throws IOException, ParseException {
+        //InputStream in =;
+    	
+    	Date startDate = getDate(startDateValue);
+        Date endDate= getDate(endDateValue);
+        
+        List<RecordSense> list = recordSenseRepository.findRecordsForUnknownPersons(startDate.toInstant(), endDate.toInstant());
+        System.out.println("asd");
+        return list;
+    }
+    
+    @GetMapping("/record-senses/getRecordsForReportForKnownPerson")
+    public List<RecordSense> getRecordsForReportForKnownPerson(@RequestParam("startDate") String startDateValue,@RequestParam("endDate") String endDateValue) throws IOException, ParseException {
+        //InputStream in =;
+    	
+    	Date startDate = getDate(startDateValue);
+        Date endDate= getDate(endDateValue);
+        
+        List<RecordSense> list = recordSenseRepository.findRecordsForKnownPersons(startDate.toInstant(), endDate.toInstant());
+        System.out.println("asd");
+        return list;
+    }
     
     private Date getDate(String startDateValue) throws ParseException {
     	Date startDate = simpleDateFormat.parse(startDateValue);

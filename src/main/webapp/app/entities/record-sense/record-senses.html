@@ -17,17 +17,7 @@
     
     <div class="row">
             
-            <div class="col-xs-3 no-padding-left">
-                <div class="form-group">
-				<label data-translate="facetrackerApp.image.person"
-					for="field_person">Person</label> <select class="form-control"
-					id="field_person" name="person" ng-model="vm.person"
-					ng-options="person as person.name for person in vm.people track by person.id">
-					<option value=""></option>
-				</select>
-			</div>
-            </div>
-
+        
         <div class="col-xs-3 no-padding-left">
     		<div class="form-group">
             <label class="control-label" for="field_insert">Start Date</label>
@@ -53,20 +43,60 @@
                 </div>
         	</div>
 		</div>
-		
-		<div class="col-xs-3 no-padding-left">
-    		<div class="form-group">
-            <label class="control-label" for="field_insert">&nbsp;</label>
-            <div class="input-group">
-                <button type="submit"  ng-click="vm.loadRecords()" ng-disabled="editForm.$invalid || vm.isSaving" class="btn btn-primary">
-            		<span class="glyphicon glyphicon-save"></span>&nbsp;<span data-translate="entity.action.save">Save</span>
-        		</button>
-            </div>
-                
-        	</div>
 		</div>
 		
-</div>		
+		 <div class="row">
+		 
+		 	<div class="col-xs-3 no-padding-left">
+                <div class="form-group">
+				<label>Calisan Listesi</label> 
+				<select class="form-control"
+					id="field_person" name="person" ng-model="vm.person"
+					ng-options="person as person.name for person in vm.people track by person.id">
+					<option value=""></option>
+				</select>
+				</div>
+            </div>
+		 	
+		 	<div class="col-xs-3 no-padding-left">
+	    		<div class="form-group">
+	            <label class="control-label" for="field_insert">&nbsp;</label>
+	            <div class="input-group">
+	                <button type="submit"  ng-click="vm.loadRecords()" ng-disabled="editForm.$invalid || vm.isSaving" class="btn btn-primary">
+	            		<span class="glyphicon glyphicon-save"></span>&nbsp;<span>Secilen Kisiyi Ara</span>
+	        		</button>
+	            </div>
+	                
+	        	</div>
+			</div>
+			
+			<div class="col-xs-3 no-padding-left">
+	    		<div class="form-group">
+	            <label class="control-label" for="field_insert">&nbsp;</label>
+	            <div class="input-group">
+	                <button type="submit"  ng-click="vm.loadRecordsForKnownPersons()" ng-disabled="editForm.$invalid || vm.isSaving" class="btn btn-primary">
+	            		<span class="glyphicon glyphicon-save"></span>&nbsp;<span>Sadece Taninan Kisileri Ara</span>
+	        		</button>
+	            </div>
+	                
+	        	</div>
+			</div>
+		
+			<div class="col-xs-3 no-padding-left">
+	    		<div class="form-group">
+	            <label class="control-label" for="field_insert">&nbsp;</label>
+	            <div class="input-group">
+	                <button type="submit"  ng-click="vm.loadRecordsForUnknownPersons()" ng-disabled="editForm.$invalid || vm.isSaving" class="btn btn-primary">
+	            		<span class="glyphicon glyphicon-save"></span>&nbsp;<span>Sadece Taninmayan Kisileri Ara</span>
+	        		</button>
+	            </div>
+	                
+	        	</div>
+			</div>
+    
+		
+		</div>
+    
     
     
     <div class="table-responsive">
@@ -104,8 +134,8 @@
                     <td>{{recordSense.processFinishDate | date:'medium'}}</td>
                     <td>{{recordSense.status}}</td>
 <!--                     <td> -->
-<!-- <!--                         <a ng-if="recordSense.afid" ng-click="vm.openFile(recordSense.afidContentType, recordSense.afid)" data-translate="entity.action.open">open</a> --> -->
-<!-- <!--                         <span ng-if="recordSense.afid">{{recordSense.afidContentType}}, {{vm.byteSize(recordSense.afid)}}</span> --> -->
+<!-- <!--                         <a ng-if="recordSense.afid" ng-click="vm.openFile(recordSense.afidContentType, recordSense.afid)" data-translate="entity.action.open">open</a>  -->
+<!-- <!--                         <span ng-if="recordSense.afid">{{recordSense.afidContentType}}, {{vm.byteSize(recordSense.afid)}}</span> -->
 <!--                     </td> -->
                     <td>{{recordSense.isProcessed}}</td>
                     <td>{{recordSense.similarity}}</td>

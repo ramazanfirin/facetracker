@@ -21,7 +21,9 @@
         
         vm.people = Person.query();
         vm.loadRecords = loadRecords;
-
+        vm.loadRecordsForUnknownPersons = loadRecordsUnknownPersons;
+        vm.loadRecordsForKnownPersons = loadRecordsForKnownPersons;
+        
         var d = new Date();
         d.setHours(d.getHours() - 1);
         
@@ -88,6 +90,40 @@ function loadRecords () {
             }
 }
 
+
+function loadRecordsForKnownPersons () {
+	
+	
+	RecordSense.getRecordsForKnown({
+    	startDate:vm.startDate,
+        endDate:vm.endDate
+    }, onSuccess, onError);
+    
+    function onSuccess(data, headers) {
+        vm.recordSenses = data;
+       
+    }
+    function onError(error) {
+        AlertService.error(error.data.message);
+    }
+}
+
+function loadRecordsUnknownPersons () {
+	
+	
+	RecordSense.getRecordsForUnknown({
+    	startDate:vm.startDate,
+        endDate:vm.endDate
+    }, onSuccess, onError);
+    
+    function onSuccess(data, headers) {
+        vm.recordSenses = data;
+       
+    }
+    function onError(error) {
+        AlertService.error(error.data.message);
+    }
+}
         
     }
 })();

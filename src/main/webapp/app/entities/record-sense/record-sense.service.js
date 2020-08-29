@@ -12,6 +12,8 @@
         return $resource(resourceUrl, {}, {
             'query': { method: 'GET', isArray: true},
             'getRecords': { method: 'GET', isArray: true,url:'/api/record-senses/getRecordsForReport'},
+            'getRecordsForKnown': { method: 'GET', isArray: true,url:'/api/record-senses/getRecordsForReportForKnownPerson'},
+            'getRecordsForUnknown': { method: 'GET', isArray: true,url:'/api/record-senses/getRecordsForReportForUnknownPerson'},
             'get': {
                 method: 'GET',
                 transformResponse: function (data) {
