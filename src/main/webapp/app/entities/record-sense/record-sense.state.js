@@ -52,6 +52,49 @@
                 }]
             }
         })
+        .state('record-sense-rapor', {
+            parent: 'entity',
+            url: '/record-sense-rapor?page&sort&search',
+            data: {
+                authorities: ['ROLE_USER'],
+                pageTitle: 'facetrackerApp.recordSense.home.title'
+            },
+            views: {
+                'content@': {
+                    templateUrl: 'app/entities/record-sense/record-senses-rapor.html',
+                    controller: 'RecordSenseRaporController',
+                    controllerAs: 'vm'
+                }
+            },
+            params: {
+                page: {
+                    value: '1',
+                    squash: true
+                },
+                sort: {
+                    value: 'id,asc',
+                    squash: true
+                },
+                search: null
+            },
+            resolve: {
+                pagingParams: ['$stateParams', 'PaginationUtil', function ($stateParams, PaginationUtil) {
+                    return {
+                        page: PaginationUtil.parsePage($stateParams.page),
+                        sort: $stateParams.sort,
+                        predicate: PaginationUtil.parsePredicate($stateParams.sort),
+                        ascending: PaginationUtil.parseAscending($stateParams.sort),
+                        search: $stateParams.search
+                    };
+                }],
+                translatePartialLoader: ['$translate', '$translatePartialLoader', function ($translate, $translatePartialLoader) {
+                    $translatePartialLoader.addPart('recordSense');
+                    $translatePartialLoader.addPart('recordStatus');
+                    $translatePartialLoader.addPart('global');
+                    return $translate.refresh();
+                }]
+            }
+        })
         .state('record-sense-detail', {
             parent: 'record-sense',
             url: '/record-sense/{id}',

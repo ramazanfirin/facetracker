@@ -10,7 +10,14 @@
         </dd>
         <dt><span data-translate="facetrackerApp.recordSense.path">Path</span></dt>
         <dd>
-            <span>{{vm.recordSense.path}}</span>
+        	<img data-ng-src="{{'data:' + vm.recordSense.image.imageContentType + ';base64,' + vm.recordSense.image.image}}" 
+                        style="max-height: 100px;" ng-if="vm.recordSense.image.image" alt="image image"/>
+            
+        </dd>
+        <dt><span data-translate="facetrackerApp.recordSense.image">Image</span></dt>
+        <dd>
+           <img width="100" height="100"  ng-src="/api/records/showImage?path={{vm.recordSense.path}}">
+           <span>{{vm.recordSense.path}}</span>
         </dd>
         <dt><span data-translate="facetrackerApp.recordSense.fileSentDate">File Sent Date</span></dt>
         <dd>
@@ -51,10 +58,7 @@
         <dd>
             <a ui-sref="device-detail({id:vm.recordSense.device.id})">{{vm.recordSense.device.id}}</a>
         </dd>
-        <dt><span data-translate="facetrackerApp.recordSense.image">Image</span></dt>
-        <dd>
-            <a ui-sref="image-detail({id:vm.recordSense.image.id})">{{vm.recordSense.image.id}}</a>
-        </dd>
+        
     </dl>
 
     <button type="submit"

@@ -3,11 +3,11 @@
 
     angular
         .module('facetrackerApp')
-        .controller('RecordSenseController', RecordSenseController);
+        .controller('RecordSenseRaporController', RecordSenseRaporController);
 
-    RecordSenseController.$inject = ['$state', 'DataUtils', 'RecordSense', 'ParseLinks', 'AlertService', 'paginationConstants', 'pagingParams','Person'];
+    RecordSenseRaporController.$inject = ['$state', 'DataUtils', 'RecordSense', 'ParseLinks', 'AlertService', 'paginationConstants', 'pagingParams','Person'];
 
-    function RecordSenseController($state, DataUtils, RecordSense, ParseLinks, AlertService, paginationConstants, pagingParams,Person) {
+    function RecordSenseRaporController($state, DataUtils, RecordSense, ParseLinks, AlertService, paginationConstants, pagingParams,Person) {
 
         var vm = this;
 
@@ -31,7 +31,7 @@
 
         vm.endDate = new Date();     
         
-        loadAll();
+        loadRecordsForKnownPersons();
 
         function loadAll () {
             RecordSense.query({
