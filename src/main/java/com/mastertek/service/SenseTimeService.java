@@ -167,4 +167,60 @@ public class SenseTimeService {
 		
 		return new SearchResult(id, similarity) ;
 	}
+	
+	
+	public SearchResult insert(String path,String token) throws ClientProtocolException, IOException{
+		
+		HttpClient client = HttpClientBuilder.create().build();
+		
+		HttpPost httpPost = new HttpPost(endpoint+"/api/form");
+		
+		FileBody fileBody = new FileBody(new File(path), ContentType.DEFAULT_BINARY);
+		StringBody msg_id = new StringBody("1051", ContentType.MULTIPART_FORM_DATA);
+		StringBody lib_id = new StringBody("5", ContentType.MULTIPART_FORM_DATA);
+		StringBody img_id = new StringBody("85", ContentType.MULTIPART_FORM_DATA);
+		
+		MultipartEntityBuilder builder = MultipartEntityBuilder.create();
+		builder.setMode(HttpMultipartMode.BROWSER_COMPATIBLE);
+		builder.addPart("img", fileBody);
+		builder.addPart("msg_id", msg_id);
+		builder.addPart("lib_id", lib_id);
+		builder.addPart("img_id", img_id);
+		
+		HttpEntity entity = builder.build();
+		httpPost.setEntity(entity);
+		
+		httpPost.setHeader("sessionid", token);
+//	    httpPost.setHeader("Accept", "application/json");
+//	    httpPost.setHeader("Content-type", "application/json");
+
+		Long start = System.currentTimeMillis();
+		HttpResponse response = client.execute(httpPost);
+		Long end = System.currentTimeMillis();
+		Long duration = end - start;
+
+		int statusCode = response.getStatusLine().getStatusCode();
+		if (statusCode != 200) {
+
+			throw new RuntimeException("Terminal Connection Exception");
+		}
+		String result = EntityUtils.toString(response.getEntity());
+
+ 		JsonNode actualObj = objectMapper.readTree(result);
+		Long code = actualObj.get("code").asLong();
+		if(code!=0)
+			throw new RuntimeException("Senstime Business Exception");
+		
+		JsonNode data =actualObj.get("data");
+		JsonNode ntop =data.get("n_topn");
+		
+		Long id = null;
+		Double similarity = 0d;
+		if(ntop.has("id")){
+			id = ntop.get("id").asLong();
+			similarity = ntop.get("similarity").asDouble();;
+		}
+		
+		return new SearchResult(id, similarity) ;
+	}
 }
