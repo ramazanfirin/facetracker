@@ -65,22 +65,22 @@ public class DiviEngineService {
 		//if(!"tomcat".equals(applicationProperties.getEnvironment()))
 		//	sdk = new FaceID("C:\\Program Files\\Ayonix Corporation\\Ayonix FaceID SDK v6\\data\\engine");
 		
-//		service = FacerecService.createService(
-//				applicationProperties.getDllPath(),
-//				applicationProperties.getFaceRegPath(),
-//				applicationProperties.getLicensePath());
-//				
-//		
-//		FacerecService.Config capturer_conf = service.new Config(applicationProperties.getCapturer());
-//		capturer_conf.overrideParameter("downscale_rawsamples_to_preferred_size", 0);
-//		capturer= service.createCapturer(capturer_conf);
-//		
-//		recognizer = service.createRecognizer(applicationProperties.getRecognizer(), true, true, true);
-//		
-//		System.out.println(" 3 divi start bitti.");
-//		System.out.println(" capturer:"+applicationProperties.getCapturer());
-//		System.out.println(" recognizer:"+applicationProperties.getRecognizer());
-//		
+		service = FacerecService.createService(
+				applicationProperties.getDllPath(),
+				applicationProperties.getFaceRegPath(),
+				applicationProperties.getLicensePath());
+				
+		
+		FacerecService.Config capturer_conf = service.new Config(applicationProperties.getCapturer());
+		capturer_conf.overrideParameter("downscale_rawsamples_to_preferred_size", 0);
+		capturer= service.createCapturer(capturer_conf);
+		
+		recognizer = service.createRecognizer(applicationProperties.getRecognizer(), true, true, true);
+		
+		System.out.println(" 3 divi start bitti.");
+		System.out.println(" capturer:"+applicationProperties.getCapturer());
+		System.out.println(" recognizer:"+applicationProperties.getRecognizer());
+		
 		
 	}
 	
