@@ -19,6 +19,11 @@
         {
             "fieldName": "description",
             "fieldType": "String"
+        },
+        {
+            "fieldName": "deviceType",
+            "fieldType": "DeviceType",
+            "fieldValues": "INPUT,OUTPUT"
         }
     ],
     "changelogDate": "20200218073323",

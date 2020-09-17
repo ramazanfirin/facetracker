@@ -2,7 +2,7 @@
     "facetrackerApp": {
         "person" : {
             "home": {
-                "title": "People",
+                "title": "Personel",
                 "createLabel": "Create a new Person",
                 "createOrEditLabel": "Create or edit a Person"
             },

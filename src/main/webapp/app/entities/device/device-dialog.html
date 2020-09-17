@@ -31,10 +31,17 @@
                     ng-model="vm.device.description"
                     />
         </div>
+        <div class="form-group">
+            <label class="control-label" data-translate="facetrackerApp.device.deviceType" for="field_deviceType">Device Type</label>
+            <select class="form-control" name="deviceType" ng-model="vm.device.deviceType" id="field_deviceType">
+                <option value="INPUT" data-translate="facetrackerApp.DeviceType.INPUT">INPUT</option>
+                <option value="OUTPUT" data-translate="facetrackerApp.DeviceType.OUTPUT">OUTPUT</option>
+            </select>
+        </div>
 
         <div class="form-group">
             <label data-translate="facetrackerApp.device.floor" for="field_floor">Floor</label>
-            <select class="form-control" id="field_floor" name="floor" ng-model="vm.device.floor" ng-options="floor as floor.name for floor in vm.floors track by floor.id">
+            <select class="form-control" id="field_floor" name="floor" ng-model="vm.device.floor" ng-options="floor as floor.id for floor in vm.floors track by floor.id">
                 <option value=""></option>
             </select>
         </div>

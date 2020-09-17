@@ -26,6 +26,7 @@
             resolve: {
                 translatePartialLoader: ['$translate', '$translatePartialLoader', function ($translate, $translatePartialLoader) {
                     $translatePartialLoader.addPart('device');
+                    $translatePartialLoader.addPart('deviceType');
                     $translatePartialLoader.addPart('global');
                     return $translate.refresh();
                 }]
@@ -48,6 +49,7 @@
             resolve: {
                 translatePartialLoader: ['$translate', '$translatePartialLoader', function ($translate, $translatePartialLoader) {
                     $translatePartialLoader.addPart('device');
+                    $translatePartialLoader.addPart('deviceType');
                     return $translate.refresh();
                 }],
                 entity: ['$stateParams', 'Device', function($stateParams, Device) {
@@ -106,6 +108,7 @@
                             return {
                                 deviceId: null,
                                 description: null,
+                                deviceType: null,
                                 id: null
                             };
                         }

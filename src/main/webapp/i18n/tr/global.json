@@ -7,9 +7,9 @@
             "jhipster-needle-menu-add-element": "JHipster will add additional menu entries here (do not translate!)",
             "entities": {
                 "main": "Varlıklar",
-                "person": "Person",
-                "image": "Image",
-                "device": "Device",
+                "person": "Personel",
+                "image": "Resim",
+                "device": "Kamera",
                 "record": "Record",
                 "whiteListPerson": "White List Person",
                 "blackListPerson": "Black List Person",

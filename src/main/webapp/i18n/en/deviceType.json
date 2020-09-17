@@ -1,0 +1,9 @@
+{
+    "facetrackerApp": {
+        "DeviceType" : {
+            "null": "",
+            "INPUT": "INPUT",
+            "OUTPUT": "OUTPUT"
+        }
+    }
+}

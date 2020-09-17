@@ -2,7 +2,7 @@
     "facetrackerApp": {
         "image" : {
             "home": {
-                "title": "Images",
+                "title": "Resim",
                 "createLabel": "Create a new Image",
                 "createOrEditLabel": "Create or edit a Image"
             },

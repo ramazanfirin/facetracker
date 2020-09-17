@@ -13,6 +13,8 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 
 import java.io.File;
 import java.time.Instant;
+import java.time.LocalDateTime;
+import java.time.ZoneOffset;
 import java.time.temporal.ChronoUnit;
 import java.util.List;
 
@@ -35,8 +37,15 @@ import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.Base64Utils;
 
 import com.mastertek.FacetrackerApp;
+import com.mastertek.domain.Device;
+import com.mastertek.domain.Image;
+import com.mastertek.domain.Person;
 import com.mastertek.domain.Record;
+import com.mastertek.domain.enumeration.DeviceType;
 import com.mastertek.domain.enumeration.RecordStatus;
+import com.mastertek.repository.DeviceRepository;
+import com.mastertek.repository.ImageRepository;
+import com.mastertek.repository.PersonRepository;
 import com.mastertek.repository.RecordRepository;
 import com.mastertek.service.AyonixEngineService;
 import com.mastertek.service.MatchingService;
@@ -100,7 +109,17 @@ public class RecordResourceIntTest {
 
     @Autowired
     private EntityManager em;
-
+    
+    @Autowired
+    private DeviceRepository deviceRepository;
+    
+    @Autowired
+    private PersonRepository personRepository;
+    
+    @Autowired
+    private ImageRepository imageRepository;
+    
+   
     private MockMvc restRecordMockMvc;
 
     private Record record;
@@ -366,4 +385,6 @@ public class RecordResourceIntTest {
         record1.setId(null);
         assertThat(record1).isNotEqualTo(record2);
     }
+    
+        
 }

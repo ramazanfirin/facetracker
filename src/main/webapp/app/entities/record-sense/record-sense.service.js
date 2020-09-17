@@ -13,7 +13,11 @@
             'query': { method: 'GET', isArray: true},
             'getRecords': { method: 'GET', isArray: true,url:'/api/record-senses/getRecordsForReport'},
             'getRecordsForKnown': { method: 'GET', isArray: true,url:'/api/record-senses/getRecordsForReportForKnownPerson'},
+            'getRecordsForKnown2': { method: 'GET', isArray: true,url:'/api/record-senses/getRecordsForReportForKnownPerson-2'},
             'getRecordsForUnknown': { method: 'GET', isArray: true,url:'/api/record-senses/getRecordsForReportForUnknownPerson'},
+            'getRecordsForReportDidntCome': { method: 'GET', isArray: true,url:'/api/record-senses/getRecordsForReportDidntCome'},
+            
+            
             'get': {
                 method: 'GET',
                 transformResponse: function (data) {

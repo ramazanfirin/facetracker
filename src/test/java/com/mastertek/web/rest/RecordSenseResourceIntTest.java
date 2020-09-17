@@ -1,10 +1,20 @@
 package com.mastertek.web.rest;
 
+import com.fasterxml.jackson.core.type.TypeReference;
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
 import com.mastertek.FacetrackerApp;
-
+import com.mastertek.domain.Device;
+import com.mastertek.domain.Image;
+import com.mastertek.domain.Person;
+import com.mastertek.domain.Record;
 import com.mastertek.domain.RecordSense;
+import com.mastertek.repository.DeviceRepository;
+import com.mastertek.repository.ImageRepository;
+import com.mastertek.repository.PersonRepository;
 import com.mastertek.repository.RecordSenseRepository;
 import com.mastertek.web.rest.errors.ExceptionTranslator;
+import com.mastertek.web.rest.vm.RecordReportVM;
 
 import org.junit.Before;
 import org.junit.Test;
@@ -17,12 +27,15 @@ import org.springframework.http.MediaType;
 import org.springframework.http.converter.json.MappingJackson2HttpMessageConverter;
 import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.test.web.servlet.MockMvc;
+import org.springframework.test.web.servlet.MvcResult;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.Base64Utils;
 
 import javax.persistence.EntityManager;
 import java.time.Instant;
+import java.time.LocalDateTime;
+import java.time.ZoneOffset;
 import java.time.temporal.ChronoUnit;
 import java.util.List;
 
@@ -32,6 +45,7 @@ import static org.hamcrest.Matchers.hasItem;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 
+import com.mastertek.domain.enumeration.DeviceType;
 import com.mastertek.domain.enumeration.RecordStatus;
 /**
  * Test class for the RecordSenseResource REST controller.
@@ -92,6 +106,15 @@ public class RecordSenseResourceIntTest {
     private MockMvc restRecordSenseMockMvc;
 
     private RecordSense recordSense;
+    
+    @Autowired
+    private DeviceRepository deviceRepository;
+    
+    @Autowired
+    private PersonRepository personRepository;
+    
+    @Autowired
+    private ImageRepository imageRepository;
 
     @Before
     public void setup() {
@@ -329,4 +352,84 @@ public class RecordSenseResourceIntTest {
         recordSense1.setId(null);
         assertThat(recordSense1).isNotEqualTo(recordSense2);
     }
+    
+    public void prepareData(String personName,String date,Device device,Person person1) {
+    	    	
+    	Image image1 = new Image();
+    	image1.setPerson(person1);
+    	image1.setImage("sdf".getBytes());
+    	image1.setAfid("sdasd".getBytes());
+    	image1.setImageContentType("");
+    	image1.setAfidContentType("");
+    	imageRepository.save(image1);
+    	
+    	RecordSense record1 = new RecordSense();
+    	record1.setImage(image1);
+    	LocalDateTime date1 = LocalDateTime.parse(date);
+    	record1.setInsert(date1.toInstant(ZoneOffset.UTC));
+    	record1.setDevice(device);
+    	recordSenseRepository.save(record1);
+    }
+    
+    
+    @Test
+    @Transactional
+    public void getRecordForKnownPeople() throws Exception {
+        // Initialize the database
+    	
+    	
+    	Device device = new Device();
+    	device.setDeviceId("1");
+    	device.setDescription("1");
+    	device.setDeviceType(DeviceType.INPUT);
+    	
+    	Device device2 = new Device();
+    	device2.setDeviceId("2");
+    	device2.setDescription("2");
+    	device2.setDeviceType(DeviceType.OUTPUT);
+
+    	deviceRepository.save(device);
+    	deviceRepository.save(device2);
+    	
+    	Person person1 = new Person();
+    	person1.setName("a");
+    	personRepository.save(person1);
+    	
+    	Person person2 = new Person();
+    	person2.setName("b");
+    	personRepository.save(person2);
+    	
+    	Person person3 = new Person();
+    	person3.setName("c");
+    	personRepository.save(person3);
+    	
+    	
+    	prepareData("a", "2020-09-01T08:11:30", device,person1);
+    	prepareData("b", "2020-09-01T10:11:30", device,person1);
+    	prepareData("c", "2020-09-01T17:11:30", device2,person1);
+    	prepareData("d", "2020-09-01T09:11:30", device,person2);
+    	prepareData("e", "2020-09-01T11:11:30", device,person2);
+    	    	
+    	recordSenseRepository.findAll();
+    	String startDate = "2020-01-01T00:00:00.00";
+    	String endDate = "2021-01-01T00:00:00.00";
+    	// Get all the recordList
+        MvcResult mvcResult = restRecordSenseMockMvc.perform(get("/api/record-senses/getRecordsForReportForKnownPerson-2?startDate="+startDate+"&endDate="+endDate))
+            .andExpect(status().isOk()).andReturn();
+    
+        
+        ObjectMapper objectMapper = new ObjectMapper();
+        objectMapper.registerModule(new JavaTimeModule());
+        List<RecordReportVM> asList = objectMapper.readValue(mvcResult.getResponse().getContentAsString(), new TypeReference<List<RecordReportVM>>() { });
+        assertThat(asList.size()).isEqualTo(2);
+    
+    
+        MvcResult mvcResult2 = restRecordSenseMockMvc.perform(get("/api/record-senses/getRecordsForReportDidntCome?startDate="+startDate+"&endDate="+endDate))
+                .andExpect(status().isOk()).andReturn();
+        List<RecordReportVM> asList2 = objectMapper.readValue(mvcResult2.getResponse().getContentAsString(), new TypeReference<List<RecordReportVM>>() { });
+        assertThat(asList2.size()).isEqualTo(1);
+        assertThat(asList2.get(0).getPersonName()).isEqualTo(person3.getName());
+    }
+
+    
 }

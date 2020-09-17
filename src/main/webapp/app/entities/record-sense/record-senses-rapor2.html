@@ -1,0 +1,202 @@
+<div>
+    <h2 data-translate="facetrackerApp.recordSense.home.title">Record Senses</h2>
+    <jhi-alert></jhi-alert>
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-xs-4 no-padding-left">
+                <button class="btn btn-primary" ui-sref="record-sense.new" >
+                    <span class="glyphicon glyphicon-plus"></span>
+                    <span  data-translate="facetrackerApp.recordSense.home.createLabel">
+                        Create new Record Sense
+                    </span>
+                </button>
+            </div>
+        </div>
+    </div>
+    <br/>
+    
+    <div class="row">
+            
+        
+        <div class="col-xs-3 no-padding-left">
+    		<div class="form-group">
+            <label class="control-label" for="field_insert">Start Date</label>
+                <div class="input-group">
+                    <input id="field_insert" type="text" class="form-control" name="startDate" datetime-picker="{{dateformat}}" ng-model="vm.startDate" is-open="vm.datePickerOpenStatus.startDate"
+                    />
+                    <span class="input-group-btn">
+                        <button type="button" class="btn btn-default" ng-click="vm.openCalendar('startDate')"><i class="glyphicon glyphicon-calendar"></i></button>
+                    </span>
+                </div>
+        	</div>
+		</div>
+		
+		<div class="col-xs-3 no-padding-left">
+    		<div class="form-group">
+            <label class="control-label" for="field_insert">End Date</label>
+                <div class="input-group">
+                    <input id="field_insert" type="text" class="form-control" name="endDate" datetime-picker="{{dateformat}}" ng-model="vm.endDate" is-open="vm.datePickerOpenStatus.endDate"
+                    />
+                    <span class="input-group-btn">
+                        <button type="button" class="btn btn-default" ng-click="vm.openCalendar('endDate')"><i class="glyphicon glyphicon-calendar"></i></button>
+                    </span>
+                </div>
+        	</div>
+		</div>
+		
+		<div class="col-xs-3 center">
+	    		<div class="form-group">
+	            <label class="control-label" for="field_insert">&nbsp;</label>
+	            <div class="input-group">
+	                <button type="submit"  ng-click="vm.loadRecordsForKnownPersons()" ng-disabled="editForm.$invalid || vm.isSaving" class="btn btn-primary">
+	            		<span class="glyphicon glyphicon-save"></span>&nbsp;<span>Mesaiye Gelenleri Getir</span>
+	        		</button>
+	            </div>
+	                
+	        	</div>
+			</div>
+		
+		<div class="col-xs-3 no-padding-left">
+	    		<div class="form-group">
+	            <label class="control-label" for="field_insert">&nbsp;</label>
+	            <div class="input-group">
+	                <button type="submit"  ng-click="vm.getRecordsForReportDidntCome()" ng-disabled="editForm.$invalid || vm.isSaving" class="btn btn-primary">
+	            		<span class="glyphicon glyphicon-save"></span>&nbsp;<span>Mesaiye Gelmeyenleri Getir</span>
+	        		</button>
+	            </div>
+	                
+	        	</div>
+			</div>
+		
+		
+		</div>
+		
+		 <div class="row">
+		    <!-- 
+		 	<div class="col-xs-3 no-padding-left">
+                <div class="form-group">
+				<label>Calisan Listesi</label> 
+				<select class="form-control"
+					id="field_person" name="person" ng-model="vm.person"
+					ng-options="person as person.name for person in vm.people track by person.id">
+					<option value=""></option>
+				</select>
+				</div>
+            </div>
+		 	
+		 	<div class="col-xs-3 no-padding-left">
+	    		<div class="form-group">
+	            <label class="control-label" for="field_insert">&nbsp;</label>
+	            <div class="input-group">
+	                <button type="submit"  ng-click="vm.loadRecords()" ng-disabled="editForm.$invalid || vm.isSaving" class="btn btn-primary">
+	            		<span class="glyphicon glyphicon-save"></span>&nbsp;<span>Secilen Kisiyi Ara</span>
+	        		</button>
+	            </div>
+	                
+	        	</div>
+			</div>
+			 -->
+
+		
+<!-- 			<div class="col-xs-3 no-padding-left"> -->
+<!-- 	    		<div class="form-group"> -->
+<!-- 	            <label class="control-label" for="field_insert">&nbsp;</label> -->
+<!-- 	            <div class="input-group"> -->
+<!-- 	                <button type="submit"  ng-click="vm.loadRecordsForUnknownPersons()" ng-disabled="editForm.$invalid || vm.isSaving" class="btn btn-primary"> -->
+<!-- 	            		<span class="glyphicon glyphicon-save"></span>&nbsp;<span>Sadece Taninmayan Kisileri Ara</span> -->
+<!-- 	        		</button> -->
+<!-- 	            </div> -->
+	                
+<!-- 	        	</div> -->
+<!-- 			</div> -->
+    
+		
+		</div>
+    
+    
+    
+    <div class="table-responsive">
+        <table class="jh-table table table-striped">
+            <thead>
+                <tr jh-sort="vm.predicate" ascending="vm.reverse" callback="vm.transition()">
+<!--                     <th jh-sort-by="id"><span data-translate="global.field.id">ID</span> <span class="glyphicon glyphicon-sort"></span></th> -->
+<!--                     <th jh-sort-by="insert"><span data-translate="facetrackerApp.recordSense.insert">Insert</span> <span class="glyphicon glyphicon-sort"></span></th> -->
+					<th><span>Personel</span> <span class="glyphicon glyphicon-sort"></span></th>
+					<th><span>En Erken Giriş Saati</span> <span class="glyphicon glyphicon-sort"></span></th>
+					<th><span>En Geç Cikis Saati</span> <span class="glyphicon glyphicon-sort"></span></th>
+						
+<!--                     <th jh-sort-by="path"><span data-translate="facetrackerApp.recordSense.path">Path</span> <span class="glyphicon glyphicon-sort"></span></th> -->
+<!--                     <th jh-sort-by="fileSentDate"><span data-translate="facetrackerApp.recordSense.fileSentDate">File Sent Date</span> <span class="glyphicon glyphicon-sort"></span></th> -->
+<!--                     <th jh-sort-by="fileCreationDate"><span data-translate="facetrackerApp.recordSense.fileCreationDate">File Creation Date</span> <span class="glyphicon glyphicon-sort"></span></th> -->
+<!--                     <th jh-sort-by="processStartDate"><span data-translate="facetrackerApp.recordSense.processStartDate">Process Start Date</span> <span class="glyphicon glyphicon-sort"></span></th> -->
+<!--                    <th jh-sort-by="image.id"><span data-translate="facetrackerApp.recordSense.image">Image</span> <span class="glyphicon glyphicon-sort"></span></th> -->
+<!--                    <th jh-sort-by="processFinishDate"><span data-translate="facetrackerApp.recordSense.processFinishDate">Process Finish Date</span> <span class="glyphicon glyphicon-sort"></span></th> -->
+<!--                     <th jh-sort-by="status"><span data-translate="facetrackerApp.recordSense.status">Status</span> <span class="glyphicon glyphicon-sort"></span></th> -->
+<!--                     <th jh-sort-by="afid"><span data-translate="facetrackerApp.recordSense.afid">Afid</span> <span class="glyphicon glyphicon-sort"></span></th> -->
+<!--                     <th jh-sort-by="isProcessed"><span data-translate="facetrackerApp.recordSense.isProcessed">Is Processed</span> <span class="glyphicon glyphicon-sort"></span></th> -->
+<!--                     <th jh-sort-by="similarity"><span data-translate="facetrackerApp.recordSense.similarity">Similarity</span> <span class="glyphicon glyphicon-sort"></span></th> -->
+<!--                     <th jh-sort-by="device.id"><span data-translate="facetrackerApp.recordSense.device">Device</span> <span class="glyphicon glyphicon-sort"></span></th> -->
+<!--                     <th jh-sort-by="image.id"><span data-translate="facetrackerApp.recordSense.image">Image</span> <span class="glyphicon glyphicon-sort"></span></th> -->
+                    <th></th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr ng-repeat="recordSense in vm.recordSenses track by recordSense.personName">
+<!--                     <td><a ui-sref="record-sense-detail({id:recordSense.id})">Incele</a></td> -->
+<!--                     <td>{{recordSense.insert | date:'medium'}}</td> -->
+                    <td>{{recordSense.personName}}</td>
+                    <td>{{recordSense.startDate | date:'dd.MM.yyyy HH:mm:ss' }}</td>
+                    <td>{{recordSense.endDate | date:'dd.MM.yyyy HH:mm:ss' }}</td>
+<!--                     <td><img width="100" height="100"  ng-src="/api/records/showImage?path={{recordSense.path}}"> -->
+<!--                     {{recordSense.path}}</td> -->
+<!--                     <td> -->
+<!--                        	<img data-ng-src="{{'data:' + recordSense.image.imageContentType + ';base64,' + recordSense.image.image}}"  -->
+<!--                         style="max-height: 100px;" ng-if="recordSense.image.image" alt="image image"/> -->
+<!--                         {{record.image.person.name}} -->
+<!--                     </td> -->
+<!--                     <td>{{recordSense.processFinishDate | date:'medium'}}</td> -->
+<!--                     <td>{{recordSense.status}}</td> -->
+<!--                     <td> -->
+<!-- <!--                         <a ng-if="recordSense.afid" ng-click="vm.openFile(recordSense.afidContentType, recordSense.afid)" data-translate="entity.action.open">open</a>  -->
+<!-- <!--                         <span ng-if="recordSense.afid">{{recordSense.afidContentType}}, {{vm.byteSize(recordSense.afid)}}</span> -->
+<!--                     </td> -->
+<!--                     <td>{{recordSense.isProcessed}}</td> -->
+<!--                     <td>{{recordSense.similarity}}</td> -->
+                   
+                    <td>
+<!--                           <a ui-sref="device-detail({id:record.device.id})">{{recordSense.device.description}}</a> -->
+                    </td>
+                    
+                    <!-- 
+                    <td class="text-right">
+                        <div class="btn-group flex-btn-group-container">
+                            <button type="submit"
+                                    ui-sref="record-sense-detail({id:recordSense.id})"
+                                    class="btn btn-info btn-sm">
+                                <span class="glyphicon glyphicon-eye-open"></span>
+                                <span class="hidden-sm-down" data-translate="entity.action.view"></span>
+                            </button>
+                            <button type="submit"
+                                    ui-sref="record-sense.edit({id:recordSense.id})"
+                                    class="btn btn-primary btn-sm">
+                                <span class="glyphicon glyphicon-pencil"></span>
+                                <span class="hidden-sm-down" data-translate="entity.action.edit"></span>
+                            </button>
+                            <button type="submit"
+                                    ui-sref="record-sense.delete({id:recordSense.id})"
+                                    class="btn btn-danger btn-sm">
+                                <span class="glyphicon glyphicon-remove-circle"></span>
+                                <span class="hidden-sm-down" data-translate="entity.action.delete"></span>
+                            </button>
+                        </div>
+                    </td>
+                     -->
+                </tr>
+            </tbody>
+        </table>
+    </div>
+    <div class="text-center">
+        <jhi-item-count page="vm.page" total="vm.queryCount" items-per-page="vm.itemsPerPage"></jhi-item-count>
+        <uib-pagination class="pagination-sm" total-items="vm.totalItems" items-per-page="vm.itemsPerPage" ng-model="vm.page" ng-change="vm.transition()"></uib-pagination>
+    </div>
+</div>

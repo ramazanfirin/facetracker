@@ -9,6 +9,8 @@ import javax.validation.constraints.*;
 import java.io.Serializable;
 import java.util.Objects;
 
+import com.mastertek.domain.enumeration.DeviceType;
+
 /**
  * A Device.
  */
@@ -29,6 +31,10 @@ public class Device implements Serializable {
 
     @Column(name = "description")
     private String description;
+
+    @Enumerated(EnumType.STRING)
+    @Column(name = "device_type")
+    private DeviceType deviceType;
 
     @ManyToOne
     private Floor floor;
@@ -66,6 +72,19 @@ public class Device implements Serializable {
 
     public void setDescription(String description) {
         this.description = description;
+    }
+
+    public DeviceType getDeviceType() {
+        return deviceType;
+    }
+
+    public Device deviceType(DeviceType deviceType) {
+        this.deviceType = deviceType;
+        return this;
+    }
+
+    public void setDeviceType(DeviceType deviceType) {
+        this.deviceType = deviceType;
     }
 
     public Floor getFloor() {
@@ -108,6 +127,7 @@ public class Device implements Serializable {
             "id=" + getId() +
             ", deviceId='" + getDeviceId() + "'" +
             ", description='" + getDescription() + "'" +
+            ", deviceType='" + getDeviceType() + "'" +
             "}";
     }
 }

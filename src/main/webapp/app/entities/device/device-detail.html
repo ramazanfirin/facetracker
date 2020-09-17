@@ -12,6 +12,10 @@
         <dd>
             <span>{{vm.device.description}}</span>
         </dd>
+        <dt><span data-translate="facetrackerApp.device.deviceType">Device Type</span></dt>
+        <dd>
+            <span data-translate="{{'facetrackerApp.DeviceType.' + vm.device.deviceType}}">{{vm.device.deviceType}}</span>
+        </dd>
         <dt><span data-translate="facetrackerApp.device.floor">Floor</span></dt>
         <dd>
             <a ui-sref="floor-detail({id:vm.device.floor.id})">{{vm.device.floor.id}}</a>

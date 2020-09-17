@@ -2,7 +2,7 @@
     "facetrackerApp": {
         "device" : {
             "home": {
-                "title": "Devices",
+                "title": "Kamera",
                 "createLabel": "Create a new Device",
                 "createOrEditLabel": "Create or edit a Device"
             },
@@ -17,6 +17,7 @@
             },
             "deviceId": "Device Id",
             "description": "Description",
+            "deviceType": "Device Type",
             "floor": "Floor"
         }
     }

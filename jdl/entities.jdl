@@ -24,6 +24,7 @@ entity Floor{
 entity Device{
     deviceId String required
 	description String
+	deviceType DeviceType
 }
 
 enum RecordStatus {
@@ -32,6 +33,11 @@ enum RecordStatus {
 enum PersonType {
    WHITE_LIST_PERSON, BLACK_LIST_PERSON
 }
+
+enum DeviceType {
+   INPUT, OUTPUT
+}
+
 entity Record{
 	insert Instant
 	path String

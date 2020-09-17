@@ -1,14 +1,18 @@
 package com.mastertek.web.rest;
 
-import com.codahale.metrics.annotation.Timed;
-import com.mastertek.domain.Record;
-import com.mastertek.domain.RecordSense;
+import java.io.IOException;
+import java.net.URI;
+import java.net.URISyntaxException;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.time.Instant;
+import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.Date;
+import java.util.Iterator;
+import java.util.List;
+import java.util.Optional;
 
-import com.mastertek.repository.RecordSenseRepository;
-import com.mastertek.web.rest.errors.BadRequestAlertException;
-import com.mastertek.web.rest.util.HeaderUtil;
-import com.mastertek.web.rest.util.PaginationUtil;
-import io.github.jhipster.web.util.ResponseUtil;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.data.domain.Page;
@@ -16,17 +20,26 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.DeleteMapping;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.RestController;
 
-import java.io.IOException;
-import java.net.URI;
-import java.net.URISyntaxException;
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
-import java.util.Calendar;
-import java.util.Date;
-import java.util.List;
-import java.util.Optional;
+import com.codahale.metrics.annotation.Timed;
+import com.mastertek.domain.Person;
+import com.mastertek.domain.RecordSense;
+import com.mastertek.repository.RecordSenseRepository;
+import com.mastertek.web.rest.errors.BadRequestAlertException;
+import com.mastertek.web.rest.util.HeaderUtil;
+import com.mastertek.web.rest.util.PaginationUtil;
+import com.mastertek.web.rest.vm.RecordReportVM;
+
+import io.github.jhipster.web.util.ResponseUtil;
 
 /**
  * REST controller for managing RecordSense.
@@ -157,8 +170,77 @@ public class RecordSenseResource {
         return list;
     }
     
+    
+    @GetMapping("/record-senses/getRecordsForReportDidntCome")
+    public List<RecordReportVM> getRecordsForReportDidntCome(@RequestParam("startDate") String startDateValue,@RequestParam("endDate") String endDateValue) throws IOException, ParseException {
+        //InputStream in =;
+    	
+    	List<RecordReportVM> result = new ArrayList<RecordReportVM>();
+    	
+    	
+    	Date startDate = getDate(startDateValue);
+        Date endDate= getDate(endDateValue);
+        
+        List<Person> list = recordSenseRepository.findRecordsDidntCome(startDate.toInstant(), endDate.toInstant());
+        for (Iterator iterator = list.iterator(); iterator.hasNext();) {
+			Person person = (Person) iterator.next();
+			RecordReportVM recordReportVM = new RecordReportVM();
+			recordReportVM.setPersonName(person.getName());
+			result.add(recordReportVM);
+        }
+        
+        return result;
+    }
+    
+    @GetMapping("/record-senses/getRecordsForReportForKnownPerson-2")
+    public List<RecordReportVM> getRecordsForReportForKnownPerson(@RequestParam("startDate") String startDateValue,@RequestParam("endDate") String endDateValue) throws IOException, ParseException {
+        //InputStream in =;
+    	
+    	List<RecordReportVM> result = new ArrayList<RecordReportVM>();
+    	
+       Date startDate = getDate(startDateValue);
+       Date endDate= getDate(endDateValue);
+       List startList = recordSenseRepository.findRecordsForKnownPersonsForInput(startDate.toInstant(), endDate.toInstant());
+       List endList = recordSenseRepository.findRecordsForKnownPersonsForOutput(startDate.toInstant(), endDate.toInstant());
+       
+       System.out.println("bitti");
+       
+       for (Iterator iterator = startList.iterator(); iterator.hasNext();) {
+		   Object[] objects = (Object[])iterator.next();	
+		   RecordReportVM recordReportVM = getItem(result, (Long)objects[0]);
+		   recordReportVM.setPersonName((String)objects[1]);
+		   recordReportVM.setType("GİRİŞ");
+		   recordReportVM.setStartDate((Instant)objects[3]);
+	   }
+        
+       for (Iterator iterator = endList.iterator(); iterator.hasNext();) {
+		   Object[] objects = (Object[])iterator.next();	
+		   RecordReportVM recordReportVM = getItem(result, (Long)objects[0]);
+		   recordReportVM.setPersonName((String)objects[1]);
+		   recordReportVM.setType("ÇIKIŞ");
+		   recordReportVM.setEndDate((Instant)objects[3]);
+	   }
+
+        return result;
+    }
+    
+    public RecordReportVM getItem(List<RecordReportVM> result,Long personId) {
+    	
+    	for (Iterator iterator = result.iterator(); iterator.hasNext();) {
+			RecordReportVM recordReportVM = (RecordReportVM) iterator.next();
+			if(recordReportVM.getPersonId().longValue() == personId) {
+				return recordReportVM;
+			}
+		}
+    	
+    	RecordReportVM recordReportVM = new RecordReportVM();
+    	recordReportVM.setPersonId(personId);
+    	result.add(recordReportVM);
+    	return recordReportVM;
+    }
+    
     @GetMapping("/record-senses/getRecordsForReportForKnownPerson")
-    public List<RecordSense> getRecordsForReportForKnownPerson(@RequestParam("startDate") String startDateValue,@RequestParam("endDate") String endDateValue) throws IOException, ParseException {
+    public List<RecordSense> getRecordsForReportForKnownPerson2(@RequestParam("startDate") String startDateValue,@RequestParam("endDate") String endDateValue) throws IOException, ParseException {
         //InputStream in =;
     	
     	Date startDate = getDate(startDateValue);
