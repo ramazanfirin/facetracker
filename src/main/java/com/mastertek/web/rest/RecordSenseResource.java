@@ -35,6 +35,7 @@ import com.mastertek.domain.Person;
 import com.mastertek.domain.RecordSense;
 import com.mastertek.repository.RecordSenseRepository;
 import com.mastertek.web.rest.errors.BadRequestAlertException;
+import com.mastertek.web.rest.util.FaceTrackerUtil;
 import com.mastertek.web.rest.util.HeaderUtil;
 import com.mastertek.web.rest.util.PaginationUtil;
 import com.mastertek.web.rest.vm.RecordReportVM;
@@ -220,9 +221,23 @@ public class RecordSenseResource {
 		   recordReportVM.setType("ÇIKIŞ");
 		   recordReportVM.setEndDate((Instant)objects[3]);
 	   }
-
+       manipulateData(result);
         return result;
     }
+    
+    public void manipulateData(List<RecordReportVM> result) {
+    	for (Iterator iterator = result.iterator(); iterator.hasNext();) {
+			RecordReportVM recordReportVM = (RecordReportVM) iterator.next();
+			manipulateDataItem(recordReportVM);
+		}
+    }
+    
+    public void manipulateDataItem(RecordReportVM recordReportVM) {
+    	FaceTrackerUtil.calculateStartDate(recordReportVM);
+    	FaceTrackerUtil.calculateEndDate(recordReportVM);
+    	FaceTrackerUtil.calculateTotalDuration(recordReportVM);
+    }
+    
     
     public RecordReportVM getItem(List<RecordReportVM> result,Long personId) {
     	

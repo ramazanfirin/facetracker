@@ -11,8 +11,27 @@ public class RecordReportVM {
 	Long personId;
 	String type;
 	
+	String entryStatus;
+	String entryDifferences;
+	
+	String exitStatus;
+	String exitDifferences;
+	
+	String totalDuration;
 	
 	
+	public Instant getStartDate() {
+		return startDate;
+	}
+	public void setStartDate(Instant startDate) {
+		this.startDate = startDate;
+	}
+	public Instant getEndDate() {
+		return endDate;
+	}
+	public void setEndDate(Instant endDate) {
+		this.endDate = endDate;
+	}
 	public String getPersonName() {
 		return personName;
 	}
@@ -31,17 +50,35 @@ public class RecordReportVM {
 	public void setType(String type) {
 		this.type = type;
 	}
-	public Instant getStartDate() {
-		return startDate;
+	public String getEntryStatus() {
+		return entryStatus;
 	}
-	public void setStartDate(Instant startDate) {
-		this.startDate = startDate;
+	public void setEntryStatus(String entryStatus) {
+		this.entryStatus = entryStatus;
 	}
-	public Instant getEndDate() {
-		return endDate;
+	public String getEntryDifferences() {
+		return entryDifferences;
 	}
-	public void setEndDate(Instant endDate) {
-		this.endDate = endDate;
+	public void setEntryDifferences(String entryDifferences) {
+		this.entryDifferences = entryDifferences;
+	}
+	public String getExitStatus() {
+		return exitStatus;
+	}
+	public void setExitStatus(String exitStatus) {
+		this.exitStatus = exitStatus;
+	}
+	public String getExitDifferences() {
+		return exitDifferences;
+	}
+	public void setExitDifferences(String exitDifferences) {
+		this.exitDifferences = exitDifferences;
+	}
+	public String getTotalDuration() {
+		return totalDuration;
+	}
+	public void setTotalDuration(String totalDuration) {
+		this.totalDuration = totalDuration;
 	}
 	
 	

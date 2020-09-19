@@ -116,14 +116,23 @@
     
     
     <div class="table-responsive">
-        <table class="jh-table table table-striped">
+        <table class="jh-table table table-striped" border="1">
             <thead>
                 <tr jh-sort="vm.predicate" ascending="vm.reverse" callback="vm.transition()">
 <!--                     <th jh-sort-by="id"><span data-translate="global.field.id">ID</span> <span class="glyphicon glyphicon-sort"></span></th> -->
 <!--                     <th jh-sort-by="insert"><span data-translate="facetrackerApp.recordSense.insert">Insert</span> <span class="glyphicon glyphicon-sort"></span></th> -->
 					<th><span>Personel</span> <span class="glyphicon glyphicon-sort"></span></th>
 					<th><span>En Erken Giriş Saati</span> <span class="glyphicon glyphicon-sort"></span></th>
+					<th><span>Giriş Durumu</span> <span class="glyphicon glyphicon-sort"></span></th>
+					<th><span>Gecikme Süresi</span> <span class="glyphicon glyphicon-sort"></span></th>
 					<th><span>En Geç Cikis Saati</span> <span class="glyphicon glyphicon-sort"></span></th>
+					<th><span>Çıkış Durumu</span> <span class="glyphicon glyphicon-sort"></span></th>
+					<th><span>Erken/Gec Çıkma Süresi</span> <span class="glyphicon glyphicon-sort"></span></th>
+<!-- 					<th><span>Giriş Sayısı</span> <span class="glyphicon glyphicon-sort"></span></th> -->
+<!-- 					<th><span>Çıkış Sayısı</span> <span class="glyphicon glyphicon-sort"></span></th> -->
+					<th><span>Toplam Mesai Süresi</span> <span class="glyphicon glyphicon-sort"></span></th>
+					<th><span>Binada Geçen Süre</span> <span class="glyphicon glyphicon-sort"></span></th>
+					<th><span>Bina Dışında Geçen Süre</span> <span class="glyphicon glyphicon-sort"></span></th>
 						
 <!--                     <th jh-sort-by="path"><span data-translate="facetrackerApp.recordSense.path">Path</span> <span class="glyphicon glyphicon-sort"></span></th> -->
 <!--                     <th jh-sort-by="fileSentDate"><span data-translate="facetrackerApp.recordSense.fileSentDate">File Sent Date</span> <span class="glyphicon glyphicon-sort"></span></th> -->
@@ -137,7 +146,7 @@
 <!--                     <th jh-sort-by="similarity"><span data-translate="facetrackerApp.recordSense.similarity">Similarity</span> <span class="glyphicon glyphicon-sort"></span></th> -->
 <!--                     <th jh-sort-by="device.id"><span data-translate="facetrackerApp.recordSense.device">Device</span> <span class="glyphicon glyphicon-sort"></span></th> -->
 <!--                     <th jh-sort-by="image.id"><span data-translate="facetrackerApp.recordSense.image">Image</span> <span class="glyphicon glyphicon-sort"></span></th> -->
-                    <th></th>
+<!--                     <th></th> -->
                 </tr>
             </thead>
             <tbody>
@@ -146,7 +155,17 @@
 <!--                     <td>{{recordSense.insert | date:'medium'}}</td> -->
                     <td>{{recordSense.personName}}</td>
                     <td>{{recordSense.startDate | date:'dd.MM.yyyy HH:mm:ss' }}</td>
+                    <td>{{recordSense.entryStatus }}</td>
+                    <td>{{recordSense.entryDifferences }}</td>
+                    
                     <td>{{recordSense.endDate | date:'dd.MM.yyyy HH:mm:ss' }}</td>
+                    <td>{{recordSense.exitStatus }}</td>
+                    <td>{{recordSense.exitDifferences }}</td>
+<!--                     <td></td> -->
+                     <td>{{recordSense.totalDuration }}</td>
+<!--                     <td></td> -->
+                    <td></td>
+                    
 <!--                     <td><img width="100" height="100"  ng-src="/api/records/showImage?path={{recordSense.path}}"> -->
 <!--                     {{recordSense.path}}</td> -->
 <!--                     <td> -->
