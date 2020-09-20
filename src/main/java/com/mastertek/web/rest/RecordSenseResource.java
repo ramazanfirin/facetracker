@@ -294,12 +294,24 @@ public class RecordSenseResource {
 			
         	Object[] temp = (Object[]) iterator.next();
         	item1.getLabels().add(temp[0]+"."+temp[1]+"."+temp[2]);
+        	//item1.getLabels().add(temp[0]+"."+temp[1]+"."+temp[2]);
         	Instant date = (Instant)temp[3];
+        	
+        	
+        	Instant tempInstantNew = date.atZone(ZoneOffset.of("+03:00")).withYear(2000).withMonth(1).withDayOfMonth(1).toInstant();
+        	item1.getEntryList().add(tempInstantNew);
+        	Instant tempStandartInstantNew = date.atZone(ZoneOffset.of("+03:00")).withYear(2000).withMonth(1).withDayOfMonth(1).withHour(8).withMinute(30).toInstant();
+        	item1.getEntryStandartInstant().add(tempStandartInstantNew);
+        	
+        	
+        	
         	Instant tempInstant = date.atZone(ZoneOffset.of("+03:00")).withHour(0).withMinute(0).withSecond(0).toInstant();
         	Long diffirences = ChronoUnit.SECONDS.between(tempInstant,date);
         	item1.getDatas().add(diffirences);
         	item1.getEntryStandart().add(31147l);
         	item1.getTemp().add(31147l);
+        	
+        	
         }
         
         return result;

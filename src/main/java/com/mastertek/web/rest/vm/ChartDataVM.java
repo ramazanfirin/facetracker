@@ -1,5 +1,6 @@
 package com.mastertek.web.rest.vm;
 
+import java.time.Instant;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -11,6 +12,9 @@ public class ChartDataVM {
 	List<Long> entryStandart = new ArrayList<Long>();
 	
 	List<Long> temp = new ArrayList<Long>();
+	
+	List<Instant> entryList = new ArrayList<Instant>();
+	List<Instant> entryStandartInstant = new ArrayList<Instant>();
 	
 	public List<String> getLabels() {
 		return labels;
@@ -41,5 +45,17 @@ public class ChartDataVM {
 	}
 	public void setTemp(List<Long> temp) {
 		this.temp = temp;
+	}
+	public List<Instant> getEntryList() {
+		return entryList;
+	}
+	public void setEntryList(List<Instant> entryList) {
+		this.entryList = entryList;
+	}
+	public List<Instant> getEntryStandartInstant() {
+		return entryStandartInstant;
+	}
+	public void setEntryStandartInstant(List<Instant> entryStandartInstant) {
+		this.entryStandartInstant = entryStandartInstant;
 	}
 }
