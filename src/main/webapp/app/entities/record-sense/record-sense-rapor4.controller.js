@@ -28,20 +28,22 @@
 
         vm.chartHigh = Highcharts.chart('container', {
             title: {
-              text: 'Mesai Başlamgıç Cizelgeis'
+              text: 'Mesai Başlangıç Çizelgesi'
             },
             time: {
                 timezoneOffset: -120
               },
-            xAxis: {
-              categories: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun',
-                'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'
-              ]
-            },
+//            xAxis: {
+//              categories: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun',
+//                'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'
+//              ]
+//            }
+//              ,
             
             yAxis: {
               	type: 'datetime'
               	,
+              	title :{text:"Mesai Başlangıç Saati"},
                 labels: {
                   format: '{value:%H:%M}',
                 }
@@ -51,34 +53,34 @@
                 	const date = new Date(this.y)
                 	const M = date.getMinutes()
                   const H = date.getHours()
-                  return `${this.series.name}: ${date} ${H}:${M}`
+                  return `${this.series.name}: ${H}:${M}`
                 }
               },
             
             series: [
-            	{name: 'Jane',
+            	{name: '',
               data: [
-//           	  1599629005000
-//           	  ,1599716347000
-//           	  ,1599808056000
-//         	  ,1600063029000
-//           	  ,1600148337000
-//           	  ,1600239127000
-//           	  ,1600322001000
-//           	  ,1600406810000
-            	  
-            	  Date.parse('2016-10-20 05:23'), 
-            	  Date.parse('2016-10-20 04:14'), 
-            	  Date.parse('2016-10-20 05:14'), 
-            	  Date.parse('2016-10-20 06:14'),
-            	  Date.parse('2016-10-20 07:14'),
-            	  Date.parse('2016-10-20 08:14'),
-//            	  Date.parse('2016-10-20 09:14'),
-//            	  Date.parse('2016-10-20 10:14'), 
-//            	  Date.parse('2016-10-20 11:14'), 
-//            	  Date.parse('2016-10-20 12:14'),
-//            	  Date.parse('2016-10-20 13:14'), 
-//            	  Date.parse('2016-10-21 14:14')
+////           	  1599629005000
+////           	  ,1599716347000
+////           	  ,1599808056000
+////         	  ,1600063029000
+////           	  ,1600148337000
+////           	  ,1600239127000
+////           	  ,1600322001000
+////           	  ,1600406810000
+//            	  
+//            	  Date.parse('2016-10-20 05:23'), 
+//            	  Date.parse('2016-10-20 04:14'), 
+//            	  Date.parse('2016-10-20 05:14'), 
+//            	  Date.parse('2016-10-20 06:14'),
+//            	  Date.parse('2016-10-20 07:14'),
+//            	  Date.parse('2016-10-20 08:14'),
+////            	  Date.parse('2016-10-20 09:14'),
+////            	  Date.parse('2016-10-20 10:14'), 
+////            	  Date.parse('2016-10-20 11:14'), 
+////            	  Date.parse('2016-10-20 12:14'),
+////            	  Date.parse('2016-10-20 13:14'), 
+////            	  Date.parse('2016-10-21 14:14')
               ]
                }
             ]
@@ -92,6 +94,7 @@
         
         var d = new Date();
         d.setHours(0);
+        d.setDate(1);
         
         vm.startDate= d;
 
