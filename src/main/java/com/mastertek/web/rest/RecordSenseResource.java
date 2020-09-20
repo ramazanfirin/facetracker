@@ -6,6 +6,8 @@ import java.net.URISyntaxException;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.time.Instant;
+import java.time.ZoneOffset;
+import java.time.temporal.ChronoUnit;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
@@ -33,11 +35,13 @@ import org.springframework.web.bind.annotation.RestController;
 import com.codahale.metrics.annotation.Timed;
 import com.mastertek.domain.Person;
 import com.mastertek.domain.RecordSense;
+import com.mastertek.repository.PersonRepository;
 import com.mastertek.repository.RecordSenseRepository;
 import com.mastertek.web.rest.errors.BadRequestAlertException;
 import com.mastertek.web.rest.util.FaceTrackerUtil;
 import com.mastertek.web.rest.util.HeaderUtil;
 import com.mastertek.web.rest.util.PaginationUtil;
+import com.mastertek.web.rest.vm.ChartDataVM;
 import com.mastertek.web.rest.vm.RecordReportVM;
 
 import io.github.jhipster.web.util.ResponseUtil;
@@ -55,12 +59,15 @@ public class RecordSenseResource {
 
     private final RecordSenseRepository recordSenseRepository;
     
+    private final PersonRepository personRepository;
+    
     String pattern = "yyyy-MM-dd'T'hh:mm:ss.SSS";
     SimpleDateFormat simpleDateFormat = new SimpleDateFormat(pattern);
     
 
-    public RecordSenseResource(RecordSenseRepository recordSenseRepository) {
+    public RecordSenseResource(RecordSenseRepository recordSenseRepository,PersonRepository personRepository) {
         this.recordSenseRepository = recordSenseRepository;
+        this.personRepository = personRepository;
     }
 
     /**
@@ -264,6 +271,38 @@ public class RecordSenseResource {
         List<RecordSense> list = recordSenseRepository.findRecordsForKnownPersons(startDate.toInstant(), endDate.toInstant());
         System.out.println("asd");
         return list;
+    }
+    
+    @GetMapping("/record-senses/getRecordsForReportForEnrtyChartData")
+    public List<ChartDataVM> getRecordsForReportForEnrtyChartData(@RequestParam("personId") Long personId,@RequestParam("startDate") String startDateValue,@RequestParam("endDate") String endDateValue) throws IOException, ParseException {
+        //InputStream in =;
+    	
+    	Person person = personRepository.findOne(personId);
+    	
+    	Date startDate = getDate(startDateValue);
+        Date endDate= getDate(endDateValue);
+        
+        List<ChartDataVM> result = new ArrayList<ChartDataVM>();
+        ChartDataVM item1 = new ChartDataVM();
+        item1.getSeries().add(person.getName());
+        item1.getSeries().add("Mesai Başlangıcı");
+        item1.getSeries().add("Mesai Başlangıcı");
+        result.add(item1);
+        
+        List<ChartDataVM> list = recordSenseRepository.findRecordsEntryDate(personId,startDate.toInstant(), endDate.toInstant());
+        for (Iterator iterator = list.iterator(); iterator.hasNext();) {
+			
+        	Object[] temp = (Object[]) iterator.next();
+        	item1.getLabels().add(temp[0]+"."+temp[1]+"."+temp[2]);
+        	Instant date = (Instant)temp[3];
+        	Instant tempInstant = date.atZone(ZoneOffset.of("+03:00")).withHour(0).withMinute(0).withSecond(0).toInstant();
+        	Long diffirences = ChronoUnit.SECONDS.between(tempInstant,date);
+        	item1.getDatas().add(diffirences);
+        	item1.getEntryStandart().add(31147l);
+        	item1.getTemp().add(31147l);
+        }
+        
+        return result;
     }
     
     private Date getDate(String startDateValue) throws ParseException {

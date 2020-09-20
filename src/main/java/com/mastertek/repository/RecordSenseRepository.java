@@ -26,7 +26,8 @@ public interface RecordSenseRepository extends JpaRepository<RecordSense, Long> 
 	List<RecordSense> findRecordsForKnownPersons(@Param("startDate") Instant startDate,@Param("endDate") Instant endDate);
 
 	@Query( "SELECT record.image.person.id,record.image.person.name,record.device.deviceType,min(record.insert) FROM RecordSense record "
-			+ "where record.device.deviceType='INPUT' and record.image is not null and record.insert>=:startDate and record.insert<=:endDate group by record.image.person.id,record.image.person.id,record.device.deviceType")
+			+ "where record.device.deviceType='INPUT' and record.image is not null and record.insert>=:startDate and record.insert<=:endDate "
+			+ "group by record.image.person.id,record.image.person.id,record.device.deviceType")
 	List findRecordsForKnownPersonsForInput(@Param("startDate") Instant startDate,@Param("endDate") Instant endDate);
 
 	@Query( "SELECT record.image.person.id,record.image.person.name,record.device.deviceType,max(record.insert) FROM RecordSense record "
@@ -41,4 +42,13 @@ public interface RecordSenseRepository extends JpaRepository<RecordSense, Long> 
 	@Query( "select person From Person person where person.id not in (SELECT record.image.person.id FROM RecordSense record where record.image is not null and record.insert>=:startDate and record.insert<=:endDate)")
 	List<Person> findRecordsDidntCome(@Param("startDate") Instant startDate,@Param("endDate") Instant endDate);
 
+	@Query( "SELECT day(record.insert) ,month(record.insert),year(record.insert),min(record.insert) FROM RecordSense record "
+			+ " where record.image.person.id=:personId and "
+			+ " record.image is not null and "
+			+ " record.insert>=:startDate and "
+			+ " record.insert<=:endDate "
+			+ " group by day(record.insert),month(record.insert),year(record.insert)")
+	List findRecordsEntryDate(@Param("personId") Long personId,@Param("startDate") Instant startDate,@Param("endDate") Instant endDate);
+
+	
 }

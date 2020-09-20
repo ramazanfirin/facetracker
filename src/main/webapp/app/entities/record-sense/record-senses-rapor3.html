@@ -1,0 +1,154 @@
+<div>
+    <h2 >Grafik Rapor</h2>
+    <jhi-alert></jhi-alert>
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-xs-4 no-padding-left">
+<!--                 <button class="btn btn-primary" ui-sref="record-sense.new" > -->
+<!--                     <span class="glyphicon glyphicon-plus"></span> -->
+<!--                     <span  data-translate="facetrackerApp.recordSense.home.createLabel"> -->
+<!--                         Create new Record Sense -->
+<!--                     </span> -->
+<!--                 </button> -->
+            </div>
+        </div>
+    </div>
+    <br/>
+    
+    <div class="row">
+            
+        
+        <div class="col-xs-3 no-padding-left">
+    		<div class="form-group">
+            <label class="control-label" for="field_insert">Start Date</label>
+                <div class="input-group">
+                    <input id="field_insert" type="text" class="form-control" name="startDate" datetime-picker="{{dateformat}}" ng-model="vm.startDate" is-open="vm.datePickerOpenStatus.startDate"
+                    />
+                    <span class="input-group-btn">
+                        <button type="button" class="btn btn-default" ng-click="vm.openCalendar('startDate')"><i class="glyphicon glyphicon-calendar"></i></button>
+                    </span>
+                </div>
+        	</div>
+		</div>
+		
+		<div class="col-xs-3 no-padding-left">
+    		<div class="form-group">
+            <label class="control-label" for="field_insert">End Date</label>
+                <div class="input-group">
+                    <input id="field_insert" type="text" class="form-control" name="endDate" datetime-picker="{{dateformat}}" ng-model="vm.endDate" is-open="vm.datePickerOpenStatus.endDate"
+                    />
+                    <span class="input-group-btn">
+                        <button type="button" class="btn btn-default" ng-click="vm.openCalendar('endDate')"><i class="glyphicon glyphicon-calendar"></i></button>
+                    </span>
+                </div>
+        	</div>
+		</div>
+		
+		<div class="col-xs-3 center">
+	    		<div class="form-group">
+	            <label class="control-label" for="field_insert">&nbsp;</label>
+	            <div class="input-group">
+	                <button type="submit"  ng-click="vm.loadRecordsForKnownPersons()" ng-disabled="editForm.$invalid || vm.isSaving" class="btn btn-primary">
+	            		<span class="glyphicon glyphicon-save"></span>&nbsp;<span>Mesaiye Gelenleri Getir</span>
+	        		</button>
+	            </div>
+	                
+	        	</div>
+			</div>
+		
+		<div class="col-xs-3 no-padding-left">
+	    		<div class="form-group">
+	            <label class="control-label" for="field_insert">&nbsp;</label>
+	            <div class="input-group">
+	                <button type="submit"  ng-click="vm.getRecordsForReportDidntCome()" ng-disabled="editForm.$invalid || vm.isSaving" class="btn btn-primary">
+	            		<span class="glyphicon glyphicon-save"></span>&nbsp;<span>Mesaiye Gelmeyenleri Getir</span>
+	        		</button>
+	            </div>
+	                
+	        	</div>
+			</div>
+		
+		
+		</div>
+		
+		<div class="row">
+		 
+		 	<div class="col-xs-3 no-padding-left">
+                <div class="form-group">
+				<label>Calisan Listesi</label> 
+				<select class="form-control"
+					id="field_person" name="person" ng-model="vm.person"
+					ng-options="person as person.name for person in vm.people track by person.id">
+					<option value=""></option>
+				</select>
+				</div>
+            </div>
+		 	
+		 	<div class="col-xs-3 no-padding-left">
+	    		<div class="form-group">
+	            <label class="control-label" for="field_insert">&nbsp;</label>
+	            <div class="input-group">
+	                <button type="submit"  ng-click="vm.getRecordsForReportForEnrtyChartData()" ng-disabled="editForm.$invalid || vm.isSaving" class="btn btn-primary">
+	            		<span class="glyphicon glyphicon-save"></span>&nbsp;<span>Secilen Kisiyi Ara</span>
+	        		</button>
+	            </div>
+	                
+	        	</div>
+			</div>
+		
+		</div>
+		
+		 <div class="row">
+		    <!-- 
+		 	<div class="col-xs-3 no-padding-left">
+                <div class="form-group">
+				<label>Calisan Listesi</label> 
+				<select class="form-control"
+					id="field_person" name="person" ng-model="vm.person"
+					ng-options="person as person.name for person in vm.people track by person.id">
+					<option value=""></option>
+				</select>
+				</div>
+            </div>
+		 	
+		 	<div class="col-xs-3 no-padding-left">
+	    		<div class="form-group">
+	            <label class="control-label" for="field_insert">&nbsp;</label>
+	            <div class="input-group">
+	                <button type="submit"  ng-click="vm.loadRecords()" ng-disabled="editForm.$invalid || vm.isSaving" class="btn btn-primary">
+	            		<span class="glyphicon glyphicon-save"></span>&nbsp;<span>Secilen Kisiyi Ara</span>
+	        		</button>
+	            </div>
+	                
+	        	</div>
+			</div>
+			 -->
+
+		
+<!-- 			<div class="col-xs-3 no-padding-left"> -->
+<!-- 	    		<div class="form-group"> -->
+<!-- 	            <label class="control-label" for="field_insert">&nbsp;</label> -->
+<!-- 	            <div class="input-group"> -->
+<!-- 	                <button type="submit"  ng-click="vm.loadRecordsForUnknownPersons()" ng-disabled="editForm.$invalid || vm.isSaving" class="btn btn-primary"> -->
+<!-- 	            		<span class="glyphicon glyphicon-save"></span>&nbsp;<span>Sadece Taninmayan Kisileri Ara</span> -->
+<!-- 	        		</button> -->
+<!-- 	            </div> -->
+	                
+<!-- 	        	</div> -->
+<!-- 			</div> -->
+    
+		
+		</div>
+    
+    
+    
+    <canvas class="chart chart-line" chart-data="vm.data" chart-labels="vm.labels" width="400" chart-options="vm.options"  colours="vm.colours"
+            height="240"
+	chart-series="vm.series" ></canvas> 
+    
+    
+    <div class="text-center">
+        <jhi-item-count page="vm.page" total="vm.queryCount" items-per-page="vm.itemsPerPage"></jhi-item-count>
+        <uib-pagination class="pagination-sm" total-items="vm.totalItems" items-per-page="vm.itemsPerPage" ng-model="vm.page" ng-change="vm.transition()"></uib-pagination>
+    </div>
+</div>

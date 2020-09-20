@@ -16,7 +16,7 @@
             'getRecordsForKnown2': { method: 'GET', isArray: true,url:'/api/record-senses/getRecordsForReportForKnownPerson-2'},
             'getRecordsForUnknown': { method: 'GET', isArray: true,url:'/api/record-senses/getRecordsForReportForUnknownPerson'},
             'getRecordsForReportDidntCome': { method: 'GET', isArray: true,url:'/api/record-senses/getRecordsForReportDidntCome'},
-            
+            'getRecordsForReportForEnrtyChartData': { method: 'GET', isArray: true,url:'/api/record-senses/getRecordsForReportForEnrtyChartData'},
             
             'get': {
                 method: 'GET',

@@ -115,11 +115,12 @@ public class RecordSenseResourceIntTest {
     
     @Autowired
     private ImageRepository imageRepository;
-
+    
+    
     @Before
     public void setup() {
         MockitoAnnotations.initMocks(this);
-        final RecordSenseResource recordSenseResource = new RecordSenseResource(recordSenseRepository);
+        final RecordSenseResource recordSenseResource = new RecordSenseResource(recordSenseRepository,personRepository);
         this.restRecordSenseMockMvc = MockMvcBuilders.standaloneSetup(recordSenseResource)
             .setCustomArgumentResolvers(pageableArgumentResolver)
             .setControllerAdvice(exceptionTranslator)
