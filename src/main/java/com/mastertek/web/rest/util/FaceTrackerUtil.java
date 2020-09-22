@@ -35,7 +35,7 @@ public class FaceTrackerUtil {
 			return;
 		Instant temp = recordReportVM.getEndDate();
 		
-		temp = recordReportVM.getStartDate().atZone(ZoneOffset.of("+03:00")).withHour(17).withMinute(30).toInstant();
+		temp = recordReportVM.getEndDate().atZone(ZoneOffset.of("+03:00")).withHour(17).withMinute(30).toInstant();
 		Long diffirences = ChronoUnit.MINUTES.between(temp, recordReportVM.getEndDate());
 		
 		if(diffirences>0) {
